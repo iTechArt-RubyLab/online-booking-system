@@ -16,7 +16,9 @@ class Api::V1::SalonsController < ApplicationController
   def create
     salon = Salon.new(
       name: salon_params[:name],
-      address: salon_params[:address]
+      address: salon_params[:address],
+      phone: salon_params[:phone],
+      email: salon_params[:email],
     )
     if salon.save!
       render json: salon
@@ -28,6 +30,6 @@ class Api::V1::SalonsController < ApplicationController
   private
 
   def salon_params
-    params.require(:salon).permit([:name, :address])
+    params.require(:salon).permit([:name, :address, :phone, :email])
   end
 end
