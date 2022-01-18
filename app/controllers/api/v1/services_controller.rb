@@ -11,6 +11,13 @@ class Api::V1::ServicesController < ApplicationController
     render json: { message: 'service not found' }, status: 404 unless service
   end
 
-  private
-
+  def destroy
+    service = Service.find_by(id: params[:id])
+    
+    if service&.destroy
+      render json: service
+    else
+      render json: { message: 'service not found' }, status: 404
+    end
+  end
 end
