@@ -19,6 +19,8 @@ class Api::V1::SalonsController < ApplicationController
       address: salon_params[:address],
       phone: salon_params[:phone],
       email: salon_params[:email],
+      notes: salon_params[:notes],
+      links: salon_params[:links]
     )
     if salon.save!
       render json: salon
@@ -30,6 +32,6 @@ class Api::V1::SalonsController < ApplicationController
   private
 
   def salon_params
-    params.require(:salon).permit([:name, :address, :phone, :email])
+    params.require(:salon).permit([:name, :address, :phone, :email, :notes, :links])
   end
 end
