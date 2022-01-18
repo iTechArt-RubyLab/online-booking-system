@@ -7,7 +7,8 @@
     phone: '+375 29 883-26-36',
     email: "example#{t}@example.com",
     notes: 'Notes',
-    links: ['example.com', 'test.com']
+    links: ['example.com', 'test.com'],
+    owner_id: 'owner_id'
   )
 end
 
