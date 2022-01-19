@@ -13,6 +13,8 @@ gem 'rubocop'
 
 gem 'pg'
 
+gem 'pry'
+
 gem 'puma', '~> 5.0'
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
