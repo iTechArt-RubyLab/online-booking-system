@@ -1,20 +1,20 @@
 class Api::V1::SalonsController < ApplicationController
   def index
-    salons = Salon.all
+    @salons = Salon.all
     render json: salons
   end
 
   def show
-    salon = Salon.find_by(id: params[:id])
+    @salon = Salon.find_by(id: params[:id])
     if salon
-      render json: salon
+      render json: @salon
     else
       render json: { error: 'Error creating review.' }
     end
   end
 
   def create
-    salon = Salon.new(
+    @salon = Salon.new(
       name: salon_params[:name],
       address: salon_params[:address],
       phone: salon_params[:phone],
@@ -23,27 +23,27 @@ class Api::V1::SalonsController < ApplicationController
       links: salon_params[:links],
       owner_id: salon_params[:owner_id]
     )
-    if salon.save!
-      render json: salon
+    if @salon.save!
+      render json: @salon
     else
       render json: { error: 'Error creating review.' }
     end
 
     def update
-      salon = Salon.find(params[:id])
+      @salon = Salon.find(params[:id])
 
-      if salon.update(salon_params)
-        render json: salon
+      if @salon.update(salon_params)
+        render json: @salon
       else
         render json: { error: 'Error creating review.' }
       end
     end
 
     def destroy
-      salon = Salon.find(parms[:id])
+      @salon = Salon.find(parms[:id])
 
       if salon.destroy!
-        render json: salon
+        render json: @salon
       else
         render json: { error: 'Error creating review.' }
       end
