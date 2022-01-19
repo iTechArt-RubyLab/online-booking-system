@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2022_01_18_212511) do
     t.string "phone", null: false
     t.string "email", default: "", null: false
     t.text "notes", null: false
-    t.text "links", default: [], array: true
+    t.integer "owner_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
