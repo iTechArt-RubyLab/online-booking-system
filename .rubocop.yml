@@ -1,0 +1,21 @@
+require:
+ - rubocop-rails
+ - rubocop-rspec
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.0.3
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'bin/**/*'
+    - 'test/**/*'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+    - 'Gemfile'
+    - 'Gemfile.lock'
+
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
