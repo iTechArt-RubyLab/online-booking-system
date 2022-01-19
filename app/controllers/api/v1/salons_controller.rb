@@ -28,6 +28,26 @@ class Api::V1::SalonsController < ApplicationController
     else
       render json: { error: 'Error creating review.' }
     end
+
+    def update
+      salon = Salon.find(params[:id])
+
+      if salon.update(salon_params)
+        render json: salon
+      else
+        render json: { error: 'Error creating review.' }
+      end
+    end
+
+    def destroy
+      salon = Salon.find(parms[:id])
+
+      if salon.destroy!
+        render json: salon
+      else
+        render json: { error: 'Error creating review.' }
+      end
+    end
   end
 
   private
