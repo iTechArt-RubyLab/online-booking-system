@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_18_154508) do
+ActiveRecord::Schema.define(version: 2022_01_18_212511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "salons", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "address", null: false
+    t.string "phone", null: false
+    t.string "email", default: "", null: false
+    t.text "notes", null: false
+    t.integer "owner_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "services", force: :cascade do |t|
     t.integer "category_id", default: 0, null: false
@@ -27,6 +38,24 @@ ActiveRecord::Schema.define(version: 2022_01_18_154508) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_services_on_name", unique: true
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "patronymic"
+    t.integer "salon_id", null: false
+    t.string "email", null: false
+    t.string "work_email", null: false
+    t.string "phone", null: false
+    t.string "work_phone", null: false
+    t.datetime "birthday", null: false
+    t.integer "role", default: 0, null: false
+    t.integer "status", default: 0, null: false
+    t.text "notes"
+    t.string "image_url", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end
