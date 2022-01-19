@@ -1,7 +1,7 @@
 module Api
   module V1
     class SalonsController < ApplicationController
-      before_action :set_salon, only: %i[show update destroy] 
+      before_action :set_salon, only: %i[show update destroy]
 
       attr_accessor :salon
 
@@ -44,7 +44,7 @@ module Api
         end
       end
 
-      private 
+      private
 
       def set_salon
         @salon = Salon.find(params[:id])
