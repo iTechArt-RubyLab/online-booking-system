@@ -5,7 +5,7 @@ class Api::V1::VisitsController < ApplicationController
   end
 
   def show
-    @visit = Visit.find(params[:id])
+    visit
     render json: @visit
   end
 
@@ -19,8 +19,7 @@ class Api::V1::VisitsController < ApplicationController
   end
 
   def update
-    @visit = Visit.find(params[:id])
-    if @visit.update(visit_params)
+    if visit.update(visit_params)
       render json: { message: 'Visit was successfully updated' }
     else
       render json: { error: 'Unable to update visit' }
@@ -28,8 +27,7 @@ class Api::V1::VisitsController < ApplicationController
   end
 
   def destroy
-    @visit = Visit.find(params[:id])
-    if @visit.destroy
+    if visit.destroy
       render json: { message: 'Visit was successfully deleted' }
     else
       render json: { error: 'Unable to delete visit' }
@@ -37,6 +35,10 @@ class Api::V1::VisitsController < ApplicationController
   end
 
   private
+
+  def visit
+    @visit ||= Visit.find(params[:id])
+  end
 
   def visit_params
     params.permit(:start_at, :end_at, :price, :adress, :status)
