@@ -32,18 +32,18 @@ class Api::V1::ServicesController < ApplicationController
     end
   end
 
-  def destroy    
+  def destroy   
     if service&.destroy
       render json: service
     else
-      render json: { message: 'service not found' }, status: 404
+      render json: { message: service.errors.full_messages }, status: 400
     end
   end
 
   private
 
   def set_service
-    @service = Service.find_by(id: params[:id])
+    @service = Service.find(params[:id])
   end
 
   def message_and_status
