@@ -21,6 +21,16 @@ class Api::V1::ServicesController < ApplicationController
     end
   end
 
+  def update
+    service = Service.find(params[:id])
+
+    if service.update(service_params)
+      render json: service
+    else
+      render json: { message: service.errors.full_messages }, status: 400
+    end
+  end
+
   def destroy
     service = Service.find_by(id: params[:id])
     
