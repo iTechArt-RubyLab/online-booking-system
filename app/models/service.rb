@@ -1,5 +1,4 @@
 class Service < ApplicationRecord
-  
   enum availability: {
     yes: 0,
     no: 1

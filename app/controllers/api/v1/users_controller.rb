@@ -26,7 +26,6 @@ module Api
       end
 
       def update
-        user
         if user
           if user.update(user_params)
             user = User.find_by(id: user.id)
