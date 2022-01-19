@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :services
       resources :salons, only: [:index, :show, :create]
       resources :users
+      resources :visits
     end
   end
 end

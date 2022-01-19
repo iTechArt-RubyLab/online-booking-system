@@ -1,4 +1,4 @@
-#Add salons
+require 'faker'
 
 100.times do |t|
   solon = Salon.create(
@@ -43,3 +43,8 @@ Service.create(
 )
 
 puts 'Service has been created'
+
+50.times do
+  Visit.create(start_at: Date.current, end_at: Date.current, price: rand(1..100), adress: Faker::Address.full_address,
+               status: 0)
+end
