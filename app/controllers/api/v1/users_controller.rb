@@ -1,22 +1,22 @@
 module Api
   module V1
     class UsersController < ApplicationController
+      before_action :set_user, only: %i[show update destroy]
+
+      attr_accessor :user
+
       def index
         users = User.all
         render json: users
       end
 
       def show
-        user
-        if user
-          render json: user
-        else
-          render json: { error: 'User not found.' }
-        end
+        render json: user
       end
 
       def create
         user = User.new(user_params)
+
         if user.save!
           render json: user
         else
@@ -25,7 +25,6 @@ module Api
       end
 
       def update
-        user
         if user.update(user_params)
           render json: user
         else
@@ -34,27 +33,23 @@ module Api
       end
 
       def destroy
-        user
-        if user
-          if user.destroy
-            render json: { message: 'User deleted.' }
-          else
-            render json: { error: 'Error deleting user.' }, status: :unprocessable_entity
-          end
+        if user.destroy
+          render json: user
         else
-          render json: { error: 'User not found.' }, status: :not_found
+          render json: { error: 'Error deleting user.' }, status: :unprocessable_entity
         end
       end
+
+      private
 
       def user_params
         params.permit(%i[first_name last_name patronymic salon_id email work_email phone
                          work_phone birthday role status notes image_url])
       end
 
-      def user
-        @user ||= User.find_by(id: params[:id])
+      def set_user
+        @user = User.find(params[:id])
       end
-      private :user_params, :user
     end
   end
 end
