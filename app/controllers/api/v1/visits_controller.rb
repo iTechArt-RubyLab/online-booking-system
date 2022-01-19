@@ -39,6 +39,6 @@ class Api::V1::VisitsController < ApplicationController
   private
 
   def visit_params
-    params.require(:visit).permit(:start_at, :end_at, :price, :adress, :status)
+    params.permit(:start_at, :end_at, :price, :adress, :status)
   end
 end
