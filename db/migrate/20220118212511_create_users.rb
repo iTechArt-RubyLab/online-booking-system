@@ -13,7 +13,8 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.integer :role, null: false, default: 0
       t.integer :status, null: false, default: 0
       t.text :notes, empty: true
-      
+      t.string :image_url, null: false
+
       t.timestamps
     end
   end

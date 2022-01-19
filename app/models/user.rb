@@ -21,6 +21,7 @@ class User < ApplicationRecord
                          format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Work phone invalid' }
   validates :birthday, presence: true, date: { before: proc { Time.zone.today }, message: 'Birthday invalid' }
   validates :role, :status, presence: true
+  validates :image_url, presence: true, url: true
 
   def validate_notes
     self.notes = notes.chars.shuffle if notes.include?('</script>')

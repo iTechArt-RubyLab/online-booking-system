@@ -22,6 +22,8 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'bootsnap', require: false
 # Use date_validator gem for validating dates
 gem 'date_validator', '~> 0.12.0'
+# Use validate_url gem for validating urls
+gem 'validate_url', '~> 1.0.13'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]

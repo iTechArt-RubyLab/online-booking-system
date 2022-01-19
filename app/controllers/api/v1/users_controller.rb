@@ -7,7 +7,7 @@ module Api
       end
 
       def show
-        user = User.find_by(id: params[:id])
+        user
         if user
           render json: user
         else
@@ -16,20 +16,7 @@ module Api
       end
 
       def create
-        user = User.new(
-          first_name: user_params[:first_name],
-          last_name: user_params[:last_name],
-          patronymic: user_params[:patronymic],
-          salon_id: user_params[:salon_id],
-          email: user_params[:email],
-          work_email: user_params[:work_email],
-          phone: user_params[:phone],
-          work_phone: user_params[:work_phone],
-          birthday: user_params[:birthday],
-          role: user_params[:role],
-          status: user_params[:status],
-          notes: user_params[:notes]
-        )
+        user
         if user.save!
           user = User.find_by(id: user.id)
           render json: user
@@ -38,11 +25,42 @@ module Api
         end
       end
 
+      def update
+        user
+        if user
+          if user.update(user_params)
+            user = User.find_by(id: user.id)
+            render json: user
+          else
+            render json: { error: 'Error updating user.' }, status: :unprocessable_entity
+          end
+        else
+          render json: { error: 'User not found.' }, status: :not_found
+        end
+      end
+
+      def destroy
+        user
+        if user
+          if user.destroy
+            render json: { message: 'User deleted.' }
+          else
+            render json: { error: 'Error deleting user.' }, status: :unprocessable_entity
+          end
+        else
+          render json: { error: 'User not found.' }, status: :not_found
+        end
+      end
+
       def user_params
         params.require(:user).permit(%i[first_name last_name patronymic salon_id email work_email phone
-                                        work_phone birthday role status notes])
+                                        work_phone birthday role status notes image_url])
       end
-      private :user_params
+
+      def user
+        @user ||= User.find_by(id: params[:id])
+      end
+      private :user_params, :user
     end
   end
 end
