@@ -37,3 +37,11 @@ puts 'Users have been created'
   Visit.create(start_at: Date.current, end_at: Date.current, price: rand(1..100), adress: Faker::Address.full_address,
                status: 0)
 end
+
+
+# Add categories
+%w[Test_1 Test_2 Test_3].each do |category_name|
+  Category.create(name: category_name)
+end
+
+puts 'Catigories have been created'
