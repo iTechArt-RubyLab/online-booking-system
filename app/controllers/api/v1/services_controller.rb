@@ -1,12 +1,14 @@
 class Api::V1::ServicesController < ApplicationController
+  before_action :set_service, only: %i[show update destroy]
+
+  attr_accessor :service
+
   def index
     services = Service.all
     render json: services
   end
 
-  def show
-    service = Service.find_by(id: params[:id])
-    
+  def show    
     render json: service if service
     render json: { message: 'service not found' }, status: 404 unless service
   end
@@ -14,7 +16,7 @@ class Api::V1::ServicesController < ApplicationController
   def create
     service = Service.new(service_params)
     
-    if service.save()
+    if service.save
       render json: service
     else
       render json: { message: service.errors.full_messages }, status: 400
@@ -22,18 +24,15 @@ class Api::V1::ServicesController < ApplicationController
   end
 
   def update
-    service = Service.find(params[:id])
-
-    if service.update(service_params)
+    if service&.update(service_params)
       render json: service
     else
-      render json: { message: service.errors.full_messages }, status: 400
+      response = message_and_status
+      render json: { message: response[:message] }, status: response[:status]
     end
   end
 
-  def destroy
-    service = Service.find_by(id: params[:id])
-    
+  def destroy    
     if service&.destroy
       render json: service
     else
@@ -42,6 +41,16 @@ class Api::V1::ServicesController < ApplicationController
   end
 
   private
+
+  def set_service
+    @service = Service.find_by(id: params[:id])
+  end
+
+  def message_and_status
+    return { message: service.errors.full_messages, status: 400 } if service
+
+    { message: 'service not found' , status: 404 }
+  end
 
   def service_params
     params.require(:service).permit([:category_id,
