@@ -1,7 +1,9 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :user, only: %i[show update destroy]
+      before_action :set_user, only: %i[show update destroy]
+
+      attr_accessor :user
 
       def index
         users = User.all
@@ -45,8 +47,8 @@ module Api
                          work_phone birthday role status notes image_url])
       end
 
-      def user
-        @user ||= User.find(params[:id])
+      def set_user
+        @user = User.find(params[:id])
       end
     end
   end
