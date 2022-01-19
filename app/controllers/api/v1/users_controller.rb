@@ -16,9 +16,8 @@ module Api
       end
 
       def create
-        user
+        user = User.new(user_params)
         if user.save!
-          user = User.find_by(id: user.id)
           render json: user
         else
           render json: { error: 'Error creating user.' }, status: :unprocessable_entity
@@ -27,15 +26,10 @@ module Api
 
       def update
         user
-        if user
-          if user.update(user_params)
-            user = User.find_by(id: user.id)
-            render json: user
-          else
-            render json: { error: 'Error updating user.' }, status: :unprocessable_entity
-          end
+        if user.update(user_params)
+          render json: user
         else
-          render json: { error: 'User not found.' }, status: :not_found
+          render json: { error: 'Error updating user.' }, status: :unprocessable_entity
         end
       end
 
@@ -53,8 +47,8 @@ module Api
       end
 
       def user_params
-        params.require(:user).permit(%i[first_name last_name patronymic salon_id email work_email phone
-                                        work_phone birthday role status notes image_url])
+        params.permit(%i[first_name last_name patronymic salon_id email work_email phone
+                         work_phone birthday role status notes image_url])
       end
 
       def user
