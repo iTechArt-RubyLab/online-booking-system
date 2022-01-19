@@ -6,7 +6,7 @@ class AddSalonsTable < ActiveRecord::Migration[6.1]
       t.string :phone, null: false
       t.string :email, default: '', null: false
       t.text :notes, null: false
-      t.text :links, array: true, default: []
+      t.integer :owner_id, null: false
 
       t.timestamps
     end

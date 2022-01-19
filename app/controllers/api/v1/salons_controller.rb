@@ -1,11 +1,12 @@
 class Api::V1::SalonsController < ApplicationController
   def index
     @salons = Salon.all
-    render json: salons
+    render json: @salons
   end
 
   def show
-    @salon = Salon.find_by(id: params[:id])
+    salon
+
     if salon
       render json: @salon
     else
@@ -14,45 +15,42 @@ class Api::V1::SalonsController < ApplicationController
   end
 
   def create
-    @salon = Salon.new(
-      name: salon_params[:name],
-      address: salon_params[:address],
-      phone: salon_params[:phone],
-      email: salon_params[:email],
-      notes: salon_params[:notes],
-      links: salon_params[:links],
-      owner_id: salon_params[:owner_id]
-    )
+    @salon = Salon.new(salon_params)
+
     if @salon.save!
       render json: @salon
     else
-      render json: { error: 'Error creating review.' }
+      render json: { error: @salon.errors.full_messages }
     end
 
     def update
-      @salon = Salon.find(params[:id])
+      salon
 
-      if @salon.update(salon_params)
-        render json: @salon
+      if salon.update(salon_params)
+        render json: { message: 'Salon was successfully updated' }
       else
-        render json: { error: 'Error creating review.' }
+        render json: { error: 'Update not update salon' }
       end
     end
 
     def destroy
-      @salon = Salon.find(parms[:id])
+      salon
 
-      if salon.destroy!
-        render json: @salon
+      if salon.destroy
+        render json: { message: 'Salon was successfully updated' }
       else
-        render json: { error: 'Error creating review.' }
+        render json: { error: 'Unable to delete salon' }
       end
     end
   end
 
   private
 
+  def salon
+    @salon ||= Salon.find(params[:id])
+  end
+
   def salon_params
-    params.require(:salon).permit([:name, :address, :phone, :email, :notes, :links, :owner_id])
+    params.require(:salon).permit([:name, :address, :phone, :email, :notes, :owner_id])
   end
 end
