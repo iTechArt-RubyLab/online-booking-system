@@ -28,8 +28,12 @@ gem 'validate_url', '~> 1.0.13'
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   # Use rubocop to lint your code
+  gem 'rspec-rails'
   gem 'rubocop-rails', '~> 2.13', '>= 2.13.2'
   gem 'rubocop-rspec', '~> 2.7'
   # Use faker to generate test data
+  gem 'database_cleaner'
+  gem 'factory_bot_rails'
   gem 'faker', '~> 2.19'
+  gem 'shoulda-matchers', '~> 3.0', require: false
 end
