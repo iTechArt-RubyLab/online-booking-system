@@ -30,6 +30,9 @@ group :development, :test do
   # Use rubocop to lint your code
   gem 'rubocop-rails', '~> 2.13', '>= 2.13.2'
   gem 'rubocop-rspec', '~> 2.7'
+  gem 'rspec-rails'
   # Use faker to generate test data
   gem 'faker', '~> 2.19'
+  gem 'factory_bot_rails'
+  gem 'database_cleaner'
 end
