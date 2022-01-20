@@ -6,4 +6,10 @@ FactoryBot.define do
     end_at { '2022-01-19' }
     status { 0 }
   end
+
+  trait(:nil_start_at) { start_at { nil } }
+  trait(:nil_end_at) { end_at { nil } }
+  trait(:nil_price) { price { nil } }
+  trait(:nil_adress) { adress { nil } }
+  trait(:nil_status) { status { nil } }
 end
