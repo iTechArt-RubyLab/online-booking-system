@@ -3,7 +3,7 @@ module Api
     class CategoriesController < ApplicationController
       before_action :set_category, only: %i[show update destroy]
 
-      attr_accessor :categories
+      attr_accessor :category
 
       def index
         categories = Category.all
@@ -11,34 +11,30 @@ module Api
       end
 
       def show
-        render json: categories
-      end
-
-      def edit
-
+        render json: category
       end
 
       def create
-        categories = Category.new(category_params)
+        category = Category.new(category_params)
 
-        if categories.save!
-          render json: categories
+        if category.save!
+          render json: category
         else
           render json: { error: 'Error creating user.' }, status: :unprocessable_entity
         end
       end
 
       def update
-        if categories.update(category_params)
-          render json: categories
+        if category.update(category_params)
+          render json: category
         else
           render json: { error: 'Error updating user.' }, status: :unprocessable_entity
         end
       end
 
       def destroy
-        if categories.destroy
-          render json: categories
+        if category.destroy
+          render json: category
         else
           render json: { error: 'Error deleting user.' }, status: :unprocessable_entity
         end
@@ -51,7 +47,7 @@ module Api
       end
 
       def set_category
-        @categories = Category.find(params[:id])
+        @category = Category.find(params[:id])
       end
     end
   end
