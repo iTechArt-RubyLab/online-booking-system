@@ -1,6 +1,6 @@
 require 'rails_helper'
 describe 'get all visits route', type: :request do
-  let!(:visits) { FactoryBot.create_list(:random_visit, 20) }
+  let!(:visits) { create_list(:random_visit, 20) }
 
   before { get '/api/v1/visits' }
 
@@ -43,7 +43,7 @@ end
 
 describe 'PUT /api/v1/visits/:id' do
   before do
-    @visit = FactoryBot.create(:random_visit)
+    @visit = create(:random_visit)
   end
 
   it 'updates a visit' do
@@ -56,17 +56,17 @@ end
 
 describe 'delete visit route' do
   before do
-    @visit_one = FactoryBot.create(:random_visit)
-    @visit_two = FactoryBot.create(:random_visit)
+    @visit_one = create(:random_visit)
+    @visit_two = create(:random_visit)
   end
 
   it 'deletes the visit' do
     get '/api/v1/visits'
     expect(response.status).to eq(200)
-    expect(JSON.parse(response.body)).to eq([YAML.load(@visit_one.to_json), YAML.load(@visit_two.to_json)])
+    expect(JSON.parse(response.body)).to eq([YAML.safe_load(@visit_one.to_json), YAML.safe_load(@visit_two.to_json)])
     delete "/api/v1/visits/#{@visit_one.id}"
     expect(response.status).to eq(200)
     get '/api/v1/visits'
-    expect(JSON.parse(response.body)).to eq([YAML.load(@visit_two.to_json)])
+    expect(JSON.parse(response.body)).to eq([YAML.safe_load(@visit_two.to_json)])
   end
 end

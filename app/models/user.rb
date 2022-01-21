@@ -23,14 +23,15 @@ class User < ApplicationRecord
   validates :role, :status, presence: true
   validates :image_url, presence: true, url: true
 
-  def validate_notes
-    self.notes = notes.chars.shuffle if notes.include?('</script>')
-  end
-
   def capitalize_data
     self.first_name = first_name.downcase.titleize
     self.last_name = last_name.downcase.titleize
     self.patronymic = patronymic.downcase.titleize if patronymic
   end
-  private :validate_notes
+
+  private
+
+  def validate_notes
+    self.notes = notes.chars.shuffle if notes.include?('</script>')
+  end
 end

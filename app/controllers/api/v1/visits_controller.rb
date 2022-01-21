@@ -1,7 +1,6 @@
 module Api
   module V1
     class VisitsController < ApplicationController
-
       before_action :set_visit, only: %i[show update destroy]
 
       attr_accessor :visit
