@@ -13,9 +13,5 @@ FactoryBot.define do
     status { rand(0...4) }
     notes { Faker::Lorem.paragraph }
     image_url { 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y' }
-
-    factory(:professional) do 
-      role { :professional }
-    end
   end
 end
