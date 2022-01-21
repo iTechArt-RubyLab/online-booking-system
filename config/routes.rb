@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       resources :salons
       resources :users
       resources :visits
-      resources :categories
+      resources :categories, only: [:index, :show, :create, :update, :destroy]
     end
   end
 end
