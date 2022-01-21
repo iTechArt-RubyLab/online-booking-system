@@ -6,7 +6,6 @@ RSpec.shared_examples "invalid professional" do |args|
   it { is_expected.to be_invalid }
 end
 
-
 RSpec.describe Professional, type: :model do
   describe  'validation' do
     context "presence with nil" do
