@@ -1,35 +1,36 @@
 require 'rails_helper'
 
-describe 'User', type: :request do
-  describe 'GET all users route', type: :request do
-    before { get '/api/v1/users' }
+describe 'Users API', type: :request do
+  describe 'GET requests' do
+    it 'returns all users' do
+      create(:random_user)
+      create(:random_user)
 
-    it 'returns status code 200' do
-      create_list(:random_user, 20)
-      expect(response).to have_http_status(:success)
-    end
-  end
+      get '/api/v1/users'
 
-  describe 'GET a user route', type: :request do
-    before { get '/api/v1/users/1' }
-
-    let(:user) { create(:random_user) }
-
-    it 'returns the user' do
-      expect(JSON.parse(response.user.body)['first_name']).to eq(user.first_name)
-    end
-
-    it 'returns a status' do
       expect(response.status).to eq(200)
+      expect(JSON.parse(response.body).size).to eq(2)
+    end
+
+    it 'return one user' do
+      user = create(:random_user)
+
+      get "/api/v1/users/#{user.id}"
+
+      expect(response.status).to eq(200)
+      expect(JSON.parse(response.body)['first_name']).to eq(user.first_name)
     end
   end
 
-  describe 'POST a user route', type: :request do
+  describe 'POST request' do
     before do
       post '/api/v1/users',
-           params: { first_name: 'John', last_name: 'Smith', patronymic: 'Johnovich',
-                     salon_id: 10, email: 'gek@mail.ru', work_email: 'gek@outlook.com', phone: '+375 25 609-99-99',
-                     work_phone: '+375 33 200-11-11', birthday: '1998-01-20', role: 1, status: 1, notes: 'test' }
+           params: { user: { first_name: 'John', last_name: 'Smith', patronymic: 'Johnovich',
+                             salon_id: 10, email: 'gek@mail.ru', work_email: 'gek@outlook.com',
+                             phone: '+375 25 609-99-99', work_phone: '+375 33 200-11-11',
+                             birthday: '1998-01-20T00:00:00.000Z', role: 'professional',
+                             status: 'working', notes: 'test',
+                             image_url: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y' } }
     end
 
     it 'returns the user first_name' do
@@ -61,19 +62,23 @@ describe 'User', type: :request do
     end
 
     it 'returns the user birthday' do
-      expect(JSON.parse(response.body)['birthday']).to eq('1998-01-20')
+      expect(JSON.parse(response.body)['birthday']).to eq('1998-01-20T00:00:00.000Z')
     end
 
     it 'returns the user role' do
-      expect(JSON.parse(response.body)['role']).to eq(1)
+      expect(JSON.parse(response.body)['role']).to eq('professional')
     end
 
     it 'returns the user status' do
-      expect(JSON.parse(response.body)['status']).to eq(1)
+      expect(JSON.parse(response.body)['status']).to eq('working')
     end
 
     it 'returns the user notes' do
       expect(JSON.parse(response.body)['notes']).to eq('test')
+    end
+
+    it 'returns the user image_url' do
+      expect(JSON.parse(response.body)['image_url']).to eq('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y')
     end
 
     it 'return a status' do
@@ -81,22 +86,29 @@ describe 'User', type: :request do
     end
   end
 
-  describe 'PUT /api/v1/users/:id' do
-    let(:user) { create(:random_user) }
-    let(:new_first_name) { Faker::Name.first_name }
+  describe 'PUT request' do
+    it 'updates the user' do
+      user = create(:random_user)
 
-    it 'updates a user' do
-      put "/api/v1/users/#{user.id}", params: { first_name: new_first_name }
+      put "/api/v1/users/#{user.id}",
+          params: { user: { first_name: 'Ginger', last_name: 'Smithy', patronymic: 'Jackson', salon_id: 10 } }
+
       expect(response.status).to eq(200)
-      expect(User.find(user.id).first_name).to eq(new_first_name)
+      expect(JSON.parse(response.body)['first_name']).to eq('Ginger')
     end
   end
 
-  describe 'DELETE /api/v1/users/:id' do
-    let!(:user) { create(:random_user) }
+  describe 'DELETE request' do
+    it 'deletes the user' do
+      user = create(:random_user)
 
-    it 'delete a user' do
-      expect { delete "/api/v1/users/#{user.id}" }.to change(User, :count).by(-1)
+      delete "/api/v1/users/#{user.id}"
+
+      expect(response.status).to eq(200)
+
+      get "/api/v1/users/#{user.id}"
+
+      expect(response.status).to eq(404)
     end
   end
 end
