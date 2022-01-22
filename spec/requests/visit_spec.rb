@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Visits', type: :request do
+describe 'Visits API', type: :request do
   describe 'GET all visits route', type: :request do
     before { get '/api/v1/visits' }
 
@@ -13,8 +13,8 @@ describe 'Visits', type: :request do
   describe 'POST a visit route', type: :request do
     before do
       post '/api/v1/visits',
-           params: { start_at: '2022-01-18T00:00:00.000Z', end_at: '2022-01-18T00:00:00.000Z',
-                     price: 23, adress: '763 Minsk', status: 'created' }
+           params: { visit: { start_at: '2022-01-18T00:00:00.000Z', end_at: '2022-01-18T00:00:00.000Z',
+                              price: 23, adress: '763 Minsk', status: 'created' } }
     end
 
     it 'returns the visit start' do
@@ -47,24 +47,22 @@ describe 'Visits', type: :request do
     let(:new_adress) { Faker::Address.full_address }
 
     it 'updates a visit' do
-      put "/api/v1/visits/#{visit.id}", params: { adress: new_adress }
+      put "/api/v1/visits/#{visit.id}", params: { visit: { adress: new_adress } }
       expect(response.status).to eq(200)
       expect(Visit.find(visit.id).adress).to eq(new_adress)
     end
   end
 
   describe 'DELETE visit' do
-    let(:visit_one) { create(:random_visit) }
-
-    it 'get visit_one' do
-      get "/api/v1/visits/#{visit_one.id}"
-      expect(response.status).to eq(200)
-    end
-
     it 'delete visit' do
-      delete "/api/v1/visits/#{visit_one.id}"
+      visit = create(:random_visit)
+
+      delete "/api/v1/visits/#{visit.id}"
+
       expect(response.status).to eq(200)
-      get "/api/v1/visits/#{visit_one.id}"
+
+      get "/api/v1/visits/#{visit.id}"
+
       expect(response.status).to eq(404)
     end
   end
