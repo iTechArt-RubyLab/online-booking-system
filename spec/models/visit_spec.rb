@@ -1,35 +1,29 @@
 require 'rails_helper'
 
 RSpec.describe Visit, type: :model do
-  describe 'does not pass validations with' do
-    context 'nil start_date' do
-      subject { FactoryBot.build(:random_visit, :nil_start_at) }
-
-      it { is_expected.not_to be_valid }
+  describe 'validations' do
+    it 'is valid with valid attributes' do
+      expect(build(:random_visit)).to be_valid
     end
 
-    context 'nil end_date' do
-      subject { FactoryBot.build(:random_visit, :nil_end_at) }
-
-      it { is_expected.not_to be_valid }
+    it 'is not valid with nil start_at' do
+      expect(build(:random_visit, start_at: nil)).not_to be_valid
     end
 
-    context 'nil price' do
-      subject { FactoryBot.build(:random_visit, :nil_price) }
-
-      it { is_expected.not_to be_valid }
+    it 'is not valid with nil end_at' do
+      expect(build(:random_visit, end_at: nil)).not_to be_valid
     end
 
-    context 'nil adress' do
-      subject { FactoryBot.build(:random_visit, :nil_adress) }
-
-      it { is_expected.not_to be_valid }
+    it 'is not valid with nil price' do
+      expect(build(:random_visit, price: nil)).not_to be_valid
     end
 
-    context 'nil status' do
-      subject { FactoryBot.build(:random_visit, :nil_status) }
+    it 'is not valid with nil adress' do
+      expect(build(:random_visit, adress: nil)).not_to be_valid
+    end
 
-      it { is_expected.not_to be_valid }
+    it 'is not valid with nil status' do
+      expect(build(:random_visit, status: nil)).not_to be_valid
     end
   end
 end
