@@ -1,28 +1,28 @@
 require 'rails_helper'
 
 describe 'Services API', type: :request do
-  describe 'GET /services' do
+  describe 'GET requests' do
     it 'returns all services' do
-      FactoryBot.create(:random_service)
-      FactoryBot.create(:random_service)
+      create(:random_service)
+      create(:random_service)
 
       get '/api/v1/services'
 
-      expect(response).to have_http_status(:success)
+      expect(response.status).to eq(200)
       expect(JSON.parse(response.body).size).to eq(2)
     end
 
     it 'return one service' do
-      service = FactoryBot.create(:random_service)
+      service = create(:random_service)
 
       get "/api/v1/services/#{service.id}"
 
-      expect(response).to have_http_status(:success)
+      expect(response.status).to eq(200)
       expect(JSON.parse(response.body)['name']).to eq(service.name)
     end
   end
 
-  describe 'POST requests', type: :request do
+  describe 'POST request' do
     before do
       post '/api/v1/services',
            params: { service:
@@ -61,30 +61,34 @@ describe 'Services API', type: :request do
     end
 
     it 'returns a status' do
-      expect(response).to have_http_status(:success)
+      expect(response.status).to eq(200)
     end
   end
 
-  describe 'PUT requests', type: :request do
+  describe 'PUT request' do
     it 'updates a service' do
-      service = FactoryBot.create(:random_service)
+      service = create(:random_service)
 
       put "/api/v1/services/#{service.id}",
           params: { service:
                     { name: 'a_new_service' } }
 
-      expect(response).to have_http_status(:success)
+      expect(response.status).to eq(200)
       expect(JSON.parse(response.body)['name']).to eq('a_new_service')
     end
   end
 
-  describe 'DELETE requests', type: :request do
+  describe 'DELETE request' do
     it 'deletes a service' do
-      service = FactoryBot.create(:random_service)
+      service = create(:random_service)
 
       delete "/api/v1/services/#{service.id}"
 
-      expect(response).to have_http_status(:success)
+      expect(response.status).to eq(200)
+
+      get "/api/v1/services/#{service.id}"
+
+      expect(response.status).to eq(404)
     end
   end
 end
