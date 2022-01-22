@@ -1,6 +1,11 @@
 module Api
   module V1
     class VisitsController < ApplicationController
+
+      before_action :set_visit, only: %i[show update destroy]
+
+      attr_accessor :visit
+
       def index
         @visits = Visit.all
         render json: @visits
@@ -22,7 +27,7 @@ module Api
 
       def update
         if visit.update(visit_params)
-          render json: { message: 'Visit was successfully updated' }
+          render json: visit
         else
           render json: { error: 'Unable to update visit' }
         end
@@ -30,7 +35,7 @@ module Api
 
       def destroy
         if visit.destroy
-          render json: { message: 'Visit was successfully deleted' }
+          render json: visit
         else
           render json: { error: 'Unable to delete visit' }
         end
@@ -38,8 +43,8 @@ module Api
 
       private
 
-      def visit
-        @visit ||= Visit.find(params[:id])
+      def set_visit
+        @visit = Visit.find(params[:id])
       end
 
       def visit_params
