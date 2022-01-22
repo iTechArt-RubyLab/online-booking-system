@@ -1,8 +1,8 @@
 class User < ApplicationRecord
-  enum role: { professional: 0, salon_owner: 1 }
+  enum role: { professional: 0, salon_owner: 1, client: 2 }
   enum status: { working: 0, on_vacation: 1, banned: 2, fired: 3 }
 
-  before_validation :capitalize_data, on: :create
+  before_validation :normalize_params, on: :create
   before_save :validate_notes
 
   validates :first_name, presence: true, length: { minimum: 2, maximum: 255 }
@@ -27,10 +27,22 @@ class User < ApplicationRecord
     self.notes = notes.chars.shuffle if notes.include?('</script>')
   end
 
-  def capitalize_data
-    self.first_name = first_name.downcase.titleize
-    self.last_name = last_name.downcase.titleize
-    self.patronymic = patronymic.downcase.titleize if patronymic
+  def normalize_params
+    titleize_name
+    titleize_last_name
+    titleize_patronymic
   end
-  private :validate_notes
+
+  def titleize_name
+    self.first_name = first_name.downcase.titleize if attribute_present?('first_name')
+  end
+
+  def titleize_last_name
+    self.last_name = last_name.downcase.titleize if attribute_present?('last_name')
+  end
+
+  def titleize_patronymic
+    self.patronymic = patronymic.downcase.titleize if attribute_present?('patronymic')
+  end
+  private :validate_notes, :normalize_params, :titleize_name, :titleize_last_name, :titleize_patronymic
 end

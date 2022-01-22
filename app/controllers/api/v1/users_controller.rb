@@ -43,8 +43,8 @@ module Api
       private
 
       def user_params
-        params.permit(%i[first_name last_name patronymic salon_id email work_email phone
-                         work_phone birthday role status notes image_url])
+        params.require(:user).permit(%i[first_name last_name patronymic salon_id email work_email phone
+                                        work_phone birthday role status notes image_url])
       end
 
       def set_user
