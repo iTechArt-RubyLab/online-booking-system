@@ -1,29 +1,31 @@
 require 'rails_helper'
 
+RSpec.shared_examples 'to be invalid' do |factory_trait|
+  subject { build(:random_visit, factory_trait) }
+
+  it { is_expected.to be_invalid }
+end
+
 RSpec.describe Visit, type: :model do
-  describe 'validations' do
-    it 'is valid with valid attributes' do
-      expect(build(:random_visit)).to be_valid
+  describe 'does not pass validations' do
+    context 'when nil start_date' do
+      include_examples 'to be invalid', :nil_start_at
     end
 
-    it 'is not valid with nil start_at' do
-      expect(build(:random_visit, start_at: nil)).not_to be_valid
+    context 'when nil end_date' do
+      include_examples 'to be invalid', :nil_end_at
     end
 
-    it 'is not valid with nil end_at' do
-      expect(build(:random_visit, end_at: nil)).not_to be_valid
+    context 'when nil price' do
+      include_examples 'to be invalid', :nil_price
     end
 
-    it 'is not valid with nil price' do
-      expect(build(:random_visit, price: nil)).not_to be_valid
+    context 'when nil adress' do
+      include_examples 'to be invalid', :nil_adress
     end
 
-    it 'is not valid with nil adress' do
-      expect(build(:random_visit, adress: nil)).not_to be_valid
-    end
-
-    it 'is not valid with nil status' do
-      expect(build(:random_visit, status: nil)).not_to be_valid
+    context 'when nil status' do
+      include_examples 'to be invalid', :nil_status
     end
   end
 end

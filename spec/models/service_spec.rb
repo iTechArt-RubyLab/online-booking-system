@@ -1,45 +1,35 @@
 require 'rails_helper'
 
+RSpec.shared_examples 'to be invalid' do |factory_trait|
+  subject { build(:random_service, factory_trait) }
+
+  it { is_expected.to be_invalid }
+end
+
 RSpec.describe Service, type: :model do
-  describe 'validations' do
-    it 'is valid with valid attributes' do
-      expect(build(:random_service)).to be_valid
+  describe 'does not pass validations' do
+    context 'when name nil' do
+      include_examples 'to be invalid', :nil_name
     end
 
-    context 'when nil name' do
-      subject { build(:random_service, :nil_name) }
-
-      it { is_expected.not_to be_valid }
+    context 'when description nil' do
+      include_examples 'to be invalid', :nil_description
     end
 
-    context 'when nil description' do
-      subject { build(:random_service, :nil_description) }
-
-      it { is_expected.not_to be_valid }
+    context 'when duration nil' do
+      include_examples 'to be invalid', :nil_duration
     end
 
-    context 'when nil duration' do
-      subject { build(:random_service, :nil_duration) }
-
-      it { is_expected.not_to be_valid }
+    context 'when price nil' do
+      include_examples 'to be invalid', :nil_price
     end
 
-    context 'when nil price' do
-      subject { build(:random_service, :nil_price) }
-
-      it { is_expected.not_to be_valid }
+    context 'when hidden_price nil' do
+      include_examples 'to be invalid', :nil_hidden_price
     end
 
-    context 'when nil hidden_price' do
-      subject { build(:random_service, :nil_hidden_price) }
-
-      it { is_expected.not_to be_valid }
-    end
-
-    context 'when nil availability' do
-      subject { build(:random_service, :nil_availability) }
-
-      it { is_expected.not_to be_valid }
+    context 'when availability nil' do
+      include_examples 'to be invalid', :nil_availability
     end
   end
 end
