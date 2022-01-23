@@ -1,13 +1,31 @@
 module Api
   module V1
     class SalonsController < ApplicationController
-      before_action :set_salon, only: %i[show update destroy] 
+      before_action :set_salon, only: %i[show update destroy]
 
       attr_accessor :salon
 
       def index
-        @salons = Salon.all
-        render json: @salons
+
+        if params[:sort]
+          sort_params = params[:sort]
+
+          if sort_params[:name]
+            sort_field = :name
+            sort_order = sort_params[:name]
+          end
+
+          if sort_params[:email]
+            sort_field = :email
+            sort_order = sort_params[:email]
+          end
+
+          @salons = Salon.order(sort_field => sort_order)
+          render json: @salons
+        else
+          @salons = Salon.all
+          render json: @salons
+        end
       end
 
       def show
@@ -44,7 +62,7 @@ module Api
         end
       end
 
-      private 
+      private
 
       def set_salon
         @salon = Salon.find(params[:id])
