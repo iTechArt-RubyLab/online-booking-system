@@ -13,18 +13,19 @@ module Api
           if sort_params[:first_name]
             sort_field = :first_name
             sort_order = sort_params[:first_name]
-          end
-
-          if sort_params[:last_name]
+          elsif
+            sort_params[:last_name]
             sort_field = :last_name
             sort_order = sort_params[:last_name]
-          end
-
-          if sort_params[:patronymic]
+          elsif
+            sort_params[:patronymic]
             sort_field = :patronymic
             sort_order = sort_params[:patronymic]
+          elsif
+            sort_params[:email]
+            sort_field = :email
+            sort_order = sort_params[:email]
           end
-
           @users = User.order(sort_field => sort_order)
           render json: @users
         else
