@@ -29,11 +29,10 @@ module Api
             sort_order = sort_params[:price]
           end
           @visits = Visit.order(sort_field => sort_order)
-          render json: @visits
         else
           @visits = Visit.all
-          render json: @visits
         end
+        render json: @visits
       end
 
       def show

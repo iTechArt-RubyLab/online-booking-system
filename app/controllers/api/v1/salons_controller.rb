@@ -6,7 +6,6 @@ module Api
       attr_accessor :salon
 
       def index
-
         if params[:sort]
           sort_params = params[:sort]
 
@@ -21,11 +20,10 @@ module Api
           end
 
           @salons = Salon.order(sort_field => sort_order)
-          render json: @salons
         else
           @salons = Salon.all
-          render json: @salons
         end
+        render json: @salons
       end
 
       def show
