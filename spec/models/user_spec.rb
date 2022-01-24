@@ -1,61 +1,57 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'validations' do
-    it 'is valid with valid attributes' do
-      expect(build(:random_user)).to be_valid
+  describe 'does not pass validations' do
+    context 'when first_name nil' do
+      include_examples 'to be invalid', :nil_first_name
     end
 
-    it 'is not valid with nil first_name' do
-      expect(build(:random_user, first_name: nil)).not_to be_valid
+    context 'when last_name nil' do
+      include_examples 'to be invalid', :nil_last_name
     end
 
-    it 'is not valid with nil last_name' do
-      expect(build(:random_user, last_name: nil)).not_to be_valid
+    context 'when patronymic nil' do
+      include_examples 'to be valid', :nil_patronymic
     end
 
-    it 'is not valid with nil salon_id' do
-      expect(build(:random_user, salon_id: nil)).not_to be_valid
+    context 'when salon_id nil' do
+      include_examples 'to be invalid', :nil_salon_id
     end
 
-    it 'is not valid with nil email' do
-      expect(build(:random_user, email: nil)).not_to be_valid
+    context 'when email nil' do
+      include_examples 'to be invalid', :nil_email
     end
 
-    it 'is not valid with nil work_email' do
-      expect(build(:random_user, work_email: nil)).not_to be_valid
+    context 'when work_email nil' do
+      include_examples 'to be invalid', :nil_work_email
     end
 
-    it 'is not valid with nil phone' do
-      expect(build(:random_user, phone: nil)).not_to be_valid
+    context 'when phone nil' do
+      include_examples 'to be invalid', :nil_phone
     end
 
-    it 'is not valid with nil work_phone' do
-      expect(build(:random_user, work_phone: nil)).not_to be_valid
+    context 'when work_phone nil' do
+      include_examples 'to be invalid', :nil_work_phone
     end
 
-    it 'is not valid with nil birthday' do
-      expect(build(:random_user, birthday: nil)).not_to be_valid
+    context 'when birthday nil' do
+      include_examples 'to be invalid', :nil_birthday
     end
 
-    it 'is not valid with nil role' do
-      expect(build(:random_user, role: nil)).not_to be_valid
+    context 'when role nil' do
+      include_examples 'to be invalid', :nil_role
     end
 
-    it 'is not valid with nil status' do
-      expect(build(:random_user, status: nil)).not_to be_valid
+    context 'when status nil' do
+      include_examples 'to be invalid', :nil_status
     end
 
-    it 'is not valid with nil image_url' do
-      expect(build(:random_user, image_url: nil)).not_to be_valid
+    context 'when notes nil' do
+      include_examples 'to be valid', :nil_notes
     end
 
-    it 'is valid with nil notes' do
-      expect(build(:random_user, notes: nil)).to be_valid
-    end
-
-    it 'is valid with nil patronymic' do
-      expect(build(:random_user, patronymic: nil)).to be_valid
+    context 'when image_url nil' do
+      include_examples 'to be invalid', :nil_image_url
     end
   end
 end

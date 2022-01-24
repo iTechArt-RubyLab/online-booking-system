@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Services API PUT', type: :request do
   describe 'PUT requests', type: :request do
-    context 'when /servicis/:id' do
+    context 'when /services/:id' do
       let(:service) { create(:random_service) }
 
       before do

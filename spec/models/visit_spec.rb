@@ -1,11 +1,5 @@
 require 'rails_helper'
 
-RSpec.shared_examples 'to be invalid' do |factory_trait|
-  subject { build(:random_visit, factory_trait) }
-
-  it { is_expected.to be_invalid }
-end
-
 RSpec.describe Visit, type: :model do
   describe 'does not pass validations' do
     context 'when nil start_date' do

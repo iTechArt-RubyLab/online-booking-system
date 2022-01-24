@@ -3,11 +3,11 @@ require 'rails_helper'
 describe 'post a visit route', type: :request do
   before do
     post '/api/v1/visits',
-         params: {
+         params: { visit: {
            start_at: '2022-01-18T00:00:00.000Z',
            end_at: '2022-01-18T00:00:00.000Z', price: 23, adress: '763 Minsk',
            status: 'created'
-         }
+         } }
   end
 
   include_examples 'response body', { field: 'start_at', value: '2022-01-18T00:00:00.000Z' }

@@ -1,7 +1,7 @@
 class Salon < ApplicationRecord
   validates :name, uniqueness: true, presence: true, length: { minimum: 2, maximum: 255 }
   validates :address, presence: true, length: { minimum: 2, maximum: 255 }
-  validates :notes, allow_blank: true, length: { maximum: 255 }
+  validates :notes, presence: true, length: { maximum: 255 }
   validates :email, presence: true, uniqueness: { case_sensitive: false },
                     format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: 'Email invalid' },
                     length: { minimum: 4, maximum: 254 }
