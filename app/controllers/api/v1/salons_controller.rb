@@ -35,7 +35,7 @@ module Api
         if @salon.update(salon_params)
           render json: @salon
         else
-          render json: { error: 'Update not update salon' }, status: :unprocessable_entity
+          render json: { error: 'Not update salon' }, status: :unprocessable_entity
         end
       end
 
@@ -47,6 +47,14 @@ module Api
         end
       end
 
+      def update_reminder
+        if salon.update(reminder_params)
+          render json: { message: 'Reminder was successfully added' }
+        else
+          render json: { error: 'Try again' }, status: :unprocessable_entity
+        end
+      end
+
       private
 
       def find_salon
@@ -55,6 +63,10 @@ module Api
 
       def salon_params
         params.require(:salon).permit(%i[name address phone email notes latitude longitude])
+      end
+
+      def reminder_params
+        params.require(:salon).permit(:remind_up_min)
       end
     end
   end
