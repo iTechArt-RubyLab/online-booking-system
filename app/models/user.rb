@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  enum role: { professional: 0, salon_owner: 1 }
+  enum role: { professional: 0, salon_owner: 1, client: 2 }
   enum status: { working: 0, on_vacation: 1, banned: 2, fired: 3 }
 
   before_save :validate_notes, :capitalize_data
