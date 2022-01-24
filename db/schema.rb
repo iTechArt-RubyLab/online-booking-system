@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2022_01_18_212511) do
   end
 
   create_table "services", force: :cascade do |t|
-    t.integer "category_id", default: 0, null: false
+    t.integer "category", default: 0, null: false
     t.integer "salon_id", null: false
     t.string "name", null: false
     t.text "description", null: false

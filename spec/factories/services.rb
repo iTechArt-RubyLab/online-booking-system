@@ -9,10 +9,11 @@ FactoryBot.define do
     availability { rand(0..1) }
   end
 
-  trait(:nil_salon_id) { salon_id { nil } }
-  trait(:nil_name) { name { nil } }
-  trait(:nil_description) { description { nil } }
-  trait(:nil_duration) { duration { nil } }
-  trait(:nil_hidden_price) { hidden_price { nil } }
-  trait(:nil_availability) { availability { nil } }
+  trait(:no_salon_id) { salon_id { nil } }
+  trait(:no_name) { name { nil } }
+  trait(:no_description) { description { nil } }
+  trait(:no_duration) { duration { nil } }
+  trait(:no_price) { price { nil } }
+  trait(:no_hidden_price) { hidden_price { nil } }
+  trait(:no_availability) { availability { nil } }
 end

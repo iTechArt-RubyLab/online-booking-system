@@ -9,27 +9,27 @@ end
 RSpec.describe Service, type: :model do
   describe 'does not pass validations' do
     context 'when name nil' do
-      include_examples 'to be invalid', :nil_name
+      include_examples 'to be invalid', :no_name
     end
 
     context 'when description nil' do
-      include_examples 'to be invalid', :nil_description
+      include_examples 'to be invalid', :no_description
     end
 
     context 'when duration nil' do
-      include_examples 'to be invalid', :nil_duration
+      include_examples 'to be invalid', :no_duration
     end
 
     context 'when price nil' do
-      include_examples 'to be invalid', :nil_price
+      include_examples 'to be invalid', :no_price
     end
 
     context 'when hidden_price nil' do
-      include_examples 'to be invalid', :nil_hidden_price
+      include_examples 'to be invalid', :no_hidden_price
     end
 
     context 'when availability nil' do
-      include_examples 'to be invalid', :nil_availability
+      include_examples 'to be invalid', :no_availability
     end
   end
 end
