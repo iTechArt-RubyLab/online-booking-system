@@ -1,35 +1,29 @@
 require 'rails_helper'
 
-RSpec.shared_examples 'to be invalid' do |factory_trait|
-  subject { build(:random_service, factory_trait) }
-
-  it { is_expected.to be_invalid }
-end
-
 RSpec.describe Service, type: :model do
   describe 'does not pass validations' do
     context 'when name nil' do
-      include_examples 'to be invalid', :no_name
+      it { should validate_presence_of :name }
     end
 
     context 'when description nil' do
-      include_examples 'to be invalid', :no_description
+      it { should validate_presence_of :description }
     end
 
     context 'when duration nil' do
-      include_examples 'to be invalid', :no_duration
+      it { should validate_presence_of :duration }
     end
 
     context 'when price nil' do
-      include_examples 'to be invalid', :no_price
+      it { should validate_presence_of :price }
     end
 
     context 'when hidden_price nil' do
-      include_examples 'to be invalid', :no_hidden_price
+      it { should validate_presence_of :hidden_price }
     end
 
     context 'when availability nil' do
-      include_examples 'to be invalid', :no_availability
+      it { should validate_presence_of :availability }
     end
   end
 end
