@@ -7,17 +7,8 @@ module Api
 
       def index
         sorting = params[:sort]
-        render json:
-
-        if sorting
-          Salon.order(sort_params.to_h)
-        else
-          Salon.all
-        end
-      end
-
-      def sort_params
-        params.require(:sort).permit!
+        render json: Salon.order(sort_params.to_h) if sorting
+        render json: Salon.all unless sorting
       end
 
       def show
@@ -58,6 +49,14 @@ module Api
 
       def set_salon
         @salon = Salon.find(params[:id])
+      end
+
+      def sort_params
+        params.require(:sort).permit(salon_columns)
+      end
+
+      def salon_columns
+        Salon.column_names.map(&:to_s)
       end
 
       def salon_params
