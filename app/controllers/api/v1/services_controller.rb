@@ -11,8 +11,7 @@ module Api
       end
 
       def show
-        render json: service if service
-        render json: { message: 'service not found' }, status: :not_found unless service
+        render json: service
       end
 
       def create
@@ -26,11 +25,10 @@ module Api
       end
 
       def update
-        if service&.update(service_params)
+        if service.update(service_params)
           render json: service
         else
-          response = message_and_status
-          render json: { message: response[:message] }, status: response[:status]
+          render json: { message: service.errors.full_messages }, status: :bad_request
         end
       end
 
@@ -46,12 +44,6 @@ module Api
 
       def set_service
         @service = Service.find(params[:id])
-      end
-
-      def message_and_status
-        return { message: service.errors.full_messages, status: 400 } if service
-
-        { message: 'service not found', status: 404 }
       end
 
       def service_params

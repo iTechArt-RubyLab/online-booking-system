@@ -6,14 +6,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.3'
 
 gem 'rails', '~> 6.1.4'
-# Use rspec instead of minitest
-gem 'rspec'
-# Use rubocop for code quality
-gem 'rubocop'
-# Use pg gem instead of postgres
+
 gem 'pg'
-# Use pry instead of byebug
-gem 'pry'
 
 gem 'puma', '~> 5.0'
 # Use tzinfo gem instead of tzinfo-data
@@ -26,6 +20,9 @@ gem 'date_validator', '~> 0.12.0'
 gem 'validate_url', '~> 1.0.13'
 
 group :development, :test do
+  gem 'rspec'
+  gem 'rubocop'
+  gem 'pry'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   # Use rubocop to lint your code
   gem 'rspec-rails'
@@ -37,8 +34,8 @@ group :development, :test do
   gem 'database_cleaner'
   # Use factory_bot to generate test data
   gem 'factory_bot_rails'
-  # Use shoulda-matchers to test your code
-  gem 'shoulda-matchers', '~> 3.0', require: false
-  # Use simplecov to generate coverage reports
+  # Use shoulda-matchers gem to test your models
+  gem 'shoulda-matchers', '~> 5.0'
+  # Use simplecov gem to generate test coverage reports
   gem 'simplecov', '~> 0.21.2'
 end

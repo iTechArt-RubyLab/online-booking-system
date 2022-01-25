@@ -3,27 +3,27 @@ require 'rails_helper'
 RSpec.describe Service, type: :model do
   describe 'does not pass validations' do
     context 'when name nil' do
-      include_examples 'to be invalid', :nil_name
+      it { is_expected.to validate_presence_of :name }
     end
 
     context 'when description nil' do
-      include_examples 'to be invalid', :nil_description
+      it { is_expected.to validate_presence_of :description }
     end
 
     context 'when duration nil' do
-      include_examples 'to be invalid', :nil_duration
+      it { is_expected.to validate_presence_of :duration }
     end
 
     context 'when price nil' do
-      include_examples 'to be invalid', :nil_price
+      it { is_expected.to validate_presence_of :price }
     end
 
     context 'when hidden_price nil' do
-      include_examples 'to be invalid', :nil_hidden_price
+      it { is_expected.to validate_presence_of :hidden_price }
     end
 
     context 'when availability nil' do
-      include_examples 'to be invalid', :nil_availability
+      it { is_expected.to validate_presence_of :availability }
     end
   end
 end
