@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_25_144210) do
+ActiveRecord::Schema.define(version: 2022_01_25_182703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "professionals_salons", force: :cascade do |t|
+    t.integer "professional_id", null: false
+    t.integer "salon_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "salons", force: :cascade do |t|
     t.string "name", null: false
@@ -75,5 +82,7 @@ ActiveRecord::Schema.define(version: 2022_01_25_144210) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "professionals_salons", "salons", on_delete: :cascade
+  add_foreign_key "professionals_salons", "users", column: "professional_id", on_delete: :cascade
   add_foreign_key "salons", "users", column: "salon_owner_id", on_delete: :cascade
 end

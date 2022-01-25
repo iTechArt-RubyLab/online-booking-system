@@ -1,4 +1,9 @@
 class Salon < ApplicationRecord
+  belongs_to :salon_owner, class_name: 'SalonOwner'
+
+  has_many :professionals_salons, dependent: :destroy
+  has_many :professionals, through: :professionals_salons
+
   validates :name, uniqueness: true, presence: true, length: { minimum: 2, maximum: 255 }
   validates :address, presence: true, length: { minimum: 2, maximum: 255 }
   validates :notes, presence: true, length: { maximum: 255 }
@@ -9,8 +14,6 @@ class Salon < ApplicationRecord
 
   before_validation :normalize_params, on: :create
   before_save :validacion_notes
-
-  belongs_to :salon_owner, class_name: 'SalonOwner'
 
   private
 
