@@ -8,7 +8,7 @@ FactoryBot.define do
     work_email { Faker::Internet.email }
     phone { '+375 25 609-99-99' }
     work_phone { '+375 25 609-99-99' }
-    birthday { Faker::Date.between(from: 50.years.ago, to: Date.today - 18.years) }
+    birthday { Faker::Date.between(from: 50.years.ago, to: Time.zone.today - 18.years) }
     role { rand(0...2) }
     status { rand(0...4) }
     notes { Faker::Lorem.paragraph }
