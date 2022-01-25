@@ -6,11 +6,17 @@ module Api
       attr_accessor :visit
 
       def index
-        render json: params[:sort] ? Visit.order(sort_params.to_h) : Visit.all
+        sorting = params[:sort]
+        render json: Visit.order(sort_params.to_h) if sorting
+        render json: Visit.all unless sorting
       end
 
       def sort_params
-        params.require(:sort).permit!
+        params.require(:sort).permit(sort_colonum)
+      end
+
+      def sort_colonum
+        Visit.column_names.map(&:to_s)
       end
 
       def show
