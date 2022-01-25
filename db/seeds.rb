@@ -33,6 +33,17 @@ end
 
 puts 'Users have been created'
 
+Service.create(
+  category_id: 1,
+  salon_id: 1, 
+  name: 'asdfasf', 
+  description: 'afdasfa', 
+  hidden_price: 1,
+  availability: 1
+)
+
+puts 'Service has been created'
+
 50.times do
   Visit.create(start_at: Date.current, end_at: Date.current, price: rand(1..100), adress: Faker::Address.full_address,
                status: 0)
