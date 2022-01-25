@@ -7,7 +7,7 @@ RSpec.shared_examples 'invalid professional' do |args|
 end
 
 RSpec.describe Professional, type: :model do
-  describe 'validation' do
+  describe 'validations' do
     describe 'field presence' do
       include_examples 'invalid professional', { field: 'salon_id', value: nil }
       include_examples 'invalid professional', { field: 'status', value: nil }
