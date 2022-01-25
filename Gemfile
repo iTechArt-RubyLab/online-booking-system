@@ -7,13 +7,7 @@ ruby '3.0.3'
 
 gem 'rails', '~> 6.1.4'
 
-gem 'rspec'
-
-gem 'rubocop'
-
 gem 'pg'
-
-gem 'pry'
 
 gem 'puma', '~> 5.0'
 
@@ -26,6 +20,9 @@ gem 'date_validator', '~> 0.12.0'
 gem 'validate_url', '~> 1.0.13'
 
 group :development, :test do
+  gem 'rspec'
+  gem 'rubocop'
+  gem 'pry'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   # Use rubocop to lint your code
   gem 'rspec-rails'
@@ -35,5 +32,5 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'faker', '~> 2.19'
-  gem 'shoulda-matchers', '~> 3.0', require: false
+  gem 'shoulda-matchers', '~> 5.0'
 end
