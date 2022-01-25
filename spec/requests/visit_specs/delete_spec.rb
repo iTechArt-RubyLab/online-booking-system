@@ -8,7 +8,7 @@ describe 'delete visit route' do
     delete "/api/v1/visits/#{visit_one.id}"
   end
 
-  include_examples 'response success status'
+  include_examples 'success status'
 
   it 'deletes the visit' do
     id = JSON.parse(response.body)[:id]

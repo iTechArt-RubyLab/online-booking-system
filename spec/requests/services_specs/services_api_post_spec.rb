@@ -6,7 +6,7 @@ describe 'Services API POST', type: :request do
       post '/api/v1/services',
            params: {
              service: {
-               category_id: 1,
+               category: 1,
                salon_id: 1,
                name: 'a_service',
                description: 'a_description',
@@ -25,6 +25,6 @@ describe 'Services API POST', type: :request do
     include_examples 'response body', { field: 'hidden_price', value: 1 }
     include_examples 'response body', { field: 'availability', value: 'no' }
 
-    include_examples 'response success status'
+    include_examples 'success status'
   end
 end
