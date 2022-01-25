@@ -10,6 +10,8 @@ class Salon < ApplicationRecord
   before_validation :normalize_params, on: :create
   before_save :validacion_notes
 
+  belongs_to :salon_owner, class_name: 'SalonOwner'
+
   private
 
   def validacion_notes

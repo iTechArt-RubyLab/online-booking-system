@@ -28,7 +28,7 @@ class User < ApplicationRecord
   validates :image_url, url: true
 
   with_options if: :professional? do |_professional|
-    validates :salon_id, :status,
+    validates :status,
               :work_email, :work_phone,
               :rating, presence: true
 

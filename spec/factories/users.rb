@@ -3,7 +3,6 @@ FactoryBot.define do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     middle_name { Faker::Name.middle_name }
-    salon_id { rand(1...101) }
     email { Faker::Internet.email }
     work_email { Faker::Internet.email }
     phone { '+375 25 609-99-99' }
@@ -26,7 +25,6 @@ FactoryBot.define do
   trait(:no_role) { role { nil } }
   trait(:no_notes) { notes { nil } }
   trait(:no_image_url) { image_url { nil } }
-  # role: 0 - professional, 1 - salon_owner, 2 - client
   trait(:professional) { role { 0 } }
   trait(:salon_owner) { role { 1 } }
   trait(:client) { role { 2 } }
