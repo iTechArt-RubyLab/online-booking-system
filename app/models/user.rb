@@ -18,7 +18,7 @@ class User < ApplicationRecord
 
   validates :email,
             uniqueness: { case_sensitive: false },
-            format: { with: URI::MailTo::EMAIL_REGEXP , message: 'Email invalid' },
+            format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email invalid' },
             length: { minimum: 4, maximum: 254 }
 
   validates :phone, format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Phone invalid' }
@@ -27,20 +27,20 @@ class User < ApplicationRecord
 
   validates :image_url, url: true
 
+  with_options if: :salon_owner? do
+    validates :salon_id, :status,
+              :work_email, :work_phone, presence: true
 
-  with_options if: :salon_owner? do |salon_owner|
-    salon_owner.validates :salon_id, :status,
-                           :work_email, :work_phone, presence: true
+    validates :rating, allow_blank: true
 
-    salon_owner.validates :rating, allow_blank: true
+    validates :work_email,
+              uniqueness: { case_sensitive: false },
+              format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i,
+                        message: 'Work email invalid' },
+              length: { minimum: 4, maximum: 254 }
 
-    salon_owner.validates :work_email,
-                            uniqueness: { case_sensitive: false },
-                            format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: 'Work email invalid' },
-                            length: { minimum: 4, maximum: 254 }
-
-    salon_owner.validates :work_phone,
-                           format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Work phone invalid' }
+    validates :work_phone,
+              format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Work phone invalid' }
   end
   def validate_notes
     self.notes = notes.chars.shuffle if notes.include?('</script>')
