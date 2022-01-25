@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :first_name, :last_name,
             length: { minimum: 2, maximum: 255 }
 
-  validates :patronymic,
+  validates :middle_name,
             length: { maximum: 255 },
             allow_blank: true
 
@@ -52,6 +52,6 @@ class User < ApplicationRecord
   def capitalize_data
     self.first_name = first_name.downcase.titleize
     self.last_name = last_name.downcase.titleize
-    self.patronymic = patronymic.downcase.titleize if patronymic
+    self.middle_name = middle_name.downcase.titleize if middle_name
   end
 end
