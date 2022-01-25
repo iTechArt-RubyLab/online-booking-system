@@ -19,9 +19,7 @@ describe 'Users API GET', type: :request do
 
     before { get "/api/v1/users/#{user.id}" }
 
-    it 'have http status success' do
-      expect(response).to have_http_status(:success)
-    end
+    include_examples 'success status'
 
     it 'return right user' do
       expect(JSON.parse(response.body)['id']).to eq(user.id)

@@ -19,9 +19,7 @@ describe 'Salons API GET', type: :request do
 
     before { get "/api/v1/salons/#{salon.id}" }
 
-    it 'have http status success' do
-      expect(response).to have_http_status(:success)
-    end
+    include_examples 'success status'
 
     it 'return right salon' do
       expect(JSON.parse(response.body)['id']).to eq(salon.id)

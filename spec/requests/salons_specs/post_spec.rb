@@ -20,6 +20,6 @@ describe 'Salons API POST', type: :request do
     include_examples 'response body', { field: 'notes', value: 'Iusto soluta temporibus. Non deserunt rem.' }
     include_examples 'response body', { field: 'owner_id', value: 3 }
 
-    include_examples 'response success status'
+    include_examples 'success status'
   end
 end

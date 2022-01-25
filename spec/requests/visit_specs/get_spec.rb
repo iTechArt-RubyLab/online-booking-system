@@ -7,9 +7,7 @@ describe 'Visits API GET', type: :request do
       get '/api/v1/visits'
     end
 
-    it 'have http status success' do
-      expect(response).to have_http_status(:success)
-    end
+    include_examples 'success status'
 
     it 'returns all visits' do
       expect(JSON.parse(response.body).size).to eq(2)
@@ -21,9 +19,7 @@ describe 'Visits API GET', type: :request do
 
     before { get "/api/v1/visits/#{visit.id}" }
 
-    it 'have http status success' do
-      expect(response).to have_http_status(:success)
-    end
+    include_examples 'success status'
 
     it 'return right visit' do
       expect(JSON.parse(response.body)['id']).to eq(visit.id)

@@ -12,9 +12,7 @@ describe 'Services API PUT', type: :request do
             }
       end
 
-      it 'have http status success' do
-        expect(response).to have_http_status(:success)
-      end
+      include_examples 'success status'
 
       it 'updates a service' do
         expect(JSON.parse(response.body)['name']).to eq('a_new_service')

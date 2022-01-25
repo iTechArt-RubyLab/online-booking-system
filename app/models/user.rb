@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true, length: { minimum: 2, maximum: 255 }
   validates :last_name, presence: true, length: { minimum: 2, maximum: 255 }
-  validates :patronymic, length: { maximum: 255 }, allow_blank: true
+  validates :middle_name, length: { maximum: 255 }, allow_blank: true
   validates :salon_id, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false },
                     format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: 'Email invalid' },
@@ -22,6 +22,8 @@ class User < ApplicationRecord
   validates :birthday, presence: true, date: { before: proc { Time.zone.today }, message: 'Birthday invalid' }
   validates :role, :status, presence: true
   validates :image_url, presence: true, url: true
+
+  private
 
   def validate_notes
     self.notes = notes.chars.shuffle if notes.include?('</script>')
@@ -42,7 +44,6 @@ class User < ApplicationRecord
   end
 
   def titleize_patronymic
-    self.patronymic = patronymic.downcase.titleize if attribute_present?('patronymic')
+    self.middle_name = middle_name.downcase.titleize if attribute_present?('middle_name')
   end
-  private :validate_notes, :normalize_params, :titleize_name, :titleize_last_name, :titleize_patronymic
 end

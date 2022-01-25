@@ -10,9 +10,7 @@ describe 'Salons API PUT', type: :request do
         put "/api/v1/salons/#{salon.id}", params: { salon: { address: new_adress } }
       end
 
-      it 'have http status success' do
-        expect(response).to have_http_status(:success)
-      end
+      include_examples 'success status'
 
       it 'updates a service' do
         expect(Salon.find(salon.id).address).to eq(new_adress)

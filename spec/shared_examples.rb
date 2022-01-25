@@ -1,13 +1,11 @@
 shared_examples 'response body' do |args|
-  it "returns the service #{args[:field]}" do
+  it "returns the #{args[:field]}" do
     expect(JSON.parse(response.body)[args[:field]]).to eq(args[:value])
   end
 end
 
-shared_examples 'response success status' do
-  it 'returns success status' do
-    expect(response).to have_http_status(:success)
-  end
+shared_examples 'success status' do
+  it { expect(response).to have_http_status(:success) }
 end
 
 shared_examples 'to be invalid' do |factory_trait|

@@ -8,6 +8,6 @@ FactoryBot.define do
     owner_id { rand(1..100) }
   end
 
-  trait(:nil_owner_id) { owner_id { nil } }
-  trait(:nil_address) { address { nil } }
+  trait(:no_owner_id) { owner_id { nil } }
+  trait(:no_address) { address { nil } }
 end

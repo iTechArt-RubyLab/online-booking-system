@@ -10,9 +10,7 @@ describe 'Users API PUT', type: :request do
             params: { user: { first_name: 'Ginger', last_name: 'Smithy', patronymic: 'Jackson', salon_id: 10 } }
       end
 
-      it 'have http status success' do
-        expect(response).to have_http_status(:success)
-      end
+      include_examples 'success status'
 
       it 'updates a service' do
         expect(JSON.parse(response.body)['first_name']).to eq('Ginger')
