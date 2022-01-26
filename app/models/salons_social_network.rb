@@ -9,7 +9,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
-class SalonSocialNetwork < ApplicationRecord
+class SalonsSocialNetwork < ApplicationRecord
   belongs_to :salon
   belongs_to :social_network
 end

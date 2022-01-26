@@ -60,7 +60,7 @@ end
 puts 'SocialNetwork has been created'
 
 10.times do
-  SalonSocialNetwork.create(
+  SalonsSocialNetwork.create(
     salon_id: rand(1...51),
     social_network_id: rand(1...6),
     link: Faker::Internet.url
