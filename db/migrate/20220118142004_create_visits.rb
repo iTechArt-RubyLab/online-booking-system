@@ -6,8 +6,6 @@ class CreateVisits < ActiveRecord::Migration[6.1]
       t.integer :price, null: false
       t.text :address, null: false
       t.integer :status, null:false
-      # t.integer :salon_id, null: false, foreign_key: true
-      # t.integer :client_id, null: false, foreign_key: true
 
       t.timestamps
     end

@@ -4,6 +4,8 @@ class Salon < ApplicationRecord
   has_many :professionals_salons, dependent: :destroy
   has_many :professionals, through: :professionals_salons
 
+  has_many :visits, dependent: :destroy
+
   validates :name, uniqueness: true, presence: true, length: { minimum: 2, maximum: 255 }
   validates :address, presence: true, length: { minimum: 2, maximum: 255 }
   validates :notes, presence: true, length: { maximum: 255 }
