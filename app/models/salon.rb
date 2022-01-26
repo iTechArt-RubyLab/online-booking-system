@@ -23,6 +23,10 @@ class Salon < ApplicationRecord
   before_validation :format_name, on: :create
   before_save :validacion_notes
 
+  def links
+    salon_social_networks.map(&:link)
+  end
+
   private
 
   def validacion_notes
