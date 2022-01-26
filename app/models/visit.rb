@@ -4,8 +4,7 @@ class Visit < ApplicationRecord
                  rejected_by_user: 2,
                  rejected_by_client: 3,
                  deleted: 4,
-                 finished: 5
-                }
+                 finished: 5 }
 
   belongs_to :client, class_name: 'Client'
   belongs_to :salon
