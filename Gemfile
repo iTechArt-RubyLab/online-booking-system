@@ -23,6 +23,7 @@ group :development, :test do
   gem 'rspec'
   gem 'rubocop'
   gem 'pry'
+  gem 'pry-nav'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   # Use rubocop to lint your code
   gem 'rspec-rails'
