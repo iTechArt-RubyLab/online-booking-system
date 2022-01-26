@@ -6,7 +6,7 @@ module Api
       attr_accessor :user
 
       def index
-        users = User.all
+        users = User.paginate(page: params[:page])
         render json: users
       end
 
