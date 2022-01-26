@@ -8,6 +8,6 @@
 #  updated_at :datetime         not null
 #
 class SocialNetwork < ApplicationRecord
-  has_many :salon_social_networks, dependent: :destroy
-  has_many :salons, through: :salon_social_networks
+  has_many :salons_social_networks, dependent: :destroy
+  has_many :salons, through: :salons_social_networks
 end

@@ -24,7 +24,7 @@ class Salon < ApplicationRecord
   before_save :validacion_notes
 
   def links
-    salon_social_networks.map(&:link)
+    salons_social_networks.map(&:link)
   end
 
   private
