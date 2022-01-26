@@ -6,7 +6,7 @@ describe 'Services API POST', type: :request do
       post '/api/v1/services',
            params: {
              service: {
-               category_id: 1,
+               category: 1,
                salon_id: 1,
                name: 'a_service',
                description: 'a_description',
