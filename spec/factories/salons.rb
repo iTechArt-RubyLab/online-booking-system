@@ -5,6 +5,10 @@ FactoryBot.define do
     phone { '+375 29 123-45-67' }
     email { Faker::Internet.email }
     notes { Faker::Lorem.paragraph }
+
+    after(:create) do |salon|
+      FactoryBot.create(:service, salon_id: salon.id)
+    end
   end
 
   trait(:no_owner_id) { salon_owner_id { nil } }

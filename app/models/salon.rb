@@ -1,6 +1,8 @@
 class Salon < ApplicationRecord
   belongs_to :salon_owner, class_name: 'SalonOwner'
 
+  has_many :services, dependent: :destroy
+
   has_many :professionals_salons, dependent: :destroy
   has_many :professionals, through: :professionals_salons
 

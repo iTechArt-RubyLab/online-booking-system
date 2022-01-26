@@ -1,4 +1,6 @@
 class Service < ApplicationRecord
+  belongs_to :salon
+
   enum availability: {
     yes: 0,
     no: 1

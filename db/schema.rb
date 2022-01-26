@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2022_01_25_204311) do
 
   create_table "visits_services", force: :cascade do |t|
     t.integer "visit_id", null: false
-    t.integer "salon_id", null: false
+    t.integer "service_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
