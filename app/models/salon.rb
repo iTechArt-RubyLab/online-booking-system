@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: salons
+#
+#  id         :bigint           not null, primary key
+#  name       :string           not null
+#  address    :text             not null
+#  phone      :string           not null
+#  email      :string           default(""), not null
+#  notes      :text             not null
+#  owner_id   :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class Salon < ApplicationRecord
   has_many :salon_social_networks, dependent: :destroy
   has_many :social_networks, through: :salon_social_networks

@@ -33,4 +33,6 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker', '~> 2.19'
   gem 'shoulda-matchers', '~> 5.0'
+  # Use annotate to add comments to your code
+  gem 'annotate', '~> 3.1', '>= 3.1.1'
 end
