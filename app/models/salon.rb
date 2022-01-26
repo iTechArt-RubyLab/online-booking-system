@@ -1,4 +1,7 @@
 class Salon < ApplicationRecord
+  has_many :salon_social_networks, dependent: :destroy
+  has_many :social_networks, through: :salon_social_networks
+
   validates :name, uniqueness: true
   validates :address, :notes, :email, presence: true
   validates :phone, format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/ }
