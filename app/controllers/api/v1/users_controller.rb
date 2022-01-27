@@ -6,8 +6,18 @@ module Api
       attr_accessor :user
 
       def index
-        users = User.all
-        render json: users
+        sorting = params[:sort]
+
+        render json: User.order(sort_params.to_h) if sorting
+        render json: Salon.all unless sorting
+      end
+
+      def sort_params
+        params.require(:sort).permit(salon_columns)
+      end
+
+      def salon_columns
+        Salon.column_names.map(&:to_s)
       end
 
       def show
