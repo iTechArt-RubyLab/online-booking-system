@@ -6,6 +6,8 @@ module Api
       attr_accessor :user
 
       def index
+        users = User.paginate(page: params[:page])
+        render json: users
         sorting = params[:sort]
 
         render json: User.order(sort_params.to_h) if sorting

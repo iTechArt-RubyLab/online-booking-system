@@ -6,7 +6,7 @@ module Api
       attr_accessor :visit
 
       def index
-        @visits = Visit.all
+        @visits = Visit.paginate(page: params[:page], per_page: 10)
         render json: @visits
       end
 

@@ -19,11 +19,13 @@ gem 'date_validator', '~> 0.12.0'
 # Use validate_url gem for validating urls
 gem 'validate_url', '~> 1.0.13'
 
+gem 'will_paginate', '~> 3.3'
+
 group :development, :test do
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'pry'
   gem 'rspec'
   gem 'rubocop'
-  gem 'pry'
-  gem 'debug', platforms: %i[mri mingw x64_mingw]
   # Use rubocop to lint your code
   gem 'rspec-rails'
   gem 'rubocop-rails', '~> 2.13', '>= 2.13.2'
