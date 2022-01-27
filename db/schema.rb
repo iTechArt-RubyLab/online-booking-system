@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_18_212511) do
+ActiveRecord::Schema.define(version: 2022_01_21_085640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,20 @@ ActiveRecord::Schema.define(version: 2022_01_18_212511) do
     t.integer "owner_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.integer "category", default: 0, null: false
+    t.integer "salon_id", null: false
+    t.string "name", null: false
+    t.text "description", null: false
+    t.integer "duration", default: 1, null: false
+    t.integer "price", default: 1, null: false
+    t.integer "hidden_price"
+    t.integer "availability", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_services_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -50,6 +64,13 @@ ActiveRecord::Schema.define(version: 2022_01_18_212511) do
     t.integer "price", null: false
     t.text "adress", null: false
     t.integer "status", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "visits_services", force: :cascade do |t|
+    t.integer "visit_id", null: false
+    t.integer "salon_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

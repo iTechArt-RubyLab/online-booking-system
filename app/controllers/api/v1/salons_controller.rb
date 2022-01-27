@@ -9,6 +9,8 @@ module Api
         sorting = params[:sort]
         render json: Salon.order(sort_params.to_h) if sorting
         render json: Salon.all unless sorting
+        @salons = Salon.paginate(page: params[:page], per_page: 15)
+        render json: @salons
       end
 
       def show
