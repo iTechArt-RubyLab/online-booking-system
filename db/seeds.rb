@@ -1,7 +1,7 @@
 require 'faker'
 
-100.times do |t|
-  solon = Salon.create(
+50.times do |t|
+  salon = Salon.create(
     name: "Salon name #{t}",
     address: "Minsk, street #{rand(1...101)}",
     phone: '+375 29 883-26-36',
@@ -13,7 +13,7 @@ end
 
 puts 'Salons have been created'
 
-100.times do
+50.times do
   User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
@@ -33,7 +33,38 @@ end
 
 puts 'Users have been created'
 
+Service.create(
+  category: 1,
+  salon_id: 1, 
+  name: 'asdfasf', 
+  description: 'afdasfa', 
+  hidden_price: 1,
+  availability: 1
+)
+
+puts 'Service has been created'
+
 50.times do
   Visit.create(start_at: Date.current, end_at: Date.current, price: rand(1..100), adress: Faker::Address.full_address,
                status: 0)
 end
+
+puts 'Visit has been created'
+
+10.times do
+  SocialNetwork.create(
+    name: Faker::Lorem.word
+)
+end
+
+puts 'SocialNetwork has been created'
+
+10.times do
+  SalonsSocialNetwork.create(
+    salon_id: rand(1...51),
+    social_network_id: rand(1...11),
+    link: Faker::Internet.url
+)
+end
+
+puts 'SalonSocialNetwork has been created'

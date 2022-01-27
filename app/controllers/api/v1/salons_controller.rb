@@ -6,7 +6,7 @@ module Api
       attr_accessor :salon
 
       def index
-        @salons = Salon.all
+        @salons = Salon.paginate(page: params[:page], per_page: 15)
         render json: @salons
       end
 

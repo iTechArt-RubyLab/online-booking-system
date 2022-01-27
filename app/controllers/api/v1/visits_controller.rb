@@ -7,8 +7,10 @@ module Api
 
       def index
         sorting = params[:sort]
-        render json: Visit.order(sort_params.to_h) if sorting
-        render json: Visit.all unless sorting
+        @visits = Visit.order(sort_params.to_h) if sorting
+        @visits = Visit.paginate(page: params[:page], per_page: 10) unless sorting
+
+        render json: @visits
       end
 
       def sort_params
@@ -16,7 +18,7 @@ module Api
       end
 
       def sort_column
-        Visit.column_names.map(&:to_s)
+        Visit.column_names.map(&:to_s)  
       end
 
       def show

@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: visits
+#
+#  id         :bigint           not null, primary key
+#  start_at   :datetime         not null
+#  end_at     :datetime         not null
+#  price      :integer          not null
+#  adress     :text             not null
+#  status     :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class Visit < ApplicationRecord
   enum status: { created: 0, approved: 1, rejected_by_user: 2, rejected_by_client: 3, deleted: 4, finished: 5 }
 

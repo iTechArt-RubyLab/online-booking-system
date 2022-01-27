@@ -7,13 +7,7 @@ ruby '3.0.3'
 
 gem 'rails', '~> 6.1.4'
 
-gem 'rspec'
-
-gem 'rubocop'
-
 gem 'pg'
-
-gem 'pry'
 
 gem 'puma', '~> 5.0'
 
@@ -25,8 +19,13 @@ gem 'date_validator', '~> 0.12.0'
 # Use validate_url gem for validating urls
 gem 'validate_url', '~> 1.0.13'
 
+gem 'will_paginate', '~> 3.3'
+
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'pry'
+  gem 'rspec'
+  gem 'rubocop'
   # Use rubocop to lint your code
   gem 'rspec-rails'
   gem 'rubocop-rails', '~> 2.13', '>= 2.13.2'
@@ -35,5 +34,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'faker', '~> 2.19'
-  gem 'shoulda-matchers', '~> 3.0', require: false
+  gem 'shoulda-matchers', '~> 5.0'
+  # Use annotate to add comments to your code
+  gem 'annotate', '~> 3.1', '>= 3.1.1'
 end
