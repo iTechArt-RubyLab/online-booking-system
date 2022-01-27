@@ -1,27 +1,37 @@
 class User < ApplicationRecord
-  enum role: { professional: 0, salon_owner: 1 }
+  enum role: { professional: 0, salon_owner: 1, client: 2 }
   enum status: { working: 0, on_vacation: 1, banned: 2, fired: 3 }
 
-  before_validation :capitalize_data, on: :create
-  before_save :validate_notes
+  before_save :validate_notes, :capitalize_data
 
-  validates :first_name, presence: true, length: { minimum: 2, maximum: 255 }
-  validates :last_name, presence: true, length: { minimum: 2, maximum: 255 }
-  validates :patronymic, length: { maximum: 255 }, allow_blank: true
-  validates :salon_id, presence: true
-  validates :email, presence: true, uniqueness: { case_sensitive: false },
-                    format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: 'Email invalid' },
-                    length: { minimum: 4, maximum: 254 }
-  validates :work_email, presence: true, uniqueness: { case_sensitive: false },
-                         format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: 'Work email invalid' },
-                         length: { minimum: 4, maximum: 254 }
-  validates :phone, presence: true,
-                    format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Phone invalid' }
-  validates :work_phone, presence: true,
-                         format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Work phone invalid' }
-  validates :birthday, presence: true, date: { before: proc { Time.zone.today }, message: 'Birthday invalid' }
-  validates :role, :status, presence: true
-  validates :image_url, presence: true, url: true
+  validates :first_name, :last_name,
+            :email, :phone, :birthday,
+            :role, :image_url,
+            presence: true
+
+  validates :first_name, :last_name,
+            length: { minimum: 2, maximum: 255 }
+
+  validates :middle_name,
+            length: { maximum: 255 },
+            allow_blank: true
+
+  validates :email,
+            uniqueness: { case_sensitive: false },
+            format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email invalid' },
+            length: { minimum: 4, maximum: 254 }
+
+  validates :phone, format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Phone invalid' }
+
+  validates :birthday, date: { before: proc { Time.zone.today }, message: 'Birthday invalid' }
+
+  validates :image_url, url: true
+
+  with_options if: :client? do |client|
+    validates :rating, :work_email,
+              :work_phone_number,
+              :status, :salon_id, allow_blank: true
+  end
 
   def validate_notes
     self.notes = notes.chars.shuffle if notes.include?('</script>')
