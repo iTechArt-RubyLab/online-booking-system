@@ -19,7 +19,11 @@ gem 'date_validator', '~> 0.12.0'
 # Use validate_url gem for validating urls
 gem 'validate_url', '~> 1.0.13'
 
+gem 'will_paginate', '~> 3.3'
+
 group :development, :test do
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'pry'
   gem 'rspec'
   gem 'rubocop'
   gem 'pry'
@@ -39,4 +43,6 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 5.0'
   # Use simplecov gem to generate test coverage reports
   gem 'simplecov', '~> 0.21.2'
+  # Use annotate to add comments to your code
+  gem 'annotate', '~> 3.1', '>= 3.1.1'
 end

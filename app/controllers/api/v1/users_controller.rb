@@ -6,28 +6,20 @@ module Api
       attr_accessor :user
 
       def index
-        if params[:sort]
-          sort_params = params[:sort]
+        users = User.paginate(page: params[:page])
+        render json: users
+        sorting = params[:sort]
 
-          if sort_params[:first_name]
-            sort_field = :first_name
-            sort_order = sort_params[:first_name]
-          elsif sort_params[:last_name]
-            sort_field = :last_name
-            sort_order = sort_params[:last_name]
-          elsif sort_params[:patronymic]
-            sort_field = :patronymic
-            sort_order = sort_params[:patronymic]
-          elsif sort_params[:email]
-            sort_field = :email
-            sort_order = sort_params[:email]
-          end
-          @users = User.order(sort_field => sort_order)
-          render json: @users
-        else
-          users = User.all
-          render json: users
-        end
+        render json: User.order(sort_params.to_h) if sorting
+        render json: Salon.all unless sorting
+      end
+
+      def sort_params
+        params.require(:sort).permit(salon_columns)
+      end
+
+      def salon_columns
+        Salon.column_names.map(&:to_s)
       end
 
       def show

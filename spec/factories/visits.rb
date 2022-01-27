@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: visits
+#
+#  id         :bigint           not null, primary key
+#  start_at   :datetime         not null
+#  end_at     :datetime         not null
+#  price      :integer          not null
+#  adress     :text             not null
+#  status     :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 FactoryBot.define do
   factory :visit, class: 'Visit' do
     address { Faker::Address.full_address }

@@ -6,32 +6,7 @@ module Api
       attr_accessor :visit
 
       def index
-        if params[:sort]
-          sort_params = params[:sort]
-
-          if sort_params[:start_at]
-            sort_field = :start_at
-            sort_order = sort_params[:start_at]
-          end
-
-          if sort_params[:end_at]
-            sort_field = :end_at
-            sort_order = sort_params[:end_at]
-          end
-
-          if sort_params[:adress]
-            sort_field = :adress
-            sort_order = sort_params[:adress]
-          end
-
-          if sort_params[:price]
-            sort_field = :price
-            sort_order = sort_params[:price]
-          end
-          @visits = Visit.order(sort_field => sort_order)
-        else
-          @visits = Visit.all
-        end
+        @visits = Visit.paginate(page: params[:page], per_page: 10)
         render json: @visits
       end
 

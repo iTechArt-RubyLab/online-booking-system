@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: services
+#
+#  id           :bigint           not null, primary key
+#  category     :integer          default("body_care"), not null
+#  salon_id     :integer          not null
+#  name         :string           not null
+#  description  :text             not null
+#  duration     :integer          default(1), not null
+#  price        :integer          default(1), not null
+#  hidden_price :integer
+#  availability :integer          not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
 class Service < ApplicationRecord
   belongs_to :salon
 

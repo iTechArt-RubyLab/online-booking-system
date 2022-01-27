@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_25_204311) do
+ActiveRecord::Schema.define(version: 2022_01_25_222650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,17 @@ ActiveRecord::Schema.define(version: 2022_01_25_204311) do
     t.integer "salon_owner_id", null: false
   end
 
+  create_table "salons_social_networks", force: :cascade do |t|
+    t.bigint "salon_id", null: false
+    t.bigint "social_network_id", null: false
+    t.string "link", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["salon_id", "social_network_id"], name: "index_salons_social_networks_on_salon_id_and_social_network_id", unique: true
+    t.index ["salon_id"], name: "index_salons_social_networks_on_salon_id"
+    t.index ["social_network_id"], name: "index_salons_social_networks_on_social_network_id"
+  end
+
   create_table "services", force: :cascade do |t|
     t.integer "category", default: 0, null: false
     t.integer "salon_id", null: false
@@ -45,6 +56,12 @@ ActiveRecord::Schema.define(version: 2022_01_25_204311) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_services_on_name", unique: true
+  end
+
+  create_table "social_networks", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -87,5 +104,7 @@ ActiveRecord::Schema.define(version: 2022_01_25_204311) do
   add_foreign_key "professionals_salons", "salons", on_delete: :cascade
   add_foreign_key "professionals_salons", "users", column: "professional_id", on_delete: :cascade
   add_foreign_key "salons", "users", column: "salon_owner_id", on_delete: :cascade
+  add_foreign_key "salons_social_networks", "salons"
+  add_foreign_key "salons_social_networks", "social_networks"
   add_foreign_key "visits", "users", column: "client_id", on_delete: :cascade
 end

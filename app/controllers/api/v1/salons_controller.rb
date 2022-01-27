@@ -6,23 +6,7 @@ module Api
       attr_accessor :salon
 
       def index
-        if params[:sort]
-          sort_params = params[:sort]
-
-          if sort_params[:name]
-            sort_field = :name
-            sort_order = sort_params[:name]
-          end
-
-          if sort_params[:email]
-            sort_field = :email
-            sort_order = sort_params[:email]
-          end
-
-          @salons = Salon.order(sort_field => sort_order)
-        else
-          @salons = Salon.all
-        end
+        @salons = Salon.paginate(page: params[:page], per_page: 15)
         render json: @salons
       end
 
