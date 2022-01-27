@@ -12,10 +12,10 @@ module Api
       end
 
       def sort_params
-        params.require(:sort).permit(sort_colonum)
+        params.require(:sort).permit(sort_column)
       end
 
-      def sort_colonum
+      def sort_column
         Visit.column_names.map(&:to_s)
       end
 
