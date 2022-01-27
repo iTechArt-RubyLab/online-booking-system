@@ -27,10 +27,11 @@ class User < ApplicationRecord
 
   validates :image_url, url: true
 
+  validates :status, :work_email, :work_phone, :rating, presence: true, unless: :skip_default_field?
+
   with_options if: :professional? do |_professional|
-    validates :status,
-              :work_email, :work_phone,
-              :rating, presence: true
+    validates :status, :work_email,
+              :work_phone, :rating, presence: true
 
     validates :work_email,
               uniqueness: { case_sensitive: false },
@@ -53,5 +54,9 @@ class User < ApplicationRecord
     self.first_name = first_name.downcase.titleize
     self.last_name = last_name.downcase.titleize
     self.middle_name = middle_name.downcase.titleize if middle_name
+  end
+
+  def skip_default_field?
+    salon_owner? || client?
   end
 end
