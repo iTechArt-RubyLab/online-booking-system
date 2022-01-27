@@ -51,7 +51,7 @@ end
 
 puts 'Visit has been created'
 
-5.times do
+10.times do
   SocialNetwork.create(
     name: Faker::Lorem.word
 )
@@ -62,7 +62,7 @@ puts 'SocialNetwork has been created'
 10.times do
   SalonsSocialNetwork.create(
     salon_id: rand(1...51),
-    social_network_id: rand(1...6),
+    social_network_id: rand(1...11),
     link: Faker::Internet.url
 )
 end
