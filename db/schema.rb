@@ -85,6 +85,13 @@ ActiveRecord::Schema.define(version: 2022_01_25_222650) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "visits_services", force: :cascade do |t|
+    t.integer "visit_id", null: false
+    t.integer "salon_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   add_foreign_key "salons_social_networks", "salons"
   add_foreign_key "salons_social_networks", "social_networks"
 end

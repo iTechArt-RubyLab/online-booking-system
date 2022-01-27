@@ -5,13 +5,13 @@ module Api
 
       # GET /salons/1/salons_social_networks
       def index
-        salons_social_networks = SalonsSocialNetwork.where(salon_id: params[:salon_id]).all
-        render json: salons_social_networks
+        @salons_social_networks = SalonsSocialNetwork.where(salon_id: params[:salon_id]).all
+        render json: @salons_social_networks
       end
 
       # GET /salons/1/salons_social_networks/1
       def show
-        render json: set_salons_social_network
+        render json: @salons_social_network
       end
 
       # POST /salons/1/salons_social_networks
@@ -19,7 +19,7 @@ module Api
         @salons_social_network = SalonsSocialNetwork.new(salons_social_network_params)
 
         if @salons_social_network.save
-          render json: @salons_social_network
+          render json: @salons_social_network, status: :created
         else
           render json: { error: @salons_social_network.errors.full_messages }
         end
@@ -27,7 +27,7 @@ module Api
 
       # PUT /salons/1/salons_social_networks/1
       def update
-        if set_salons_social_network.update(salons_social_network_params)
+        if @salons_social_network.update(salons_social_network_params)
           render json: { message: 'SalonsSocialNetwork was successfully updated' }
         else
           render json: { error: 'Update not update SalonsSocialNetwork' }, status: :unprocessable_entity
@@ -36,7 +36,7 @@ module Api
 
       # DELETE /salons/1/salons_social_networks/1
       def destroy
-        if set_salons_social_network.destroy
+        if @salons_social_network.destroy
           render json: { message: 'SalonsSocialNetwork was successfully destroyed' }
         else
           render json: { message: 'Unable to delete SalonsSocialNetwork' }, status: :unprocessable_entity
