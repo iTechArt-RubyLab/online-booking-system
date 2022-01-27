@@ -99,7 +99,10 @@ class User < ApplicationRecord
   def capitalize_data
     self.first_name = first_name.downcase.titleize
     self.last_name = last_name.downcase.titleize
-    self.patronymic = patronymic.downcase.titleize if patronymic
+    self.middle_name = middle_name.downcase.titleize if middle_name
   end
-  private :validate_notes
+
+  def skip_default_field?
+    salon_owner? || client?
+  end
 end

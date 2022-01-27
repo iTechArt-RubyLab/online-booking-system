@@ -12,33 +12,26 @@
 #  updated_at :datetime         not null
 #
 require 'rails_helper'
-
-RSpec.shared_examples 'to be invalid' do |factory_trait|
-  subject { build(:random_visit, factory_trait) }
-
-  it { is_expected.to be_invalid }
-end
-
 RSpec.describe Visit, type: :model do
   describe 'does not pass validations' do
     context 'when nil start_date' do
-      include_examples 'to be invalid', :nil_start_at
+      it { is_expected.to validate_presence_of :start_at }
     end
 
     context 'when nil end_date' do
-      include_examples 'to be invalid', :nil_end_at
+      it { is_expected.to validate_presence_of :end_at }
     end
 
     context 'when nil price' do
-      include_examples 'to be invalid', :nil_price
+      it { is_expected.to validate_presence_of :price }
     end
 
     context 'when nil adress' do
-      include_examples 'to be invalid', :nil_adress
+      it { is_expected.to validate_presence_of :address }
     end
 
     context 'when nil status' do
-      include_examples 'to be invalid', :nil_status
+      it { is_expected.to validate_presence_of :status }
     end
   end
 end

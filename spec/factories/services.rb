@@ -15,9 +15,9 @@
 #  updated_at   :datetime         not null
 #
 FactoryBot.define do
-  factory :random_service, class: 'Service' do
+  factory :service, class: 'Service' do
     salon_id { rand(1..10) }
-    name { Faker::Lorem.word }
+    name { Faker::Superhero.name }
     description { Faker::Lorem.sentence }
     duration { rand(1..180) }
     price { rand(1..100) }

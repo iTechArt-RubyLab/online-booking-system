@@ -15,15 +15,22 @@ ActiveRecord::Schema.define(version: 2022_01_25_222650) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "professionals_salons", force: :cascade do |t|
+    t.integer "professional_id", null: false
+    t.integer "salon_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "salons", force: :cascade do |t|
     t.string "name", null: false
     t.text "address", null: false
     t.string "phone", null: false
     t.string "email", default: "", null: false
     t.text "notes", null: false
-    t.integer "owner_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "salon_owner_id", null: false
   end
 
   create_table "salons_social_networks", force: :cascade do |t|
@@ -60,17 +67,17 @@ ActiveRecord::Schema.define(version: 2022_01_25_222650) do
   create_table "users", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.string "patronymic"
-    t.integer "salon_id", null: false
+    t.string "middle_name"
     t.string "email", null: false
-    t.string "work_email", null: false
+    t.string "work_email"
     t.string "phone", null: false
-    t.string "work_phone", null: false
+    t.string "work_phone"
     t.datetime "birthday", null: false
     t.integer "role", default: 0, null: false
-    t.integer "status", default: 0, null: false
+    t.integer "status", default: 0
     t.text "notes"
     t.string "image_url", null: false
+    t.integer "rating", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -79,19 +86,25 @@ ActiveRecord::Schema.define(version: 2022_01_25_222650) do
     t.datetime "start_at", null: false
     t.datetime "end_at", null: false
     t.integer "price", null: false
-    t.text "adress", null: false
+    t.text "address", null: false
     t.integer "status", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "client_id", null: false
+    t.integer "salon_id", null: false
   end
 
   create_table "visits_services", force: :cascade do |t|
     t.integer "visit_id", null: false
-    t.integer "salon_id", null: false
+    t.integer "service_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "professionals_salons", "salons", on_delete: :cascade
+  add_foreign_key "professionals_salons", "users", column: "professional_id", on_delete: :cascade
+  add_foreign_key "salons", "users", column: "salon_owner_id", on_delete: :cascade
   add_foreign_key "salons_social_networks", "salons"
   add_foreign_key "salons_social_networks", "social_networks"
+  add_foreign_key "visits", "users", column: "client_id", on_delete: :cascade
 end
