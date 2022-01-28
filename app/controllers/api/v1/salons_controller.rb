@@ -6,6 +6,9 @@ module Api
       attr_accessor :salon
 
       def index
+        sorting = params[:sort]
+        render json: Salon.order(sort_params.to_h) if sorting
+        render json: Salon.all unless sorting
         @salons = Salon.paginate(page: params[:page], per_page: 15)
         render json: @salons
       end
@@ -48,6 +51,14 @@ module Api
 
       def set_salon
         @salon = Salon.find(params[:id])
+      end
+
+      def sort_params
+        params.require(:sort).permit(salon_columns)
+      end
+
+      def salon_columns
+        Salon.column_names.map(&:to_s)
       end
 
       def salon_params
