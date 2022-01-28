@@ -20,7 +20,7 @@
 #  updated_at :datetime         not null
 #
 class User < ApplicationRecord
-  enum role: { professional: 0, salon_owner: 1, client: 2 }
+  enum role: { professional: 0, salon_owner: 1 }
   enum status: { working: 0, on_vacation: 1, banned: 2, fired: 3 }
 
   before_save :validate_notes, :capitalize_data
@@ -47,40 +47,11 @@ class User < ApplicationRecord
 
   validates :image_url, url: true
 
-  with_options if: :client? do |_client|
-    validates :rating, :work_email,
-              :work_phone_number,
-              :status, :salon_id, allow_blank: true
-  end
-
-  validates :first_name, :last_name,
-            :email, :phone, :birthday,
-            :role, :image_url,
-            presence: true
-
-  validates :first_name, :last_name,
-            length: { minimum: 2, maximum: 255 }
-
-  validates :patronymic,
-            length: { maximum: 255 },
-            allow_blank: true
-
-  validates :email,
-            uniqueness: { case_sensitive: false },
-            format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email invalid' },
-            length: { minimum: 4, maximum: 254 }
-
-  validates :phone, format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Phone invalid' }
-
-  validates :birthday, date: { before: proc { Time.zone.today }, message: 'Birthday invalid' }
-
-  validates :image_url, url: true
-
   with_options if: :salon_owner? do
-    validates :salon_id, :status,
-              :work_email, :work_phone, presence: true
+    validates :status, :work_email, 
+              :work_phone, presence: true
 
-    validates :rating, allow_blank: true
+    validates :rating, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
 
     validates :work_email,
               uniqueness: { case_sensitive: false },
@@ -91,6 +62,7 @@ class User < ApplicationRecord
     validates :work_phone,
               format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Work phone invalid' }
   end
+
   def validate_notes
     self.notes = notes.chars.shuffle if notes.include?('</script>')
   end

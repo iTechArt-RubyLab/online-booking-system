@@ -14,10 +14,6 @@ RSpec.describe User, type: :model do
       it { is_expected.to allow_value('', nil).for(:middle_name) }
     end
 
-    context 'when salon_id nil' do
-      it { is_expected.to validate_presence_of :salon_id }
-    end
-
     context 'when email nil' do
       it { is_expected.to validate_presence_of :email }
     end

@@ -1,6 +1,7 @@
 class Client < ApplicationRecord
   EMAIL_REGEXP = URI::MailTo::EMAIL_REGEXP
   PHONE_REGEXP = /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/
+  SORT_FIELDS = %i[first_name last_name middle_name email phone birthday].freeze
 
   has_many :visits, dependent: :destroy
 

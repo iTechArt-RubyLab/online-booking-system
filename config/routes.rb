@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         resources :salons_social_networks
       end
       resources :users
+      resources :clients
       resources :visits
     end
   end

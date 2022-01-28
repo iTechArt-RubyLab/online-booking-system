@@ -15,15 +15,15 @@ AllCops:
     - 'Gemfile'
     - 'Gemfile.lock'
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
 Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
 Rails/UniqueValidationWithoutIndex:
   Enabled: false
-Metrics/BlockLength:
-  Enabled: false
 RSpec/ExampleLength:
-  Enabled: false
-RSpec/MultipleExpectations:
   Enabled: false

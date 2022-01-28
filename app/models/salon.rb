@@ -13,7 +13,6 @@
 #  updated_at :datetime         not null
 #
 class Salon < ApplicationRecord
-<<<<<<< HEAD
   belongs_to :salon_owner, class_name: 'SalonOwner'
 
   has_many :services, dependent: :destroy
