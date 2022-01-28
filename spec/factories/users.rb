@@ -13,7 +13,7 @@ FactoryBot.define do
     notes { Faker::Lorem.paragraph }
     image_url { 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y' }
   end
-
+  
   trait(:no_first_name) { first_name { nil } }
   trait(:no_last_name) { last_name { nil } }
   trait(:no_middle_name) { middle_name { nil } }

@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 2022_01_25_222650) do
     t.integer "rating", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "rating"
   end
 
   create_table "visits", force: :cascade do |t|

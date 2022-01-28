@@ -25,7 +25,7 @@ end
 puts 'Users have been created'
 
 Service.create(
-  category: 1,
+  category: :body_care,
   salon_id: 1, 
   name: 'asdfasf', 
   description: 'afdasfa', 

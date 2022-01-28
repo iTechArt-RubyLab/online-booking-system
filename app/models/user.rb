@@ -24,7 +24,6 @@ class User < ApplicationRecord
   enum status: { working: 0, on_vacation: 1, banned: 2, fired: 3 }
 
   before_save :validate_notes, :capitalize_data
-
   validates :first_name, :last_name,
             :email, :phone, :birthday,
             :role, :image_url,
