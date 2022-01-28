@@ -1,15 +1,31 @@
+# == Schema Information
+#
+# Table name: visits
+#
+#  id         :bigint           not null, primary key
+#  start_at   :datetime         not null
+#  end_at     :datetime         not null
+#  price      :integer          not null
+#  adress     :text             not null
+#  status     :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 FactoryBot.define do
-  factory :random_visit, class: 'Visit' do
-    adress { Faker::Address.full_address }
+  factory :visit, class: 'Visit' do
+    address { Faker::Address.full_address }
     price { 20 }
     start_at { '2022-01-18' }
     end_at { '2022-01-19' }
-    status { 0 }
+    status { :created }
+
+    after(:create) do |visit|
+      salon = visit.salon
+      visit.services << salon.services
+    end
   end
 
-  trait(:nil_start_at) { start_at { nil } }
-  trait(:nil_end_at) { end_at { nil } }
-  trait(:nil_price) { price { nil } }
-  trait(:nil_adress) { adress { nil } }
-  trait(:nil_status) { status { nil } }
+  trait(:no_start_at) { start_at { nil } }
+  trait(:no_end_at) { end_at { nil } }
+  trait(:no_status) { status { nil } }
 end

@@ -1,10 +1,16 @@
 FactoryBot.define do
-  factory :salon do
-    name { "Salon of #{Faker::Name.name}" }
-    address { "Minsk, #{Faker::Address.street_name}" }
-    phone { '+375 29 883-26-36' }
+  factory :salon, class: 'Salon' do
+    name { Faker::Company.name }
+    address { Faker::Address.street_address }
+    phone { '+375 29 123-45-67' }
     email { Faker::Internet.email }
-    notes { 'Notes' }
-    owner_id { 0 }
+    notes { Faker::Lorem.paragraph }
+
+    after(:create) do |salon|
+      FactoryBot.create(:service, salon_id: salon.id)
+    end
   end
+
+  trait(:no_owner_id) { salon_owner_id { nil } }
+  trait(:no_address) { address { nil } }
 end

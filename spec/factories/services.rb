@@ -1,7 +1,23 @@
+# == Schema Information
+#
+# Table name: services
+#
+#  id           :bigint           not null, primary key
+#  category     :integer          default("body_care"), not null
+#  salon_id     :integer          not null
+#  name         :string           not null
+#  description  :text             not null
+#  duration     :integer          default(1), not null
+#  price        :integer          default(1), not null
+#  hidden_price :integer
+#  availability :integer          not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
 FactoryBot.define do
-  factory :random_service, class: 'Service' do
+  factory :service, class: 'Service' do
     salon_id { rand(1..10) }
-    name { Faker::Lorem.word }
+    name { Faker::Superhero.name }
     description { Faker::Lorem.sentence }
     duration { rand(1..180) }
     price { rand(1..100) }

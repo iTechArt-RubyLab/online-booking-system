@@ -6,7 +6,7 @@ module Api
       attr_accessor :service
 
       def index
-        services = Service.all
+        services = Service.paginate(page: params[:page], per_page: 10)
         render json: services
       end
 
