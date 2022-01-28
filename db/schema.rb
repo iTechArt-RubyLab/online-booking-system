@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_28_145941) do
+ActiveRecord::Schema.define(version: 2022_01_28_190600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 2022_01_28_145941) do
     t.text "notes", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "salon_owner_id", null: false
   end
 
   create_table "salons_social_networks", force: :cascade do |t|
@@ -96,6 +95,14 @@ ActiveRecord::Schema.define(version: 2022_01_28_145941) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "users_salons", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "salon_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "salon_id"], name: "index_users_salons_on_user_id_and_salon_id", unique: true
+  end
+
   create_table "visits", force: :cascade do |t|
     t.datetime "start_at", null: false
     t.datetime "end_at", null: false
@@ -117,8 +124,9 @@ ActiveRecord::Schema.define(version: 2022_01_28_145941) do
 
   add_foreign_key "professionals_salons", "salons", on_delete: :cascade
   add_foreign_key "professionals_salons", "users", column: "professional_id", on_delete: :cascade
-  add_foreign_key "salons", "users", column: "salon_owner_id", on_delete: :cascade
   add_foreign_key "salons_social_networks", "salons"
   add_foreign_key "salons_social_networks", "social_networks"
+  add_foreign_key "users_salons", "salons", on_delete: :cascade
+  add_foreign_key "users_salons", "users", on_delete: :cascade
   add_foreign_key "visits", "users", column: "client_id", on_delete: :cascade
 end

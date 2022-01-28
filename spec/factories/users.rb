@@ -8,10 +8,15 @@ FactoryBot.define do
     phone { '+375 25 609-99-99' }
     work_phone { '+375 25 609-99-99' }
     birthday { Faker::Date.between(from: 50.years.ago, to: Time.zone.today - 18.years) }
-    role { rand(0...2) }
-    status { rand(0...4) }
+    role { User.roles.keys.sample }
+    status { User.statuses.keys.sample }
     notes { Faker::Lorem.paragraph }
     image_url { 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y' }
+
+    factory :salon_owner, class: 'User' do
+      role { :salon_owner }
+      salons { [association(:salon)] }
+    end
   end
 
   trait(:no_first_name) { first_name { nil } }
