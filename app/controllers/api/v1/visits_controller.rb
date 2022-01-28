@@ -6,8 +6,19 @@ module Api
       attr_accessor :visit
 
       def index
-        @visits = Visit.paginate(page: params[:page], per_page: 10)
+        sorting = params[:sort]
+        @visits = Visit.order(sort_params.to_h) if sorting
+        @visits = Visit.paginate(page: params[:page], per_page: 10) unless sorting
+
         render json: @visits
+      end
+
+      def sort_params
+        params.require(:sort).permit(sort_column)
+      end
+
+      def sort_column
+        Visit.column_names.map(&:to_s)  
       end
 
       def show
