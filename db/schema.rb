@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_25_222650) do
+ActiveRecord::Schema.define(version: 2022_01_28_145941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "clients", force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "middle_name", null: false
+    t.string "email", null: false
+    t.string "phone", null: false
+    t.datetime "birthday", null: false
+    t.text "notes"
+    t.string "image_url", null: false
+    t.integer "rating", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "professionals_salons", force: :cascade do |t|
     t.integer "professional_id", null: false
@@ -80,7 +94,6 @@ ActiveRecord::Schema.define(version: 2022_01_25_222650) do
     t.integer "rating", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "rating"
   end
 
   create_table "visits", force: :cascade do |t|

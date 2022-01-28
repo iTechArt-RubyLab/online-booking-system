@@ -18,7 +18,7 @@ module Api
       end
 
       def sort_column
-        Visit.column_names.map(&:to_s)  
+        Visit.column_names.map(&:to_s)
       end
 
       def show
