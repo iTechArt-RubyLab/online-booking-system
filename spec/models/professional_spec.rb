@@ -21,34 +21,38 @@
 #
 require 'rails_helper'
 
-RSpec.shared_examples 'invalid professional' do |args|
-  subject { FactoryBot.build(:professional, args[:field] => args[:value]) }
-
-  it { is_expected.to be_invalid }
-end
-
 RSpec.describe Professional, type: :model do
-  describe 'validations' do
-    describe 'field presence' do
-      include_examples 'invalid professional', { field: 'salon_id', value: nil }
-      include_examples 'invalid professional', { field: 'status', value: nil }
-      include_examples 'invalid professional', { field: 'work_email', value: nil }
-      include_examples 'invalid professional', { field: 'work_phone', value: nil }
-      include_examples 'invalid professional', { field: 'rating', value: nil }
+  describe 'does not pass validations' do
+    context 'when first_name nil' do
+      it { is_expected.to validate_presence_of :first_name }
     end
 
-    context 'when work_email uniqueness is violated' do
-      before { create(:professional, work_email: 'something@gmail.com') }
-
-      include_examples 'invalid professional', { field: 'work_email', value: 'Something@gmail.com' }
+    context 'when last_name nil' do
+      it { is_expected.to validate_presence_of :last_name }
     end
 
-    context 'when work_email format is violated' do
-      include_examples 'invalid professional', { field: 'work_email', value: 'Somethin.ggmail.com' }
+    context 'when middle_name nil' do
+      it { is_expected.to allow_value('', nil).for(:middle_name) }
     end
 
-    context 'when work_phone format violated' do
-      include_examples 'invalid professional', { field: 'work_phone', value: '37 25 609-99-99' }
+    context 'when email nil' do
+      it { is_expected.to validate_presence_of :email }
+    end
+
+    context 'when phone nil' do
+      it { is_expected.to validate_presence_of :phone }
+    end
+
+    context 'when birthday nil' do
+      it { is_expected.to validate_presence_of :birthday }
+    end
+
+    context 'when notes nil' do
+      it { is_expected.to allow_value('', nil).for(:notes) }
+    end
+
+    context 'when image_url nil' do
+      it { is_expected.to validate_presence_of :image_url }
     end
   end
 end

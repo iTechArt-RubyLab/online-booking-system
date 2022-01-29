@@ -42,15 +42,11 @@ class Client < ApplicationRecord
 
   validates :phone, format: { with: PHONE_REGEXP, message: 'Phone invalid' }
 
-  validates :birthday, date: :date_valid?
+  validates :birthday, date: { before: 16.years.ago }, on: :create
 
   validates :image_url, url: true
 
   private
-
-  def date_valid?
-    birthday.present? && birthday <= Time.zone.today
-  end
 
   def capitalize_data
     first_name.capitalize!

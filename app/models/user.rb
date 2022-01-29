@@ -20,6 +20,10 @@
 #  updated_at  :datetime         not null
 #
 class User < ApplicationRecord
+  EMAIL_REGEX = URI::MailTo::EMAIL_REGEXP
+  PHONE_REGEX = /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/
+  SORT_FIELDS = %i[first_name last_name middle_name email phone birthday].freeze
+
   enum role: { professional: 0, salon_owner: 1 }
   enum status: { working: 0, on_vacation: 1, banned: 2, fired: 3 }
 
@@ -38,12 +42,12 @@ class User < ApplicationRecord
 
   validates :email,
             uniqueness: { case_sensitive: false },
-            format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email invalid' },
+            format: { with: EMAIL_REGEX, message: 'Email invalid' },
             length: { minimum: 4, maximum: 254 }
 
-  validates :phone, format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Phone invalid' }
+  validates :phone, format: { with: PHONE_REGEX, message: 'Phone invalid' }
 
-  validates :birthday, date: { before: proc { Time.zone.today }, message: 'Birthday invalid' }
+  validates :birthday, date: { before: 16.years.ago }, on: :create
 
   validates :image_url, url: true
 
@@ -55,12 +59,11 @@ class User < ApplicationRecord
 
     validates :work_email,
               uniqueness: { case_sensitive: false },
-              format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i,
-                        message: 'Work email invalid' },
+              format: { with: EMAIL_REGEX, message: 'Email invalid' },
               length: { minimum: 4, maximum: 254 }
 
     validates :work_phone,
-              format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Work phone invalid' }
+              format: { with: PHONE_REGEX, message: 'Work phone invalid' }
   end
 
   def validate_notes

@@ -20,10 +20,6 @@ FactoryBot.define do
     email { Faker::Internet.email }
     notes { Faker::Lorem.paragraph }
     salon_owner_id { create(:salon_owner).id }
-
-    after(:create) do |salon|
-      FactoryBot.create(:service, salon_id: salon.id)
-    end
   end
 
   trait(:no_owner_id) { salon_owner_id { nil } }

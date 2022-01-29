@@ -15,6 +15,8 @@
 #  updated_at   :datetime         not null
 #
 class Service < ApplicationRecord
+  SORT_FIELDS = %i[category salon_id name duration price availability].freeze
+
   belongs_to :salon
 
   enum availability: {

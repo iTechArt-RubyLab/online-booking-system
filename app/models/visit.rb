@@ -14,6 +14,8 @@
 #  salon_id   :integer          not null
 #
 class Visit < ApplicationRecord
+  SORT_FIELDS = %i[start_at end_at price status].freeze
+
   enum status: { created: 0,
                  approved: 1,
                  rejected_by_user: 2,
