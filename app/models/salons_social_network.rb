@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: salon_social_networks
+# Table name: salons_social_networks
 #
 #  id                :bigint           not null, primary key
 #  salon_id          :bigint           not null

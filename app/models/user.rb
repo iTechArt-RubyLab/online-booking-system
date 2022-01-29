@@ -2,22 +2,22 @@
 #
 # Table name: users
 #
-#  id         :bigint           not null, primary key
-#  first_name :string           not null
-#  last_name  :string           not null
-#  patronymic :string
-#  salon_id   :integer          not null
-#  email      :string           not null
-#  work_email :string           not null
-#  phone      :string           not null
-#  work_phone :string           not null
-#  birthday   :datetime         not null
-#  role       :integer          default("professional"), not null
-#  status     :integer          default("working"), not null
-#  notes      :text
-#  image_url  :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :bigint           not null, primary key
+#  first_name  :string           not null
+#  last_name   :string           not null
+#  middle_name :string
+#  email       :string           not null
+#  work_email  :string
+#  phone       :string           not null
+#  work_phone  :string
+#  birthday    :datetime         not null
+#  role        :integer          default("professional"), not null
+#  status      :integer          default("working")
+#  notes       :text
+#  image_url   :string           not null
+#  rating      :integer          default(0)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 class User < ApplicationRecord
   enum role: { professional: 0, salon_owner: 1 }
@@ -48,7 +48,7 @@ class User < ApplicationRecord
   validates :image_url, url: true
 
   with_options if: :salon_owner? do
-    validates :status, :work_email, 
+    validates :status, :work_email,
               :work_phone, presence: true
 
     validates :rating, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }

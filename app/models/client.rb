@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: clients
+#
+#  id          :bigint           not null, primary key
+#  first_name  :string           not null
+#  last_name   :string           not null
+#  middle_name :string           not null
+#  email       :string           not null
+#  phone       :string           not null
+#  birthday    :datetime         not null
+#  notes       :text
+#  image_url   :string           not null
+#  rating      :integer          default(0), not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
 class Client < ApplicationRecord
   EMAIL_REGEXP = URI::MailTo::EMAIL_REGEXP
   PHONE_REGEXP = /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/

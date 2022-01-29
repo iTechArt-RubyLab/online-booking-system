@@ -6,10 +6,12 @@
 #  start_at   :datetime         not null
 #  end_at     :datetime         not null
 #  price      :integer          not null
-#  adress     :text             not null
+#  address    :text             not null
 #  status     :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  client_id  :integer          not null
+#  salon_id   :integer          not null
 #
 require 'rails_helper'
 RSpec.describe Visit, type: :model do
