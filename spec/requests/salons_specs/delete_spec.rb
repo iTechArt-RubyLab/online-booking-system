@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Salons API DELETE', type: :request do
   describe 'DELETE requests', type: :request do
-    let(:salon) { create(:random_salon) }
+    let(:salon) { create(:salon) }
 
     it 'deletes a salon' do
       delete "/api/v1/salons/#{salon.id}"

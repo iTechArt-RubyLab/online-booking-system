@@ -6,8 +6,13 @@ module Api
       attr_accessor :service
 
       def index
-        services = Service.paginate(page: params[:page], per_page: 10)
-        render json: services
+        @services =
+          if params[:sort]
+            Service.order(Service::SORT_FIELDS).paginate(page: params[:page], per_page: 15)
+          else
+            Service.paginate(page: params[:page], per_page: 15)
+          end
+        render json: @services
       end
 
       def show

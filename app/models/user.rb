@@ -2,38 +2,30 @@
 #
 # Table name: users
 #
-#  id         :bigint           not null, primary key
-#  first_name :string           not null
-#  last_name  :string           not null
-#  patronymic :string
-#  salon_id   :integer          not null
-#  email      :string           not null
-#  work_email :string           not null
-#  phone      :string           not null
-#  work_phone :string           not null
-#  birthday   :datetime         not null
-#  role       :integer          default("professional"), not null
-#  status     :integer          default("working"), not null
-#  notes      :text
-#  image_url  :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :bigint           not null, primary key
+#  first_name  :string           not null
+#  last_name   :string           not null
+#  middle_name :string
+#  email       :string           not null
+#  work_email  :string
+#  phone       :string           not null
+#  work_phone  :string
+#  birthday    :datetime         not null
+#  role        :integer          default("professional"), not null
+#  status      :integer          default("working")
+#  notes       :text
+#  image_url   :string           not null
+#  rating      :integer          default(0)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 class User < ApplicationRecord
-  enum role: {
-    professional: 0,
-    salon_owner: 1
-  }
+  EMAIL_REGEX = URI::MailTo::EMAIL_REGEXP
+  PHONE_REGEX = /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/
+  SORT_FIELDS = %i[first_name last_name middle_name email phone birthday].freeze
 
-  enum status: {
-    working: 0,
-    on_vacation: 1,
-    banned: 2,
-    fired: 3
-  }
-
-  has_many :users_salons, dependent: :destroy
-  has_many :salons, through: :users_salons
+  enum role: { professional: 0, salon_owner: 1 }
+  enum status: { working: 0, on_vacation: 1, banned: 2, fired: 3 }
 
   before_save :validate_notes, :capitalize_data
 
@@ -50,7 +42,7 @@ class User < ApplicationRecord
 
   validates :email,
             uniqueness: { case_sensitive: false },
-            format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email invalid' },
+            format: { with: EMAIL_REGEX, message: 'Email invalid' },
             length: { minimum: 4, maximum: 254 }
 
   validates :phone, format: { with: PHONE_REGEXP, message: 'Phone invalid' }
@@ -69,24 +61,14 @@ class User < ApplicationRecord
       less_than_or_equal_to: 5
     }
 
-    validates :work_email, uniqueness: { case_sensitive: false },
-                           format: {
-                             with: URI::MailTo::EMAIL_REGEXP,
-                             message: 'Work email invalid'
-                           },
-                           length: {
-                             minimum: 4,
-                             maximum: 254
-                           }
+    validates :work_email,
+              uniqueness: { case_sensitive: false },
+              format: { with: EMAIL_REGEX, message: 'Email invalid' },
+              length: { minimum: 4, maximum: 254 }
 
     validates :work_phone,
-              format: {
-                with: PHONE_REGEXP,
-                message: 'Work phone invalid'
-              }
+              format: { with: PHONE_REGEX, message: 'Work phone invalid' }
   end
-
-  private
 
   def date_valid?
     birthday.present? && birthday <= Time.zone.today

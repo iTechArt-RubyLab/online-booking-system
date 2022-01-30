@@ -6,12 +6,16 @@
 #  start_at   :datetime         not null
 #  end_at     :datetime         not null
 #  price      :integer          not null
-#  adress     :text             not null
+#  address    :text             not null
 #  status     :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  client_id  :integer          not null
+#  salon_id   :integer          not null
 #
 class Visit < ApplicationRecord
+  SORT_FIELDS = %i[start_at end_at price status].freeze
+
   enum status: {
     created: 0,
     approved: 1,

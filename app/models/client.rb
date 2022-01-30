@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: clients
+#
+#  id          :bigint           not null, primary key
+#  first_name  :string           not null
+#  last_name   :string           not null
+#  middle_name :string           not null
+#  email       :string           not null
+#  phone       :string           not null
+#  birthday    :datetime         not null
+#  notes       :text
+#  image_url   :string           not null
+#  rating      :integer          default(0), not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
 class Client < ApplicationRecord
   SORT_FIELDS = %i[first_name last_name middle_name email phone birthday].freeze
 
@@ -23,15 +40,11 @@ class Client < ApplicationRecord
 
   validates :phone, format: { with: PHONE_REGEXP, message: 'Phone invalid' }
 
-  validates :birthday, date: :date_valid?
+  validates :birthday, date: { before: 16.years.ago }, on: :create
 
   validates :image_url, url: true
 
   private
-
-  def date_valid?
-    birthday.present? && birthday <= Time.zone.today
-  end
 
   def capitalize_data
     first_name.capitalize!

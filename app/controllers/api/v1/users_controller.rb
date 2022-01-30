@@ -6,12 +6,13 @@ module Api
       attr_accessor :user
 
       def index
-        users = User.paginate(page: params[:page])
-        render json: users
-        sorting = params[:sort]
-
-        render json: User.order(sort_params.to_h) if sorting
-        render json: Salon.all unless sorting
+        @users =
+          if params[:sort]
+            User.order(User::SORT_FIELDS).paginate(page: params[:page], per_page: 15)
+          else
+            User.paginate(page: params[:page], per_page: 15)
+          end
+        render json: @users
       end
 
       def sort_params

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Salons API PUT', type: :request do
   describe 'PUT requests', type: :request do
     context 'when /salons/:id' do
-      let(:salon) { create(:random_salon) }
+      let(:salon) { create(:salon) }
       let(:new_adress) { Faker::Address.full_address }
 
       before do
