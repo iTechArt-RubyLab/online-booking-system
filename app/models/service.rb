@@ -15,7 +15,7 @@
 #  updated_at   :datetime         not null
 #
 class Service < ApplicationRecord
-  SORT_FIELDS = %i[category salon_id name duration price availability].freeze
+  SORT_FIELDS = %i[name category salon_id duration price availability].freeze
 
   belongs_to :salon
 

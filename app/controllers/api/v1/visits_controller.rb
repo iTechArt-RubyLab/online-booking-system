@@ -15,14 +15,6 @@ module Api
         render json: @visits
       end
 
-      def sort_params
-        params.require(:sort).permit(sort_column)
-      end
-
-      def sort_column
-        Visit.column_names.map(&:to_s)
-      end
-
       def show
         visit
         render json: @visit

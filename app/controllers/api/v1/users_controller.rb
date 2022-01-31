@@ -15,14 +15,6 @@ module Api
         render json: @users
       end
 
-      def sort_params
-        params.require(:sort).permit(salon_columns)
-      end
-
-      def salon_columns
-        Salon.column_names.map(&:to_s)
-      end
-
       def show
         render json: user
       end

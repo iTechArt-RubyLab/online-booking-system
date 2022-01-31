@@ -55,14 +55,6 @@ module Api
         @salon = Salon.find(params[:id])
       end
 
-      def sort_params
-        params.require(:sort).permit(salon_columns)
-      end
-
-      def salon_columns
-        Salon.column_names.map(&:to_s)
-      end
-
       def salon_params
         params.require(:salon).permit(%i[name address phone email notes])
       end

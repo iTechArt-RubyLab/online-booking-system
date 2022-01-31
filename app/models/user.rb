@@ -20,8 +20,6 @@
 #  updated_at  :datetime         not null
 #
 class User < ApplicationRecord
-  EMAIL_REGEX = URI::MailTo::EMAIL_REGEXP
-  PHONE_REGEX = /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/
   SORT_FIELDS = %i[first_name last_name middle_name email phone birthday].freeze
 
   enum role: { professional: 0, salon_owner: 1 }
@@ -42,7 +40,7 @@ class User < ApplicationRecord
 
   validates :email,
             uniqueness: { case_sensitive: false },
-            format: { with: EMAIL_REGEX, message: 'Email invalid' },
+            format: { with: EMAIL_REGEXP, message: 'Email invalid' },
             length: { minimum: 4, maximum: 254 }
 
   validates :phone, format: { with: PHONE_REGEXP, message: 'Phone invalid' }
@@ -63,11 +61,11 @@ class User < ApplicationRecord
 
     validates :work_email,
               uniqueness: { case_sensitive: false },
-              format: { with: EMAIL_REGEX, message: 'Email invalid' },
+              format: { with: EMAIL_REGEXP, message: 'Email invalid' },
               length: { minimum: 4, maximum: 254 }
 
     validates :work_phone,
-              format: { with: PHONE_REGEX, message: 'Work phone invalid' }
+              format: { with: PHONE_REGEXP, message: 'Work phone invalid' }
   end
 
   def date_valid?
