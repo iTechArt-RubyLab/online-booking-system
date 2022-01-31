@@ -13,7 +13,12 @@
 #  client_id  :integer          not null
 #  salon_id   :integer          not null
 #
+
+require 'elasticsearch/model'
+
 class Visit < ApplicationRecord
+  include Elasticsearch::Model
+
   SORT_FIELDS = %i[start_at end_at price status].freeze
 
   enum status: {
@@ -34,3 +39,6 @@ class Visit < ApplicationRecord
   validates :start_at, :end_at, :price, :address, :status, presence: true
   validates :price, length: { minimum: 2 }
 end
+
+Visit.__elasticsearch__.create_index!
+Visit.import

@@ -5,6 +5,10 @@ module Api
 
       attr_accessor :visit
 
+      def search
+        render json: Visit.search(search_params[:info]).records.to_a
+      end
+
       def index
         @visits =
           if params[:sort]
@@ -54,6 +58,14 @@ module Api
       end
 
       private
+
+      def search_params
+        params.require(:search).permit(:info)
+      end
+
+      def set_user
+        @user = User.find(params[:id])
+      end
 
       def set_visit
         @visit = Visit.find(params[:id])

@@ -7,9 +7,13 @@ Rails.application.routes.draw do
       resources :salons do
         resources :salons_social_networks
       end
-      resources :users
+      resources :users do
+        get 'search', action: :search
+      end
       resources :clients
-      resources :visits
+      resources :visits do
+        get 'search', action: :search
+      end
     end
   end
 end

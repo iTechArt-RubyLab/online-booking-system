@@ -5,6 +5,10 @@ module Api
 
       attr_accessor :user
 
+      def search
+        render json: User.search(search_params[:info]).records.to_a
+      end
+
       def index
         @users =
           if params[:sort]
@@ -54,6 +58,10 @@ module Api
       end
 
       private
+
+      def search_params
+        params.require(:search).permit(:info)
+      end
 
       def user_params
         params.require(:user).permit(%i[first_name last_name middle_name salon_id email work_email phone
