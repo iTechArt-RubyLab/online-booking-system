@@ -19,6 +19,8 @@ gem 'date_validator', '~> 0.12.0'
 # Use validate_url gem for validating urls
 gem 'validate_url', '~> 1.0.13'
 
+gem 'geocoder', '~> 1.3', '>= 1.3.7'
+
 gem 'will_paginate', '~> 3.3'
 
 group :development, :test do
