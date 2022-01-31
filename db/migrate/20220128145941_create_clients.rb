@@ -13,7 +13,5 @@ class CreateClients < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
-
-    add_foreign_key :visits, :clients, column: :client_id, on_delete: :cascade
   end
 end

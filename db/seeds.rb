@@ -37,7 +37,7 @@ puts 'Catigories have been created'
 end
 
 25.times do
-  FactoryBot.create(:visit, client_id: rand(1..10), salon_id: rand(1..10))
+  FactoryBot.create(:visit, user_id: rand(1..5), client_id: rand(1..10), service_id: rand(1..20))
 end
 
 FactoryBot.create(:service, salon_id: 1)
