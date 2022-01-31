@@ -42,4 +42,10 @@ RSpec.describe Service, type: :model do
       it { is_expected.to validate_presence_of :availability }
     end
   end
+
+  describe 'associations' do
+    context 'when belongs to salon' do
+      it { is_expected.to belong_to(:salon) }
+    end
+  end
 end

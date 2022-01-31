@@ -2,22 +2,19 @@
 #
 # Table name: salons
 #
-#  id             :bigint           not null, primary key
-#  name           :string           not null
-#  address        :text             not null
-#  phone          :string           not null
-#  email          :string           default(""), not null
-#  notes          :text             not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  salon_owner_id :integer          not null
+#  id         :bigint           not null, primary key
+#  name       :string           not null
+#  address    :text             not null
+#  phone      :string           not null
+#  email      :string           default(""), not null
+#  notes      :text             not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 class Salon < ApplicationRecord
   EMAIL_REGEXP = URI::MailTo::EMAIL_REGEXP
   PHONE_REGEXP = /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/
   SORT_FIELDS = %i[name address phone email].freeze
-
-  belongs_to :salon_owner, class_name: 'SalonOwner'
 
   has_many :services, dependent: :destroy
 
@@ -57,7 +54,7 @@ class Salon < ApplicationRecord
   validates :email, presence: true,
                     uniqueness: { case_sensitive: false },
                     format: {
-                      with: URI::MailTo::EMAIL_REGEXP,
+                      with: EMAIL_REGEXP,
                       message: 'Email invalid'
                     },
                     length: {

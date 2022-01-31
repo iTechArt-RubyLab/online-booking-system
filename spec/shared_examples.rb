@@ -9,13 +9,13 @@ shared_examples 'success status' do
 end
 
 shared_examples 'to be invalid' do |factory_trait|
-  subject { build(:"random_#{described_class.name.underscore}", factory_trait) }
+  subject { build(:"#{described_class.name.underscore}", factory_trait) }
 
   it { is_expected.to be_invalid }
 end
 
 shared_examples 'to be valid' do |factory_trait|
-  subject { build(:"random_#{described_class.name.underscore}", factory_trait) }
+  subject { build(:"#{described_class.name.underscore}", factory_trait) }
 
   it { is_expected.to be_valid }
 end

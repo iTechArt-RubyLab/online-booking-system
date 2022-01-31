@@ -52,7 +52,7 @@ module Api
       end
 
       def service_params
-        params.require(:service).permit(%i[category_id
+        params.require(:service).permit(%i[category
                                            salon_id
                                            name
                                            description

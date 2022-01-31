@@ -40,7 +40,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'when work_email nil' do
-      it { is_expected.to validate_presence_of :work_email }
+      it { is_expected.to allow_value('', nil).for(:work_email) }
     end
 
     context 'when phone nil' do
@@ -48,7 +48,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'when work_phone nil' do
-      it { is_expected.to validate_presence_of :work_phone }
+      it { is_expected.to allow_value('', nil).for(:work_phone) }
     end
 
     context 'when birthday nil' do
@@ -60,7 +60,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'when status nil' do
-      it { is_expected.to validate_presence_of :status }
+      it { is_expected.to allow_value(0).for(:status) }
     end
 
     context 'when notes nil' do
@@ -69,6 +69,10 @@ RSpec.describe User, type: :model do
 
     context 'when image_url nil' do
       it { is_expected.to validate_presence_of :image_url }
+    end
+
+    context 'when rating nil' do
+      it { is_expected.to allow_value(0).for(:rating) }
     end
   end
 end

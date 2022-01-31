@@ -64,7 +64,7 @@ module Api
       end
 
       def salon_params
-        params.require(:salon).permit(%i[name address phone email notes salon_owner_id])
+        params.require(:salon).permit(%i[name address phone email notes])
       end
     end
   end

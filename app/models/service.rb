@@ -39,4 +39,6 @@ class Service < ApplicationRecord
   validates :duration, numericality: { greater_than: 0, less_than_or_equal_to: 180, only_integer: true }
   validates :availability, inclusion: { in: Service.availabilities }
   validates :description, length: { minimum: 10, maximum: 255 }
+  validates :salon_id, numericality: { in: Salon.pluck(:id) }
+  validates :category, inclusion: { in: Service.categories }
 end

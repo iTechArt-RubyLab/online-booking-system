@@ -16,7 +16,7 @@
 #
 FactoryBot.define do
   factory :service, class: 'Service' do
-    salon_id { create(:salon).id }
+    salon_id { rand(1..10) }
     name { Faker::Superhero.name }
     description { Faker::Lorem.sentence }
     duration { rand(1..180) }

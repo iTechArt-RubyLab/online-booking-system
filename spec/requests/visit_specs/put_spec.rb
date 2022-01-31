@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'PUT /api/v1/visits/:id' do
-  let(:visit) { create(:random_visit) }
+  let(:visit) { create(:visit) }
   let(:new_address) { Faker::Address.full_address }
 
   before do

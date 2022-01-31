@@ -36,4 +36,26 @@ RSpec.describe Visit, type: :model do
       it { is_expected.to validate_presence_of :status }
     end
   end
+
+  describe 'associations' do
+    context 'when belongs to client' do
+      it { is_expected.to belong_to(:client) }
+    end
+
+    context 'when belongs to salon' do
+      it { is_expected.to belong_to(:salon) }
+    end
+
+    context 'when has many visits_services' do
+      it { is_expected.to have_many(:visits_services).dependent(:destroy) }
+    end
+
+    context 'when has many services' do
+      it { is_expected.to have_many(:services) }
+    end
+
+    context 'when has many services through visits_services' do
+      it { is_expected.to have_many(:services).through(:visits_services) }
+    end
+  end
 end

@@ -1,37 +1,42 @@
 require 'faker'
 
-# FactoryBot.create(:salon_owner)
-# FactoryBot.create(:visit, client_id: Client.last.id, salon_id: Salon.last.id)
-
-10.times { FactoryBot.create(:client) }
-puts '10 clients created'
-FactoryBot.create(:user)
-puts  'user created'
-FactoryBot.create(:salon_owner)
-10.times { FactoryBot.create(:service, salon_id: Salon.last.id) }
-puts '10 services created'
-
-50.times do
-  Visit.create(start_at: Date.current, end_at: Date.current, price: rand(1..100), address: Faker::Address.full_address,
-               status: 0)
+20.times do
+  FactoryBot.create(:salon)
+  puts "Salon #{Salon.last.id} created"
 end
 
-puts 'Visit has been created'
+5.times do
+  FactoryBot.create(:salon_owner)
+  puts "Salon owner created"
+end
+
+5.times do
+  FactoryBot.create(:user)
+  puts "User created"
+end
 
 10.times do
-  SocialNetwork.create(
-    name: Faker::Lorem.word
-)
+  FactoryBot.create(:client)
+  puts "Client created"
 end
 
-puts 'SocialNetwork has been created'
+20.times do
+  FactoryBot.create(:service, salon_id: rand(1..10))
+  puts "Created service with id: #{Service.last.id}"
+end
+
+25.times do
+  FactoryBot.create(:visit, client_id: rand(1..10), salon_id: rand(1..10))
+end
+
+FactoryBot.create(:service, salon_id: 1)
+
+20.times do
+  FactoryBot.create(:social_network)
+  puts "Created social_network with id: #{SocialNetwork.last.id}"
+end
 
 10.times do
-  SalonsSocialNetwork.create(
-    salon_id: rand(1...51),
-    social_network_id: rand(1...11),
-    link: Faker::Internet.url
-)
+  FactoryBot.create(:salons_social_network, salon_id: rand(1..10), social_network_id: rand(1..20))
+  puts "Created salons_social_network with id: #{SalonsSocialNetwork.last.id}"
 end
-
-puts 'SalonSocialNetwork has been created'

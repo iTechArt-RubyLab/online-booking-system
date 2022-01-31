@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'delete visit route' do
-  let(:visit_one) { create(:random_visit) }
-  let(:visit_two) { create(:random_visit) }
+  let(:visit_one) { create(:visit) }
+  let(:visit_two) { create(:visit) }
 
   before do
     delete "/api/v1/visits/#{visit_one.id}"

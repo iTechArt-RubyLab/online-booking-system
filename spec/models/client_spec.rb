@@ -27,8 +27,8 @@ RSpec.describe Client, type: :model do
       it { is_expected.to validate_presence_of :last_name }
     end
 
-    context 'when middle_name nil' do
-      it { is_expected.to allow_value('', nil).for(:middle_name) }
+    context 'when middle_name empty' do
+      it { is_expected.to allow_value('').for(:middle_name) }
     end
 
     context 'when email nil' do
@@ -49,6 +49,12 @@ RSpec.describe Client, type: :model do
 
     context 'when image_url nil' do
       it { is_expected.to validate_presence_of :image_url }
+    end
+  end
+
+  describe 'associations' do
+    context 'when has many visits' do
+      it { is_expected.to have_many(:visits).dependent(:destroy) }
     end
   end
 end
