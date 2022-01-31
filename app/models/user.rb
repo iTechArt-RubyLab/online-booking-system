@@ -19,7 +19,12 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
+
+require 'elasticsearch/model'
+
 class User < ApplicationRecord
+  include Elasticsearch::Model
+
   EMAIL_REGEX = URI::MailTo::EMAIL_REGEXP
   PHONE_REGEX = /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/
   SORT_FIELDS = %i[first_name last_name middle_name email phone birthday].freeze
@@ -88,3 +93,6 @@ class User < ApplicationRecord
     salon_owner? || client?
   end
 end
+
+Service.__elasticsearch__.create_index!
+Service.import

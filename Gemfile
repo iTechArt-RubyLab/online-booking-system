@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.3'
-
+  
 gem 'rails', '~> 6.1.4'
 
 gem 'pg'
@@ -43,4 +43,6 @@ group :development, :test do
   gem 'simplecov', '~> 0.21.2'
   # Use annotate to add comments to your code
   gem 'annotate', '~> 3.1', '>= 3.1.1'
+  gem 'elasticsearch-rails', '~> 7.2'
+  gem 'elasticsearch-model', '~> 7.2'
 end

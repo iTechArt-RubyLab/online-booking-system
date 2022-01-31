@@ -14,7 +14,12 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
+
+require 'elasticsearch/model'
+
 class Service < ApplicationRecord
+  include Elasticsearch::Model
+
   SORT_FIELDS = %i[category salon_id name duration price availability].freeze
 
   belongs_to :salon
