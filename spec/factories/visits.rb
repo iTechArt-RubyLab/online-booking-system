@@ -20,8 +20,8 @@ FactoryBot.define do
     start_at { '2022-01-18' }
     end_at { '2022-01-19' }
     status { :created }
-    client { create(:client) }
-    salon { create(:salon) }
+    client_id { rand(1..10) }
+    salon_id { rand(1..10) }
 
     after(:create) do |visit|
       salon = visit.salon

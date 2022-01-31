@@ -52,7 +52,7 @@ module Api
       end
 
       def visit_params
-        params.require(:visit).permit(:start_at, :end_at, :price, :address, :status)
+        params.require(:visit).permit(:start_at, :end_at, :price, :address, :status, :client_id, :salon_id)
       end
     end
   end

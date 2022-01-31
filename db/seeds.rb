@@ -37,6 +37,6 @@ FactoryBot.create(:service, salon_id: 1)
 end
 
 10.times do
-  FactoryBot.create(:salons_social_network, salon_id: rand(1..10), social_network_id: rand(1..20))
+  FactoryBot.create(:salons_social_network, salon_id: rand(1..20), social_network_id: rand(1..20))
   puts "Created salons_social_network with id: #{SalonsSocialNetwork.last.id}"
 end

@@ -26,7 +26,7 @@ class Visit < ApplicationRecord
   }
 
   belongs_to :client, class_name: 'Client'
-  belongs_to :salon
+  belongs_to :salon, class_name: 'Salon'
 
   has_many :visits_services, dependent: :destroy
   has_many :services, through: :visits_services

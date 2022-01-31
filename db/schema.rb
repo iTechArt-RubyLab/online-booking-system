@@ -128,5 +128,5 @@ ActiveRecord::Schema.define(version: 2022_01_28_190600) do
   add_foreign_key "salons_social_networks", "social_networks"
   add_foreign_key "users_salons", "salons", on_delete: :cascade
   add_foreign_key "users_salons", "users", on_delete: :cascade
-  add_foreign_key "visits", "users", column: "client_id", on_delete: :cascade
+  add_foreign_key "visits", "clients", on_delete: :cascade
 end
