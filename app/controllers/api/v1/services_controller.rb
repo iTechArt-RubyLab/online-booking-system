@@ -1,9 +1,7 @@
 module Api
   module V1
     class ServicesController < ApplicationController
-      before_action :set_service, only: %i[show update destroy]
-
-      attr_accessor :service
+      before_action :find_service, only: %i[show update destroy]
 
       def index
         services = Service.paginate(page: params[:page], per_page: 10)
@@ -11,38 +9,38 @@ module Api
       end
 
       def show
-        render json: service
+        render json: @service
       end
 
       def create
-        service = Service.new(service_params)
+        @service = Service.new(service_params)
 
-        if service.save
-          render json: service
+        if @service.save
+          render json: @service
         else
-          render json: { message: service.errors.full_messages }, status: :bad_request
+          render json: { message: @service.errors.full_messages }, status: :bad_request
         end
       end
 
       def update
-        if service.update(service_params)
-          render json: service
+        if @service.update(service_params)
+          render json: @service
         else
-          render json: { message: service.errors.full_messages }, status: :bad_request
+          render json: { message: @service.errors.full_messages }, status: :bad_request
         end
       end
 
       def destroy
-        if service&.destroy
-          render json: service
+        if @service&.destroy
+          render json: @service
         else
-          render json: { message: service.errors.full_messages }, status: :bad_request
+          render json: { message: @service.errors.full_messages }, status: :bad_request
         end
       end
 
       private
 
-      def set_service
+      def find_service
         @service = Service.find(params[:id])
       end
 
