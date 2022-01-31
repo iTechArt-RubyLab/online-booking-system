@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :users
       resources :clients
       resources :visits
+      resources :categories, only: [:index, :show]
     end
   end
 end

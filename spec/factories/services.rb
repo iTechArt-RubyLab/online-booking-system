@@ -23,6 +23,7 @@ FactoryBot.define do
     price { rand(1..100) }
     hidden_price { rand(1..100) }
     availability { rand(0..1) }
+    category { rand(1..7) }
   end
 
   trait(:no_salon_id) { salon_id { nil } }

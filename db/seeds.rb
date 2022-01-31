@@ -20,6 +20,17 @@ end
   puts "Client created"
 end
 
+Category.create(name: 'Body Care')
+Category.create(name: 'Hair Care')
+Category.create(name: 'Face Care')
+Category.create(name: 'Makeup')
+Category.create(name: 'Nails')
+Category.create(name: 'Massage')
+Category.create(name: 'Spa')
+Category.create(name: 'Other')
+
+puts 'Catigories have been created'
+
 20.times do
   FactoryBot.create(:service, salon_id: rand(1..10))
   puts "Created service with id: #{Service.last.id}"
