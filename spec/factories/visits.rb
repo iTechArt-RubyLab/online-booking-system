@@ -10,8 +10,10 @@
 #  status     :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  client_id  :integer          not null
-#  salon_id   :integer          not null
+#  user_id    :bigint           not null
+#  service_id :bigint           not null
+#  client_id  :bigint           not null
+#  salon_id   :bigint           not null
 #
 FactoryBot.define do
   factory :visit, class: 'Visit' do

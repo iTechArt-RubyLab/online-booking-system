@@ -3,7 +3,7 @@
 # Table name: services
 #
 #  id           :bigint           not null, primary key
-#  category     :integer          default("body_care"), not null
+#  category     :integer          default(0), not null
 #  salon_id     :integer          not null
 #  name         :string           not null
 #  description  :text             not null
