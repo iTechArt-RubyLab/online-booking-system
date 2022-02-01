@@ -14,6 +14,7 @@ module Api
 
       def create
         @category = Category.new(category_params)
+        @category.images.attach(params[:images])
 
         if @category.save!
           render json: @category
@@ -41,7 +42,7 @@ module Api
       private
 
       def category_params
-        params.permit(%i[name])
+        params.permit(%i[name images: []])
       end
 
       def find_category

@@ -21,6 +21,12 @@ gem 'validate_url', '~> 1.0.13'
 
 gem 'will_paginate', '~> 3.3'
 
+# Rails 5.2 and Rails 6
+gem 'active_storage_validations'
+
+# Optional, to use :dimension validator or :aspect_ratio validator
+gem 'mini_magick', '>= 4.9.5'
+
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec'
