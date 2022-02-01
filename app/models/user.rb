@@ -20,12 +20,19 @@
 #  updated_at  :datetime         not null
 #
 class User < ApplicationRecord
+  extend Devise::Models
+  # Include default devise modules.
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable
+  include DeviseTokenAuth::Concerns::User
+
   SORT_FIELDS = %i[first_name last_name middle_name email phone birthday].freeze
 
   enum role: { professional: 0, salon_owner: 1 }
   enum status: { working: 0, on_vacation: 1, banned: 2, fired: 3 }
 
-  before_save :validate_notes, :capitalize_data
+  before_save :capitalize_data
 
   validates :first_name, :last_name,
             :email, :phone, :birthday,
@@ -70,10 +77,6 @@ class User < ApplicationRecord
 
   def date_valid?
     birthday.present? && birthday <= Time.zone.today
-  end
-
-  def validate_notes
-    self.notes = notes.chars.shuffle if notes.include?('</script>')
   end
 
   def capitalize_data

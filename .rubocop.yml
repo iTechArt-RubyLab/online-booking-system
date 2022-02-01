@@ -14,6 +14,7 @@ AllCops:
     - 'log/**/*'
     - 'Gemfile'
     - 'Gemfile.lock'
+    - 'spec/rails_helper.rb'
 
 Metrics/BlockLength:
   Exclude:

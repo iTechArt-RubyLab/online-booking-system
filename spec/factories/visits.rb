@@ -19,11 +19,13 @@ FactoryBot.define do
   factory :visit, class: 'Visit' do
     address { Faker::Address.full_address }
     price { 20 }
-    start_at { '2022-01-18' }
-    end_at { '2022-01-19' }
+    start_at { Faker::Date.between(from: Time.zone.today, to: Time.zone.today + 30) }
+    end_at { Faker::Date.between(from: Time.zone.today, to: Time.zone.today + 30) }
     status { :created }
-    client_id { rand(1..10) }
-    salon_id { rand(1..10) }
+    user_id { association(:user).id }
+    service_id { association(:service).id }
+    client_id { association(:client).id }
+    salon_id { association(:salon).id }
 
     after(:create) do |visit|
       salon = visit.salon

@@ -31,5 +31,5 @@ class Service < ApplicationRecord
   validates :availability, inclusion: { in: Service.availabilities }
   validates :description, length: { minimum: 10, maximum: 255 }
   validates :salon_id, numericality: { in: Salon.pluck(:id) }
-  validates :category, inclusion: { in: Category.pluck(:id) }
+  validates :category, presence: true, numericality: { in: Category.pluck(:id) }
 end

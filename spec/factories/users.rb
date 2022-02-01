@@ -24,6 +24,7 @@ FactoryBot.define do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     middle_name { Faker::Name.middle_name }
+    password { Faker::Internet.password }
     email { Faker::Internet.email }
     work_email { Faker::Internet.email }
     phone { '+375 25 609-99-99' }
