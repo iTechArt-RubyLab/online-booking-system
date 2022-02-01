@@ -24,6 +24,8 @@ gem 'validate_url', '~> 1.0.13'
 
 gem 'will_paginate', '~> 3.3'
 
+gem 'airbrake-ruby', '~> 6.0', '>= 6.0.2'
+
 gem 'airbrake', '~> 13.0'
 
 gem 'figaro'
