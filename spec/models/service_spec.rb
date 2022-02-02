@@ -3,7 +3,6 @@
 # Table name: services
 #
 #  id           :bigint           not null, primary key
-#  category     :integer          default("body_care"), not null
 #  salon_id     :integer          not null
 #  name         :string           not null
 #  description  :text             not null
@@ -13,6 +12,7 @@
 #  availability :integer          not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  category_id  :bigint           not null
 #
 require 'rails_helper'
 

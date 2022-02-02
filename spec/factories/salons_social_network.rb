@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :salons_social_network, class: 'SalonsSocialNetwork' do
     link { Faker::Internet.url }
-    salon_id { 1 }
-    social_network_id { 3 }
+    salon_id { association(:salon) }
+    social_network_id { association(:social_network) }
   end
 
   trait(:no_link) { link { nil } }
