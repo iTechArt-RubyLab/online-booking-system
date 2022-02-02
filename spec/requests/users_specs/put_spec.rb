@@ -7,7 +7,7 @@ describe 'Users API PUT', type: :request do
 
       before do
         put "/api/v1/users/#{user.id}",
-            params: { user: { first_name: 'Ginger', last_name: 'Smithy', middle_name: 'Jackson', salon_id: 10 } }
+            params: { user: { first_name: 'Ginger' } }
       end
 
       include_examples 'success status'

@@ -3,7 +3,6 @@
 # Table name: services
 #
 #  id           :bigint           not null, primary key
-#  category     :integer          default(0), not null
 #  salon_id     :integer          not null
 #  name         :string           not null
 #  description  :text             not null
@@ -13,17 +12,18 @@
 #  availability :integer          not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  category_id  :bigint           not null
 #
 FactoryBot.define do
   factory :service, class: 'Service' do
-    salon_id { rand(1..10) }
+    salon_id { association(:salon).id }
     name { Faker::Superhero.name }
     description { Faker::Lorem.sentence }
     duration { rand(1..180) }
     price { rand(1..100) }
     hidden_price { rand(1..100) }
     availability { rand(0..1) }
-    category_id { Category.pluck(:id).sample }
+    category_id { association(:category).id }
   end
 
   trait(:no_salon_id) { salon_id { nil } }
