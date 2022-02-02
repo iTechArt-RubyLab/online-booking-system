@@ -19,6 +19,14 @@ class ApplicationController < ActionController::API
                                                image_url])
   end
 
+  include Authorization
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  def user_not_authorized
+    render json: { error: 'You are not authorized to perform this action.' }, status: :unauthorized
+  end
+
   private
 
   def record_not_found(exception)

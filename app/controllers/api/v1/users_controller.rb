@@ -1,7 +1,12 @@
 module Api
   module V1
     class UsersController < ApplicationController
+<<<<<<< HEAD
       before_action :find_user, only: %i[show update destroy]
+=======
+      before_action :require_authentication, exept: %i[show index]
+      before_action :set_user, only: %i[show update destroy]
+>>>>>>> d236e7f (Add-authorization-with-pundit)
 
       def search
         render json: User.search(search_params[:info]).records.to_a

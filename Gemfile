@@ -43,6 +43,8 @@ gem 'active_storage_validations'
 
 gem 'mini_magick', '>= 4.9.5'
 
+gem 'pundit'
+
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec'
