@@ -27,11 +27,9 @@ class Visit < ApplicationRecord
     finished: 5
   }
 
-  belongs_to :client, class_name: 'Client'
-  belongs_to :salon, class_name: 'Salon'
-
-  has_many :visits_services, dependent: :destroy
-  has_many :services, through: :visits_services
+  belongs_to :client
+  belonga_to :user
+  belongs_to :service
 
   validates :start_at, :end_at, :price, :address, :status, presence: true
   validates :price, length: { minimum: 2 }

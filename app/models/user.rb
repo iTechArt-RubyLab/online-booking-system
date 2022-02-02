@@ -25,6 +25,12 @@ class User < ApplicationRecord
   enum role: { professional: 0, salon_owner: 1 }
   enum status: { working: 0, on_vacation: 1, banned: 2, fired: 3 }
 
+  concerning :professional do
+    include do
+      has_many :visits, dependent: :destroy
+    end
+  end
+
   before_save :validate_notes, :capitalize_data
 
   validates :first_name, :last_name,
