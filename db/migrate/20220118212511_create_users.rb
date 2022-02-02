@@ -4,8 +4,8 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :first_name, null: false
       t.string :last_name, null: false
       t.string :middle_name, empty: true
-      t.string :email, null: false, unique: true
-      t.string :work_email, null: true, unique: true
+      t.string :email, null: false
+      t.string :work_email, null: true
       t.string :phone, null: false
       t.string :work_phone, null: true
       t.datetime :birthday, null: false

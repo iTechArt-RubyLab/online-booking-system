@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
+  include DeviseTokenAuth::Concerns::SetUserByToken
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ArgumentError, with: :arguments_error
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
@@ -8,6 +9,15 @@ class ApplicationController < ActionController::API
   rescue_from ActionController::RoutingError, with: :routing_error # not working!
   rescue_from ActiveRecord::StatementInvalid, with: :statement_invalid # not working!
   rescue_from ActionController::ParameterMissing, with: :parameter_missing
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up,
+                                      keys: %i[first_name last_name middle_name email phone birthday role status notes
+                                               image_url])
+  end
 
   private
 

@@ -10,8 +10,9 @@
 #  status     :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  client_id  :integer          not null
-#  salon_id   :integer          not null
+#  user_id    :bigint           not null
+#  service_id :bigint           not null
+#  client_id  :bigint           not null
 #
 require 'rails_helper'
 RSpec.describe Visit, type: :model do
@@ -40,22 +41,6 @@ RSpec.describe Visit, type: :model do
   describe 'associations' do
     context 'when belongs to client' do
       it { is_expected.to belong_to(:client) }
-    end
-
-    context 'when belongs to salon' do
-      it { is_expected.to belong_to(:salon) }
-    end
-
-    context 'when has many visits_services' do
-      it { is_expected.to have_many(:visits_services).dependent(:destroy) }
-    end
-
-    context 'when has many services' do
-      it { is_expected.to have_many(:services) }
-    end
-
-    context 'when has many services through visits_services' do
-      it { is_expected.to have_many(:services).through(:visits_services) }
     end
   end
 end

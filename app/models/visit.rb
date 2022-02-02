@@ -10,8 +10,9 @@
 #  status     :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  client_id  :integer          not null
-#  salon_id   :integer          not null
+#  user_id    :bigint           not null
+#  service_id :bigint           not null
+#  client_id  :bigint           not null
 #
 class Visit < ApplicationRecord
   SORT_FIELDS = %i[start_at end_at price status].freeze
@@ -25,11 +26,11 @@ class Visit < ApplicationRecord
     finished: 5
   }
 
-  belongs_to :client, class_name: 'Client'
-  belongs_to :salon, class_name: 'Salon'
+  belongs_to :client
+  belongs_to :user
+  belongs_to :service
 
-  has_many :visits_services, dependent: :destroy
-  has_many :services, through: :visits_services
+  delegate :salon, to: :service
 
   validates :start_at, :end_at, :price, :address, :status, presence: true
   validates :price, length: { minimum: 2 }

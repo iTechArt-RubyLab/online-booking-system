@@ -1,9 +1,7 @@
 module Api
   module V1
     class SalonsController < ApplicationController
-      before_action :set_salon, only: %i[show update destroy]
-
-      attr_accessor :salon
+      before_action :find_salon, only: %i[show update destroy]
 
       def index
         @salons =
@@ -16,34 +14,34 @@ module Api
       end
 
       def show
-        if salon
-          render json: salon
+        if @salon
+          render json: @salon
         else
           render json: { error: 'Salon not found' }, status: :not_found
         end
       end
 
       def create
-        salon = Salon.new(salon_params)
+        @salon = Salon.new(salon_params)
 
-        if salon.save!
-          render json: salon
+        if @salon.save!
+          render json: @salon
         else
           render json: { error: 'Error creating salon.' }, status: :unprocessable_entity
         end
       end
 
       def update
-        if salon.update(salon_params)
-          render json: salon
+        if @salon.update(salon_params)
+          render json: @salon
         else
           render json: { error: 'Update not update salon' }, status: :unprocessable_entity
         end
       end
 
       def destroy
-        if salon.destroy
-          render json: salon
+        if @salon.destroy
+          render json: @salon
         else
           render json: { error: 'Error deleting salon' }, status: :unprocessable_entity
         end
@@ -51,7 +49,7 @@ module Api
 
       private
 
-      def set_salon
+      def find_salon
         @salon = Salon.find(params[:id])
       end
 
