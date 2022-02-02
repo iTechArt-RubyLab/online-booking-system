@@ -24,14 +24,9 @@ Salon.all.each do |salon|
   end
 end
 
-
-20.times do
-  FactoryBot.create(:social_network)
-  puts "Created social_network with id: #{SocialNetwork.last.id}"
+Salon.all.each do |salon|
+  social_network = FactoryBot.create(:social_network)
+  FactoryBot.create(:salons_social_network, salon_id: salon.id, social_network_id: social_network.id)
 end
 
-10.times do
-  salon_id = Salon.pluck(:id).sample
-  FactoryBot.create(:salons_social_network, salon_id: salon_id, social_network_id: rand(1..20))
-  puts "Created salons_social_network with id: #{SalonsSocialNetwork.last.id}"
-end
+puts "Social_networks created"
