@@ -10,12 +10,15 @@ gem 'rails', '~> 6.1.4'
 gem 'pg'
 
 gem 'puma', '~> 5.0'
+
 # Use tzinfo gem instead of tzinfo-data
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'bootsnap', require: false
+
 # Use date_validator gem for validating dates
 gem 'date_validator', '~> 0.12.0'
+
 # Use validate_url gem for validating urls
 gem 'validate_url', '~> 1.0.13'
 # Use devise-token-auth gem for authentication
@@ -31,6 +34,12 @@ gem 'figaro', '~> 1.2'
 gem 'geocoder', '~> 1.3', '>= 1.3.7'
 
 gem 'will_paginate', '~> 3.3'
+
+gem 'airbrake-ruby', '~> 6.0', '>= 6.0.2'
+
+gem 'airbrake', '~> 13.0'
+
+gem 'figaro'
 
 gem 'active_storage_validations'
 
