@@ -99,7 +99,6 @@ ActiveRecord::Schema.define(version: 2022_02_02_101807) do
     t.integer "role", default: 0, null: false
     t.integer "status", default: 0
     t.text "notes"
-    t.string "image_url", null: false
     t.integer "rating", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -157,6 +156,8 @@ ActiveRecord::Schema.define(version: 2022_02_02_101807) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "professionals_salons", "salons", on_delete: :cascade
   add_foreign_key "professionals_salons", "users", column: "professional_id", on_delete: :cascade
   add_foreign_key "salons_social_networks", "salons"

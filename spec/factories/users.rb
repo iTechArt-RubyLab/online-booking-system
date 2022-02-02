@@ -50,7 +50,13 @@ FactoryBot.define do
     role { User.roles[:professional] }
     status { User.statuses.keys.sample }
     notes { Faker::Lorem.paragraph }
-    image_url { 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y' }
+    after(:build) do |user|
+      user.avatar.attach(
+        io: File.open(Rails.root.join('spec', 'photos', 'test.png')),
+        filename: 'test.png',
+        content_type: 'image/png'
+      )
+    end
 
     factory :salon_owner, class: 'User' do
       role { :salon_owner }
@@ -75,7 +81,7 @@ FactoryBot.define do
   trait(:no_birthday) { birthday { nil } }
   trait(:no_role) { role { nil } }
   trait(:no_notes) { notes { nil } }
-  trait(:no_image_url) { image_url { nil } }
+
   trait(:professional) { role { 0 } }
   trait(:salon_owner) { role { 1 } }
 end

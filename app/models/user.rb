@@ -62,6 +62,10 @@ class User < ApplicationRecord
 
   before_save :capitalize_data
 
+  has_one_attached :avatar
+
+  validates :avatar, attached: true, content_type: 'image/png'
+
   validates :first_name, :last_name,
             :email, :phone, :birthday,
             :role, :image_url,
@@ -82,7 +86,7 @@ class User < ApplicationRecord
 
   validates :birthday, date: :date_valid?
 
-  validates :image_url, url: true
+
 
   with_options if: :salon_owner? do
     validates :status, :work_email,

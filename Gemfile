@@ -32,6 +32,10 @@ gem 'geocoder', '~> 1.3', '>= 1.3.7'
 
 gem 'will_paginate', '~> 3.3'
 
+gem 'active_storage_validations'
+
+gem 'mini_magick', '>= 4.9.5'
+
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec'

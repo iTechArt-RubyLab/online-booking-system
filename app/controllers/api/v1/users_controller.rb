@@ -23,6 +23,7 @@ module Api
 
       def create
         @user = User.new(user_params)
+        @user.avatar.attach(params[:avatar])
 
         if @user.save!
           render json: @user
@@ -55,7 +56,7 @@ module Api
 
       def user_params
         params.require(:user).permit(%i[first_name last_name middle_name salon_id email work_email phone
-                                        work_phone birthday role status notes image_url])
+                                        work_phone birthday role status notes avatar])
       end
 
       def find_user
