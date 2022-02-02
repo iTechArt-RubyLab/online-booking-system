@@ -3,6 +3,10 @@ module Api
     class UsersController < ApplicationController
       before_action :find_user, only: %i[show update destroy]
 
+      def search
+        render json: User.search(search_params[:info]).records.to_a
+      end
+
       def index
         @users =
           if params[:sort]
@@ -19,6 +23,7 @@ module Api
 
       def create
         @user = User.new(user_params)
+        @user.avatar.attach(params[:avatar])
 
         if @user.save!
           render json: @user
@@ -45,9 +50,13 @@ module Api
 
       private
 
+      def search_params
+        params.require(:search).permit(:info)
+      end
+
       def user_params
         params.require(:user).permit(%i[first_name last_name middle_name salon_id email work_email phone
-                                        work_phone birthday role status notes image_url])
+                                        work_phone birthday role status notes avatar])
       end
 
       def find_user

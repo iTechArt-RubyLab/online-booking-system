@@ -19,8 +19,6 @@ class Salon < ApplicationRecord
   has_many :users_salons, dependent: :destroy
   has_many :users, through: :users_salons
 
-  has_many :visits, dependent: :destroy
-
   has_many :salons_social_networks, dependent: :destroy
   has_many :social_networks, through: :salons_social_networks
 
@@ -34,6 +32,7 @@ class Salon < ApplicationRecord
   validates :phone, presence: true, format: { with: PHONE_REGEXP, message: 'Phone invalid' }
 
   before_validation :normalize_params, on: :create
+  after_validation :geocode, if: ->(obj) { obj.address.present? and obj.address_changed? }
   before_save :validacion_notes
 
   validates :name, uniqueness: true,
@@ -61,6 +60,12 @@ class Salon < ApplicationRecord
                     }
   validates :phone, presence: true,
                     format: { with: PHONE_REGEXP }
+
+  geocoded_by :address
+
+  def professionals
+    users.where(role: :professional)
+  end
 
   def links
     salons_social_networks.map(&:link)

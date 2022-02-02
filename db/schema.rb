@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_190520) do
     t.text "notes", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "latitude"
+    t.float "longitude"
   end
 
   create_table "salons_social_networks", force: :cascade do |t|
@@ -94,7 +96,6 @@ ActiveRecord::Schema.define(version: 2022_02_01_190520) do
   end
 
   create_table "services", force: :cascade do |t|
-    t.integer "category", default: 0, null: false
     t.integer "salon_id", null: false
     t.string "name", null: false
     t.text "description", null: false
@@ -104,6 +105,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_190520) do
     t.integer "availability", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_services_on_category_id"
     t.index ["name"], name: "index_services_on_name", unique: true
   end
 
@@ -125,10 +128,30 @@ ActiveRecord::Schema.define(version: 2022_02_01_190520) do
     t.integer "role", default: 0, null: false
     t.integer "status", default: 0
     t.text "notes"
-    t.string "image_url", null: false
     t.integer "rating", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "provider", default: "email", null: false
+    t.string "uid", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.boolean "allow_password_change", default: false
+    t.datetime "remember_created_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.json "tokens"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
   create_table "users_salons", force: :cascade do |t|
@@ -150,11 +173,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_190520) do
     t.bigint "user_id", null: false
     t.bigint "service_id", null: false
     t.bigint "client_id", null: false
-    t.bigint "salon_id", null: false
     t.index ["client_id"], name: "index_visits_on_client_id"
-    t.index ["salon_id"], name: "index_visits_on_salon_id"
     t.index ["service_id"], name: "index_visits_on_service_id"
-    t.index ["user_id", "service_id", "client_id", "salon_id"], name: "index_visits_on_user_id_service_id_client_id_salon_id", unique: true
     t.index ["user_id"], name: "index_visits_on_user_id"
   end
 
@@ -171,10 +191,10 @@ ActiveRecord::Schema.define(version: 2022_02_01_190520) do
   add_foreign_key "professionals_salons", "users", column: "professional_id", on_delete: :cascade
   add_foreign_key "salons_social_networks", "salons"
   add_foreign_key "salons_social_networks", "social_networks"
+  add_foreign_key "services", "categories", on_delete: :cascade
   add_foreign_key "users_salons", "salons", on_delete: :cascade
   add_foreign_key "users_salons", "users", on_delete: :cascade
   add_foreign_key "visits", "clients"
-  add_foreign_key "visits", "salons"
   add_foreign_key "visits", "services"
   add_foreign_key "visits", "users"
 end

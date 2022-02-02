@@ -54,7 +54,7 @@ module Api
       end
 
       def salon_params
-        params.require(:salon).permit(%i[name address phone email notes])
+        params.require(:salon).permit(%i[name address phone email notes latitude longitude])
       end
     end
   end

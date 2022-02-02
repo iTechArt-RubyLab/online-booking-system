@@ -13,9 +13,13 @@
 #  user_id    :bigint           not null
 #  service_id :bigint           not null
 #  client_id  :bigint           not null
-#  salon_id   :bigint           not null
 #
+
+require 'elasticsearch/model'
+
 class Visit < ApplicationRecord
+  include Elasticsearch::Model
+
   SORT_FIELDS = %i[start_at end_at price status].freeze
 
   enum status: {
@@ -27,12 +31,15 @@ class Visit < ApplicationRecord
     finished: 5
   }
 
-  belongs_to :client, class_name: 'Client'
-  belongs_to :salon, class_name: 'Salon'
+  belongs_to :client
+  belongs_to :user
+  belongs_to :service
 
-  has_many :visits_services, dependent: :destroy
-  has_many :services, through: :visits_services
+  delegate :salon, to: :service
 
   validates :start_at, :end_at, :price, :address, :status, presence: true
   validates :price, length: { minimum: 2 }
 end
+
+Visit.__elasticsearch__.create_index!
+Visit.import

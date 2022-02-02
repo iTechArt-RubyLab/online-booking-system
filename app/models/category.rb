@@ -8,7 +8,6 @@
 #  updated_at :datetime         not null
 #
 class Category < ApplicationRecord
-  validates :name, uniqueness: true
   validates :name, presence: true, length: { minimum: 2, maximum: 255 }
 
   validates :image_url, presence: true

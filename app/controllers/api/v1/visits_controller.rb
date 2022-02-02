@@ -3,6 +3,10 @@ module Api
     class VisitsController < ApplicationController
       before_action :find_visit, only: %i[show update destroy]
 
+      def search
+        render json: Visit.search(search_params[:info]).records.to_a
+      end
+
       def index
         @visits =
           if params[:sort]
@@ -44,12 +48,17 @@ module Api
 
       private
 
+      def search_params
+        params.require(:search).permit(:info)
+      end
+
       def find_visit
         @visit = Visit.find(params[:id])
       end
 
       def visit_params
-        params.require(:visit).permit(:start_at, :end_at, :price, :address, :status, :client_id, :salon_id, :service_id, :user_id)
+        params.require(:visit).permit(:start_at, :end_at, :price, :address, :status, :client_id, :salon_id,
+                                      :service_id, :user_id)
       end
     end
   end

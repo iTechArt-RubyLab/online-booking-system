@@ -4,27 +4,45 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.3'
-
+  
 gem 'rails', '~> 6.1.4'
 
 gem 'pg'
 
 gem 'puma', '~> 5.0'
+
 # Use tzinfo gem instead of tzinfo-data
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'bootsnap', require: false
+
 # Use date_validator gem for validating dates
 gem 'date_validator', '~> 0.12.0'
+
 # Use validate_url gem for validating urls
 gem 'validate_url', '~> 1.0.13'
+# Use devise-token-auth gem for authentication
+gem 'devise_token_auth', '~> 1.2'
+# Use omniauth gem for authentication
+gem 'omniauth', '~> 2.0'
+gem 'omniauth-github', '~> 2.0'
+# Use rack-cors gem for CORS support
+gem 'rack-cors', '~> 1.1'
+# Use figaro gem for managing environment variables
+gem 'figaro', '~> 1.2'
+
+gem 'geocoder', '~> 1.3', '>= 1.3.7'
 
 gem 'will_paginate', '~> 3.3'
 
-# Rails 5.2 and Rails 6
+gem 'airbrake-ruby', '~> 6.0', '>= 6.0.2'
+
+gem 'airbrake', '~> 13.0'
+
+gem 'figaro'
+
 gem 'active_storage_validations'
 
-# Optional, to use :dimension validator or :aspect_ratio validator
 gem 'mini_magick', '>= 4.9.5'
 
 group :development, :test do
@@ -49,4 +67,6 @@ group :development, :test do
   gem 'simplecov', '~> 0.21.2'
   # Use annotate to add comments to your code
   gem 'annotate', '~> 3.1', '>= 3.1.1'
+  gem 'elasticsearch-rails', '~> 7.2'
+  gem 'elasticsearch-model', '~> 7.2'
 end

@@ -13,22 +13,17 @@
 #  user_id    :bigint           not null
 #  service_id :bigint           not null
 #  client_id  :bigint           not null
-#  salon_id   :bigint           not null
 #
 FactoryBot.define do
   factory :visit, class: 'Visit' do
     address { Faker::Address.full_address }
     price { 20 }
-    start_at { '2022-01-18' }
-    end_at { '2022-01-19' }
+    start_at { Faker::Date.between(from: Time.zone.today, to: Time.zone.today + 30) }
+    end_at { Faker::Date.between(from: Time.zone.today, to: Time.zone.today + 30) }
     status { :created }
-    client_id { rand(1..10) }
-    salon_id { rand(1..10) }
-
-    after(:create) do |visit|
-      salon = visit.salon
-      visit.services << salon.services
-    end
+    user_id { association(:user).id }
+    service_id { association(:service).id }
+    client_id { association(:client).id }
   end
 
   trait(:no_start_at) { start_at { nil } }
