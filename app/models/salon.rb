@@ -62,6 +62,10 @@ class Salon < ApplicationRecord
   validates :phone, presence: true,
                     format: { with: PHONE_REGEXP }
 
+  def professionals
+    users.where(role: :professional)
+  end
+
   def links
     salons_social_networks.map(&:link)
   end

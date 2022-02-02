@@ -28,8 +28,10 @@ class Visit < ApplicationRecord
   }
 
   belongs_to :client
-  belonga_to :user
+  belongs_to :user
   belongs_to :service
+
+  delegate :salon, to: :service
 
   validates :start_at, :end_at, :price, :address, :status, presence: true
   validates :price, length: { minimum: 2 }

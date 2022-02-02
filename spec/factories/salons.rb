@@ -18,6 +18,11 @@ FactoryBot.define do
     phone { '+375 29 123-45-67' }
     email { Faker::Internet.email }
     notes { Faker::Lorem.paragraph }
+
+    after(:create) do |salon|
+      create(:service, salon_id: salon.id)
+      salon.users << create(:professional)
+    end
   end
 
   trait(:no_address) { address { nil } }
