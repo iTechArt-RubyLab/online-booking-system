@@ -28,6 +28,8 @@ gem 'rack-cors', '~> 1.1'
 # Use figaro gem for managing environment variables
 gem 'figaro', '~> 1.2'
 
+gem 'geocoder', '~> 1.3', '>= 1.3.7'
+
 gem 'will_paginate', '~> 3.3'
 
 group :development, :test do
