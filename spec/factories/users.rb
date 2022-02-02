@@ -36,6 +36,14 @@ FactoryBot.define do
 
     factory :salon_owner, class: 'User' do
       role { :salon_owner }
+
+      after(:create) do |salon_owner|
+        salon_owner.salons << create(:salon)
+      end
+    end
+
+    factory :professional, class: 'User' do
+      role { :professional }
     end
   end
 

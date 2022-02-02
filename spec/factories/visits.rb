@@ -22,13 +22,6 @@ FactoryBot.define do
     start_at { '2022-01-18' }
     end_at { '2022-01-19' }
     status { :created }
-    client_id { rand(1..10) }
-    salon_id { rand(1..10) }
-
-    after(:create) do |visit|
-      salon = visit.salon
-      visit.services << salon.services
-    end
   end
 
   trait(:no_start_at) { start_at { nil } }

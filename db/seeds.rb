@@ -1,46 +1,29 @@
 require 'faker'
 
-20.times do
-  FactoryBot.create(:salon)
-  puts "Salon #{Salon.last.id} created"
+['Body Care', 'Hair Care', 'Face Care', 'Makeup', 'Nails', 'Massage', 'Spa', 'Other'].each do |el|
+  FactoryBot.create(:category, name: el)
 end
+puts 'Catigories have been created'
 
+# creats salon_owners with salons(with service and professional)
 5.times do
   FactoryBot.create(:salon_owner)
   puts "Salon owner created"
 end
 
-5.times do
-  FactoryBot.create(:user)
-  puts "User created"
+FactoryBot.create_list(:client, 5)
+puts "Clients created"
+
+Salon.all.each do |salon|
+  2.times do    
+    user_id = salon.professionals.map(&:id).sample
+    client_id = Client.pluck(:id).sample
+    service_id = salon.services.map(&:id).sample
+
+    FactoryBot.create(:visit, user_id: user_id, client_id: client_id, service_id: service_id)
+  end
 end
 
-10.times do
-  FactoryBot.create(:client)
-  puts "Client created"
-end
-
-Category.create(name: 'Body Care')
-Category.create(name: 'Hair Care')
-Category.create(name: 'Face Care')
-Category.create(name: 'Makeup')
-Category.create(name: 'Nails')
-Category.create(name: 'Massage')
-Category.create(name: 'Spa')
-Category.create(name: 'Other')
-
-puts 'Catigories have been created'
-
-20.times do
-  FactoryBot.create(:service, salon_id: rand(1..10))
-  puts "Created service with id: #{Service.last.id}"
-end
-
-25.times do
-  FactoryBot.create(:visit, user_id: rand(1..5), client_id: rand(1..10), service_id: rand(1..20))
-end
-
-FactoryBot.create(:service, salon_id: 1)
 
 20.times do
   FactoryBot.create(:social_network)
@@ -48,6 +31,7 @@ FactoryBot.create(:service, salon_id: 1)
 end
 
 10.times do
-  FactoryBot.create(:salons_social_network, salon_id: rand(1..20), social_network_id: rand(1..20))
+  salon_id = Salon.pluck(:id).sample
+  FactoryBot.create(:salons_social_network, salon_id: salon_id, social_network_id: rand(1..20))
   puts "Created salons_social_network with id: #{SalonsSocialNetwork.last.id}"
 end

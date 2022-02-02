@@ -18,6 +18,7 @@ class Service < ApplicationRecord
   SORT_FIELDS = %i[name category salon_id duration price availability].freeze
 
   belongs_to :salon
+  belongs_to :category
 
   enum availability: {
     yes: 0,
@@ -31,5 +32,5 @@ class Service < ApplicationRecord
   validates :availability, inclusion: { in: Service.availabilities }
   validates :description, length: { minimum: 10, maximum: 255 }
   validates :salon_id, numericality: { in: Salon.pluck(:id) }
-  validates :category, inclusion: { in: Category.pluck(:id) }
+  validates :category_id, inclusion: { in: Category.pluck(:id) }
 end
