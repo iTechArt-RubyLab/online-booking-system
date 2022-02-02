@@ -6,6 +6,7 @@
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  image_url  :string
 #
 class Category < ApplicationRecord
   validates :name, presence: true, length: { minimum: 2, maximum: 255 }

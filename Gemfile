@@ -28,8 +28,6 @@ gem 'omniauth', '~> 2.0'
 gem 'omniauth-github', '~> 2.0'
 # Use rack-cors gem for CORS support
 gem 'rack-cors', '~> 1.1'
-# Use figaro gem for managing environment variables
-gem 'figaro', '~> 1.2'
 
 gem 'geocoder', '~> 1.3', '>= 1.3.7'
 

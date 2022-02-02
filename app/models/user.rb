@@ -14,7 +14,6 @@
 #  role                   :integer          default("professional"), not null
 #  status                 :integer          default("working")
 #  notes                  :text
-#  image_url              :string           not null
 #  rating                 :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -68,8 +67,7 @@ class User < ApplicationRecord
 
   validates :first_name, :last_name,
             :email, :phone, :birthday,
-            :role, :image_url,
-            presence: true
+            :role, presence: true
 
   validates :first_name, :last_name,
             length: { minimum: 2, maximum: 255 }
@@ -85,8 +83,6 @@ class User < ApplicationRecord
   validates :phone, format: { with: PHONE_REGEXP, message: 'Phone invalid' }
 
   validates :birthday, date: :date_valid?
-
-
 
   with_options if: :salon_owner? do
     validates :status, :work_email,

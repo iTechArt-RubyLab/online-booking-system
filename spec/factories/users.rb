@@ -14,7 +14,6 @@
 #  role                   :integer          default("professional"), not null
 #  status                 :integer          default("working")
 #  notes                  :text
-#  image_url              :string           not null
 #  rating                 :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -50,6 +49,7 @@ FactoryBot.define do
     role { User.roles[:professional] }
     status { User.statuses.keys.sample }
     notes { Faker::Lorem.paragraph }
+
     after(:build) do |user|
       user.avatar.attach(
         io: File.open(Rails.root.join('spec', 'photos', 'test.png')),

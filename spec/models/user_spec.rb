@@ -14,7 +14,6 @@
 #  role                   :integer          default("professional"), not null
 #  status                 :integer          default("working")
 #  notes                  :text
-#  image_url              :string           not null
 #  rating                 :integer          default(0)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null

@@ -6,6 +6,7 @@
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  image_url  :string
 #
 FactoryBot.define do
   factory :category do

@@ -10,6 +10,8 @@
 #  notes      :text             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  latitude   :float
+#  longitude  :float
 #
 class Salon < ApplicationRecord
   SORT_FIELDS = %i[name address phone email].freeze

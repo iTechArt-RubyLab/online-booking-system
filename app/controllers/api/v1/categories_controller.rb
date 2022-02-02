@@ -44,7 +44,7 @@ module Api
       def category_params
         params.permit(%i[name images: []])
       end
-      
+
       def find_category
         @category = Category.find(params[:id])
       end
