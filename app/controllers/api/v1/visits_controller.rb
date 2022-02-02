@@ -1,9 +1,7 @@
 module Api
   module V1
     class VisitsController < ApplicationController
-      before_action :set_visit, only: %i[show update destroy]
-
-      attr_accessor :visit
+      before_action :find_visit, only: %i[show update destroy]
 
       def search
         render json: Visit.search(search_params[:info]).records.to_a
@@ -19,16 +17,7 @@ module Api
         render json: @visits
       end
 
-      def sort_params
-        params.require(:sort).permit(sort_column)
-      end
-
-      def sort_column
-        Visit.column_names.map(&:to_s)
-      end
-
       def show
-        visit
         render json: @visit
       end
 
@@ -42,16 +31,16 @@ module Api
       end
 
       def update
-        if visit.update(visit_params)
-          render json: visit
+        if @visit.update(visit_params)
+          render json: @visit
         else
           render json: { error: 'Unable to update visit' }
         end
       end
 
       def destroy
-        if visit.destroy
-          render json: visit
+        if @visit.destroy
+          render json: @visit
         else
           render json: { error: 'Unable to delete visit' }
         end
@@ -63,16 +52,13 @@ module Api
         params.require(:search).permit(:info)
       end
 
-      def set_user
-        @user = User.find(params[:id])
-      end
-
-      def set_visit
+      def find_visit
         @visit = Visit.find(params[:id])
       end
 
       def visit_params
-        params.require(:visit).permit(:start_at, :end_at, :price, :address, :status)
+        params.require(:visit).permit(:start_at, :end_at, :price, :address, :status, :client_id, :salon_id,
+                                      :service_id, :user_id)
       end
     end
   end

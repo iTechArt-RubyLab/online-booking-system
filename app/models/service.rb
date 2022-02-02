@@ -3,7 +3,6 @@
 # Table name: services
 #
 #  id           :bigint           not null, primary key
-#  category     :integer          default("body_care"), not null
 #  salon_id     :integer          not null
 #  name         :string           not null
 #  description  :text             not null
@@ -13,6 +12,7 @@
 #  availability :integer          not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  category_id  :bigint           not null
 #
 
 require 'elasticsearch/model'
@@ -23,19 +23,11 @@ class Service < ApplicationRecord
   SORT_FIELDS = %i[category salon_id name duration price availability].freeze
 
   belongs_to :salon
+  belongs_to :category
 
   enum availability: {
     yes: 0,
     no: 1
-  }
-
-  enum category: {
-    body_care: 0,
-    face_care: 1,
-    hairdressing_services: 2,
-    nail_services: 3,
-    makeup: 4,
-    spa: 5
   }
 
   validates :name, :description, :duration, :price, :hidden_price, :availability, presence: true
@@ -45,5 +37,5 @@ class Service < ApplicationRecord
   validates :availability, inclusion: { in: Service.availabilities }
   validates :description, length: { minimum: 10, maximum: 255 }
   validates :salon_id, numericality: { in: Salon.pluck(:id) }
-  validates :category, inclusion: { in: Service.categories }
+  validates :category_id, numericality: { in: Category.pluck(:id) }
 end

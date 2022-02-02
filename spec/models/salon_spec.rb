@@ -45,10 +45,6 @@ RSpec.describe Salon, type: :model do
       it { is_expected.to have_many(:salons_social_networks).dependent(:destroy) }
     end
 
-    context 'when has many visits' do
-      it { is_expected.to have_many(:visits).dependent(:destroy) }
-    end
-
     context 'when has many social_networks' do
       it { is_expected.to have_many(:social_networks).through(:salons_social_networks) }
     end
