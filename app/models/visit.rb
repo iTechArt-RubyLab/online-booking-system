@@ -13,7 +13,6 @@
 #  user_id    :bigint           not null
 #  service_id :bigint           not null
 #  client_id  :bigint           not null
-#  salon_id   :bigint           not null
 #
 class Visit < ApplicationRecord
   SORT_FIELDS = %i[start_at end_at price status].freeze

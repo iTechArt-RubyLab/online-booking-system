@@ -13,7 +13,6 @@
 #  user_id    :bigint           not null
 #  service_id :bigint           not null
 #  client_id  :bigint           not null
-#  salon_id   :bigint           not null
 #
 FactoryBot.define do
   factory :visit, class: 'Visit' do
@@ -25,12 +24,6 @@ FactoryBot.define do
     user_id { association(:user).id }
     service_id { association(:service).id }
     client_id { association(:client).id }
-    salon_id { association(:salon).id }
-
-    after(:create) do |visit|
-      salon = visit.salon
-      visit.services << salon.services
-    end
   end
 
   trait(:no_start_at) { start_at { nil } }
