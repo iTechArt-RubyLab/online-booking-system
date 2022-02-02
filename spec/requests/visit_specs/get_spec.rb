@@ -15,7 +15,7 @@ describe 'Visits API GET', type: :request do
   end
 
   context 'when /visits/:id' do
-    let!(:visit) { create(:visit) }
+    let(:visit) { create(:visit) }
 
     before { get "/api/v1/visits/#{visit.id}" }
 

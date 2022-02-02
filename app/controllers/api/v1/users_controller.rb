@@ -1,9 +1,7 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :set_user, only: %i[show update destroy]
-
-      attr_accessor :user
+      before_action :find_user, only: %i[show update destroy]
 
       def search
         render json: User.search(search_params[:info]).records.to_a
@@ -19,40 +17,32 @@ module Api
         render json: @users
       end
 
-      def sort_params
-        params.require(:sort).permit(salon_columns)
-      end
-
-      def salon_columns
-        Salon.column_names.map(&:to_s)
-      end
-
       def show
-        render json: user
+        render json: @user
       end
 
       def create
-        user = User.new(user_params)
-        user.avatar.attach(params[:avatar])
+        @user = User.new(user_params)
+        @user.avatar.attach(params[:avatar])
 
-        if user.save!
-          render json: user
+        if @user.save!
+          render json: @user
         else
           render json: { error: 'Error creating user.' }, status: :unprocessable_entity
         end
       end
 
       def update
-        if user.update(user_params)
-          render json: user
+        if @user.update(user_params)
+          render json: @user
         else
           render json: { error: 'Error updating user.' }, status: :unprocessable_entity
         end
       end
 
       def destroy
-        if user.destroy
-          render json: user
+        if @user.destroy
+          render json: @user
         else
           render json: { error: 'Error deleting user.' }, status: :unprocessable_entity
         end
@@ -69,7 +59,7 @@ module Api
                                         work_phone birthday role status notes avatar])
       end
 
-      def set_user
+      def find_user
         @user = User.find(params[:id])
       end
     end

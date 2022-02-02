@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: social_networks
+# Table name: categories
 #
 #  id         :bigint           not null, primary key
 #  name       :string           not null
@@ -8,7 +8,7 @@
 #  updated_at :datetime         not null
 #
 FactoryBot.define do
-  factory :social_network do
-    name { Faker::Superhero.name }
+  factory :category do
+    name { Faker::Lorem.word }
   end
 end

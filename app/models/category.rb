@@ -1,14 +1,12 @@
 # == Schema Information
 #
-# Table name: social_networks
+# Table name: categories
 #
 #  id         :bigint           not null, primary key
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-FactoryBot.define do
-  factory :social_network do
-    name { Faker::Superhero.name }
-  end
+class Category < ApplicationRecord
+  validates :name, presence: true, length: { minimum: 2, maximum: 255 }
 end

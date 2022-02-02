@@ -1,9 +1,7 @@
 module Api
   module V1
     class ClientsController < ApplicationController
-      before_action :set_client, only: %i[show update destroy]
-
-      attr_accessor :client
+      before_action :find_client, only: %i[show update destroy]
 
       def index
         @clients =
@@ -16,30 +14,30 @@ module Api
       end
 
       def show
-        render json: client
+        render json: @client
       end
 
       def create
-        client = Client.new(client_params)
+        @client = Client.new(client_params)
 
-        if client.save!
-          render json: client
+        if @client.save!
+          render json: @client
         else
           render json: { error: 'Error creating client.' }, status: :unprocessable_entity
         end
       end
 
       def update
-        if client.update(client_params)
-          render json: client
+        if @client.update(client_params)
+          render json: @client
         else
           render json: { error: 'Error updating client.' }, status: :unprocessable_entity
         end
       end
 
       def destroy
-        if client.destroy
-          render json: client
+        if @client.destroy
+          render json: @client
         else
           render json: { error: 'Error deleting client.' }, status: :unprocessable_entity
         end
@@ -52,7 +50,7 @@ module Api
                                           birthday notes image_url])
       end
 
-      def set_client
+      def find_client
         @client = Client.find(params[:id])
       end
     end
