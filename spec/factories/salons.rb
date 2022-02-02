@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: salons
+#
+#  id         :bigint           not null, primary key
+#  name       :string           not null
+#  address    :text             not null
+#  phone      :string           not null
+#  email      :string           default(""), not null
+#  notes      :text             not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 FactoryBot.define do
   factory :salon, class: 'Salon' do
     name { Faker::Company.name }
@@ -7,10 +20,10 @@ FactoryBot.define do
     notes { Faker::Lorem.paragraph }
 
     after(:create) do |salon|
-      FactoryBot.create(:service, salon_id: salon.id)
+      create(:service, salon_id: salon.id)
+      salon.users << create(:professional)
     end
   end
 
-  trait(:no_owner_id) { salon_owner_id { nil } }
   trait(:no_address) { address { nil } }
 end

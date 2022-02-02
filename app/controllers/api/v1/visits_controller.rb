@@ -3,11 +3,17 @@ module Api
     class VisitsController < ApplicationController
       before_action :find_visit, only: %i[show update destroy]
 
-      def index
-        sorting = params[:sort]
-        @visits = Visit.order(sort_params.to_h) if sorting
-        @visits = Visit.paginate(page: params[:page], per_page: 10) unless sorting
+      def search
+        render json: Visit.search(search_params[:info]).records.to_a
+      end
 
+      def index
+        @visits =
+          if params[:sort]
+            Visit.order(Visit::SORT_FIELDS).paginate(page: params[:page], per_page: 15)
+          else
+            Visit.paginate(page: params[:page], per_page: 15)
+          end
         render json: @visits
       end
 
@@ -42,12 +48,17 @@ module Api
 
       private
 
+      def search_params
+        params.require(:search).permit(:info)
+      end
+
       def find_visit
         @visit = Visit.find(params[:id])
       end
 
       def visit_params
-        params.require(:visit).permit(:start_at, :end_at, :price, :address, :status)
+        params.require(:visit).permit(:start_at, :end_at, :price, :address, :status, :client_id, :salon_id,
+                                      :service_id, :user_id)
       end
     end
   end

@@ -4,10 +4,12 @@ module Api
       before_action :find_salon, only: %i[show update destroy]
 
       def index
-        sorting = params[:sort]
-        render json: Salon.order(sort_params.to_h) if sorting
-        render json: Salon.all unless sorting
-        @salons = Salon.paginate(page: params[:page], per_page: 15)
+        @salons =
+          if params[:sort]
+            Salon.order(Salon::SORT_FIELDS).paginate(page: params[:page], per_page: 15)
+          else
+            Salon.paginate(page: params[:page], per_page: 15)
+          end
         render json: @salons
       end
 
@@ -15,7 +17,7 @@ module Api
         if @salon
           render json: @salon
         else
-          render json: { error: 'Error creating review.' }
+          render json: { error: 'Salon not found' }, status: :not_found
         end
       end
 
@@ -25,7 +27,7 @@ module Api
         if @salon.save!
           render json: @salon
         else
-          render json: { error: salon.errors.full_messages }
+          render json: { error: 'Error creating salon.' }, status: :unprocessable_entity
         end
       end
 
@@ -41,7 +43,7 @@ module Api
         if @salon.destroy
           render json: @salon
         else
-          render json: { error: 'Unable to delete salon' }, status: :unprocessable_entity
+          render json: { error: 'Error deleting salon' }, status: :unprocessable_entity
         end
       end
 
@@ -52,7 +54,7 @@ module Api
       end
 
       def salon_params
-        params.require(:salon).permit(%i[name address phone email notes owner_id])
+        params.require(:salon).permit(%i[name address phone email notes latitude longitude])
       end
     end
   end

@@ -1,21 +1,21 @@
+require 'rails_helper'
+
 describe 'Salons API GET', type: :request do
   context 'when /salons' do
     before do
-      create_list(:random_salon, 2)
+      create_list(:salon, 5)
       get '/api/v1/salons'
     end
 
-    it 'have http status success' do
-      expect(response).to have_http_status(:success)
-    end
+    include_examples 'success status'
 
     it 'returns all salons' do
-      expect(JSON.parse(response.body).size).to eq(2)
+      expect(JSON.parse(response.body).size).to eq(5)
     end
   end
 
   context 'when /salons/:id' do
-    let!(:salon) { create(:random_salon) }
+    let!(:salon) { create(:salon) }
 
     before { get "/api/v1/salons/#{salon.id}" }
 

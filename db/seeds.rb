@@ -1,61 +1,32 @@
 require 'faker'
 
-FactoryBot.create(:salon_owner)
-FactoryBot.create(:client)
-FactoryBot.create(:visit, client_id: Client.last.id, salon_id: Salon.last.id)
+['Body Care', 'Hair Care', 'Face Care', 'Makeup', 'Nails', 'Massage', 'Spa', 'Other'].each do |el|
+  FactoryBot.create(:category, name: el)
+end
+puts 'Catigories have been created'
 
-50.times do
-  User.create!(
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    middle_name: Faker::Name.middle_name,
-    email: Faker::Internet.email,
-    work_email: Faker::Internet.email,
-    phone: '+375 25 609-99-99',
-    work_phone: '+375 33 200-11-11',
-    birthday: Faker::Date.between(from: 50.years.ago, to: Date.today - 18.years),
-    role: rand(0...2),
-    rating: 0,
-    status: rand(0...4),
-    notes: Faker::Lorem.paragraph,
-    image_url: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y'
-  )
+# creats salon_owners with salons(with service and professional)
+5.times do
+  FactoryBot.create(:salon_owner)
+  puts "Salon owner created"
 end
 
-puts 'Users have been created'
+FactoryBot.create_list(:client, 5)
+puts "Clients created"
 
-Service.create(
-  category: :body_care,
-  salon_id: 1, 
-  name: 'asdfasf', 
-  description: 'afdasfa', 
-  hidden_price: 1,
-  availability: 1
-)
+Salon.all.each do |salon|
+  2.times do    
+    user_id = salon.professionals.map(&:id).sample
+    client_id = Client.pluck(:id).sample
+    service_id = salon.services.map(&:id).sample
 
-puts 'Service has been created'
-
-50.times do
-  Visit.create(start_at: Date.current, end_at: Date.current, price: rand(1..100), adress: Faker::Address.full_address,
-               status: 0)
+    FactoryBot.create(:visit, user_id: user_id, client_id: client_id, service_id: service_id)
+  end
 end
 
-puts 'Visit has been created'
-
-10.times do
-  SocialNetwork.create(
-    name: Faker::Lorem.word
-)
+Salon.all.each do |salon|
+  social_network = FactoryBot.create(:social_network)
+  FactoryBot.create(:salons_social_network, salon_id: salon.id, social_network_id: social_network.id)
 end
 
-puts 'SocialNetwork has been created'
-
-10.times do
-  SalonsSocialNetwork.create(
-    salon_id: rand(1...51),
-    social_network_id: rand(1...11),
-    link: Faker::Internet.url
-)
-end
-
-puts 'SalonSocialNetwork has been created'
+puts "Social_networks created"

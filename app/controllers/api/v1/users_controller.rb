@@ -3,13 +3,18 @@ module Api
     class UsersController < ApplicationController
       before_action :find_user, only: %i[show update destroy]
 
-      def index
-        users = User.paginate(page: params[:page])
-        render json: users
-        sorting = params[:sort]
+      def search
+        render json: User.search(search_params[:info]).records.to_a
+      end
 
-        render json: User.order(sort_params.to_h) if sorting
-        render json: Salon.all unless sorting
+      def index
+        @users =
+          if params[:sort]
+            User.order(User::SORT_FIELDS).paginate(page: params[:page], per_page: 15)
+          else
+            User.paginate(page: params[:page], per_page: 15)
+          end
+        render json: @users
       end
 
       def show
@@ -43,6 +48,10 @@ module Api
       end
 
       private
+
+      def search_params
+        params.require(:search).permit(:info)
+      end
 
       def user_params
         params.require(:user).permit(%i[first_name last_name middle_name salon_id email work_email phone

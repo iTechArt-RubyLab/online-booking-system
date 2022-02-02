@@ -6,10 +6,13 @@
 #  start_at   :datetime         not null
 #  end_at     :datetime         not null
 #  price      :integer          not null
-#  adress     :text             not null
+#  address    :text             not null
 #  status     :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_id    :bigint           not null
+#  service_id :bigint           not null
+#  client_id  :bigint           not null
 #
 require 'rails_helper'
 RSpec.describe Visit, type: :model do
@@ -32,6 +35,12 @@ RSpec.describe Visit, type: :model do
 
     context 'when nil status' do
       it { is_expected.to validate_presence_of :status }
+    end
+  end
+
+  describe 'associations' do
+    context 'when belongs to client' do
+      it { is_expected.to belong_to(:client) }
     end
   end
 end

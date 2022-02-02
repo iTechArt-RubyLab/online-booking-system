@@ -2,28 +2,66 @@
 #
 # Table name: users
 #
-#  id         :bigint           not null, primary key
-#  first_name :string           not null
-#  last_name  :string           not null
-#  patronymic :string
-#  salon_id   :integer          not null
-#  email      :string           not null
-#  work_email :string           not null
-#  phone      :string           not null
-#  work_phone :string           not null
-#  birthday   :datetime         not null
-#  role       :integer          default("professional"), not null
-#  status     :integer          default("working"), not null
-#  notes      :text
-#  image_url  :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                     :bigint           not null, primary key
+#  first_name             :string           not null
+#  last_name              :string           not null
+#  middle_name            :string
+#  email                  :string           not null
+#  work_email             :string
+#  phone                  :string           not null
+#  work_phone             :string
+#  birthday               :datetime         not null
+#  role                   :integer          default("professional"), not null
+#  status                 :integer          default("working")
+#  notes                  :text
+#  image_url              :string           not null
+#  rating                 :integer          default(0)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  provider               :string           default("email"), not null
+#  uid                    :string           default(""), not null
+#  encrypted_password     :string           default(""), not null
+#  reset_password_token   :string
+#  reset_password_sent_at :datetime
+#  allow_password_change  :boolean          default(FALSE)
+#  remember_created_at    :datetime
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  unconfirmed_email      :string
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :inet
+#  last_sign_in_ip        :inet
+#  tokens                 :json
 #
+
+require 'elasticsearch/model'
+
 class User < ApplicationRecord
-  enum role: { professional: 0, salon_owner: 1, client: 2 }
+  include Elasticsearch::Model
+  extend Devise::Models
+
+  # Include default devise modules.
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable
+
+  include DeviseTokenAuth::Concerns::User
+
+  SORT_FIELDS = %i[first_name last_name middle_name email phone birthday].freeze
+
+  enum role: { professional: 0, salon_owner: 1 }
   enum status: { working: 0, on_vacation: 1, banned: 2, fired: 3 }
 
-  before_save :validate_notes, :capitalize_data
+  has_many :visits, dependent: :destroy
+
+  has_many :users_salons, dependent: :destroy
+  has_many :salons, through: :users_salons
+
+  before_save :capitalize_data
+
   validates :first_name, :last_name,
             :email, :phone, :birthday,
             :role, :image_url,
@@ -33,66 +71,40 @@ class User < ApplicationRecord
             length: { minimum: 2, maximum: 255 }
 
   validates :middle_name,
-            length: { maximum: 255 },
-            allow_blank: true
+            length: { maximum: 255 }
 
   validates :email,
             uniqueness: { case_sensitive: false },
-            format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email invalid' },
+            format: { with: EMAIL_REGEXP, message: 'Email invalid' },
             length: { minimum: 4, maximum: 254 }
 
-  validates :phone, format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Phone invalid' }
+  validates :phone, format: { with: PHONE_REGEXP, message: 'Phone invalid' }
 
-  validates :birthday, date: { before: proc { Time.zone.today }, message: 'Birthday invalid' }
-
-  validates :image_url, url: true
-
-  with_options if: :client? do |_client|
-    validates :rating, :work_email,
-              :work_phone_number,
-              :status, :salon_id, allow_blank: true
-  end
-
-  validates :first_name, :last_name,
-            :email, :phone, :birthday,
-            :role, :image_url,
-            presence: true
-
-  validates :first_name, :last_name,
-            length: { minimum: 2, maximum: 255 }
-
-  validates :patronymic,
-            length: { maximum: 255 },
-            allow_blank: true
-
-  validates :email,
-            uniqueness: { case_sensitive: false },
-            format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Email invalid' },
-            length: { minimum: 4, maximum: 254 }
-
-  validates :phone, format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Phone invalid' }
-
-  validates :birthday, date: { before: proc { Time.zone.today }, message: 'Birthday invalid' }
+  validates :birthday, date: :date_valid?
 
   validates :image_url, url: true
 
   with_options if: :salon_owner? do
-    validates :salon_id, :status,
-              :work_email, :work_phone, presence: true
+    validates :status, :work_email,
+              :work_phone, presence: true
 
-    validates :rating, allow_blank: true
+    validates :rating, numericality: {
+      only_integer: true,
+      greater_than_or_equal_to: 0,
+      less_than_or_equal_to: 5
+    }
 
     validates :work_email,
               uniqueness: { case_sensitive: false },
-              format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i,
-                        message: 'Work email invalid' },
+              format: { with: EMAIL_REGEXP, message: 'Email invalid' },
               length: { minimum: 4, maximum: 254 }
 
     validates :work_phone,
-              format: { with: /(\+375|80) (29|44|33|25) \d{3}-\d{2}-\d{2}/, message: 'Work phone invalid' }
+              format: { with: PHONE_REGEXP, message: 'Work phone invalid' }
   end
-  def validate_notes
-    self.notes = notes.chars.shuffle if notes.include?('</script>')
+
+  def date_valid?
+    birthday.present? && birthday <= Time.zone.today
   end
 
   def capitalize_data
@@ -105,3 +117,6 @@ class User < ApplicationRecord
     salon_owner? || client?
   end
 end
+
+User.__elasticsearch__.create_index!
+User.import

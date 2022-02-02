@@ -2,21 +2,12 @@ require 'rails_helper'
 
 describe 'Services API PUT', type: :request do
   describe 'PUT requests', type: :request do
-    context 'when /services/:id' do
-      let(:service) { create(:random_service) }
+    let(:service) { create(:service) }
+    let(:service_params) { { service: { name: 'New name' } } }
 
-      before do
-        put "/api/v1/services/#{service.id}",
-            params: {
-              service: { name: 'a_new_service' }
-            }
-      end
-
-      include_examples 'success status'
-
-      it 'updates a service' do
-        expect(JSON.parse(response.body)['name']).to eq('a_new_service')
-      end
+    it 'updates an existing service' do
+      put "/api/v1/services/#{service.id}", params: service_params
+      expect(response).to have_http_status(:success)
     end
   end
 end

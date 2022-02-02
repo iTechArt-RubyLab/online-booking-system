@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Visits API GET', type: :request do
   context 'when /visits' do
     before do
-      create_list(:random_visit, 2)
+      create_list(:visit, 2)
       get '/api/v1/visits'
     end
 
@@ -15,7 +15,7 @@ describe 'Visits API GET', type: :request do
   end
 
   context 'when /visits/:id' do
-    let!(:visit) { create(:random_visit) }
+    let(:visit) { create(:visit) }
 
     before { get "/api/v1/visits/#{visit.id}" }
 

@@ -4,8 +4,13 @@ module Api
       before_action :find_service, only: %i[show update destroy]
 
       def index
-        services = Service.paginate(page: params[:page], per_page: 10)
-        render json: services
+        @services =
+          if params[:sort]
+            Service.order(Service::SORT_FIELDS).paginate(page: params[:page], per_page: 15)
+          else
+            Service.paginate(page: params[:page], per_page: 15)
+          end
+        render json: @services
       end
 
       def show
@@ -45,7 +50,7 @@ module Api
       end
 
       def service_params
-        params.require(:service).permit(%i[category_id
+        params.require(:service).permit(%i[category
                                            salon_id
                                            name
                                            description

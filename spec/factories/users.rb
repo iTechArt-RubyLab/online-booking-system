@@ -1,19 +1,70 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :bigint           not null, primary key
+#  first_name             :string           not null
+#  last_name              :string           not null
+#  middle_name            :string
+#  email                  :string           not null
+#  work_email             :string
+#  phone                  :string           not null
+#  work_phone             :string
+#  birthday               :datetime         not null
+#  role                   :integer          default("professional"), not null
+#  status                 :integer          default("working")
+#  notes                  :text
+#  image_url              :string           not null
+#  rating                 :integer          default(0)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  provider               :string           default("email"), not null
+#  uid                    :string           default(""), not null
+#  encrypted_password     :string           default(""), not null
+#  reset_password_token   :string
+#  reset_password_sent_at :datetime
+#  allow_password_change  :boolean          default(FALSE)
+#  remember_created_at    :datetime
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  unconfirmed_email      :string
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :inet
+#  last_sign_in_ip        :inet
+#  tokens                 :json
+#
 FactoryBot.define do
   factory :user, class: 'User' do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     middle_name { Faker::Name.middle_name }
+    password { Faker::Internet.password }
     email { Faker::Internet.email }
     work_email { Faker::Internet.email }
     phone { '+375 25 609-99-99' }
     work_phone { '+375 25 609-99-99' }
     birthday { Faker::Date.between(from: 50.years.ago, to: Time.zone.today - 18.years) }
-    role { rand(0...2) }
-    status { rand(0...4) }
+    role { User.roles[:professional] }
+    status { User.statuses.keys.sample }
     notes { Faker::Lorem.paragraph }
     image_url { 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y' }
+
+    factory :salon_owner, class: 'User' do
+      role { :salon_owner }
+
+      after(:create) do |salon_owner|
+        salon_owner.salons << create(:salon)
+      end
+    end
+
+    factory :professional, class: 'User' do
+      role { :professional }
+    end
   end
-  
+
   trait(:no_first_name) { first_name { nil } }
   trait(:no_last_name) { last_name { nil } }
   trait(:no_middle_name) { middle_name { nil } }
@@ -27,5 +78,4 @@ FactoryBot.define do
   trait(:no_image_url) { image_url { nil } }
   trait(:professional) { role { 0 } }
   trait(:salon_owner) { role { 1 } }
-  trait(:client) { role { 2 } }
 end
