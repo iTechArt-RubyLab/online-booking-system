@@ -25,6 +25,8 @@ class Service < ApplicationRecord
   belongs_to :salon
   belongs_to :category
 
+  has_many :visits, dependent: :destroy
+
   enum availability: {
     yes: 0,
     no: 1
