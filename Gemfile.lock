@@ -345,6 +345,7 @@ DEPENDENCIES
   elasticsearch-rails (~> 7.2)
   factory_bot_rails
   faker (~> 2.19)
+  mini_magick (>= 4.9.5)
   figaro
   mini_magick (>= 4.9.5)
   figaro (~> 1.2)
