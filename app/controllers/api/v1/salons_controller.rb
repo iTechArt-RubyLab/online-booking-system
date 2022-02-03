@@ -10,14 +10,14 @@ module Api
           else
             Salon.paginate(page: params[:page], per_page: 15)
           end
-        render json: @salons
+        render json: convert_to_json(@salons)
       end
 
       def show
         if @salon
-          render json: @salon
+          render json: convert_to_json(@salon)
         else
-          render json: { error: 'Salon not found' }, status: :not_found
+          render json: convert_to_json(errors(@salon)), status: :not_found
         end
       end
 
@@ -25,23 +25,23 @@ module Api
         @salon = Salon.new(salon_params)
 
         if @salon.save!
-          render json: @salon
+          render json: convert_to_json(@salon)
         else
-          render json: { error: 'Error creating salon.' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@salon)), status: :unprocessable_entity
         end
       end
 
       def update
         if @salon.update(salon_params)
-          render json: @salon
+          render json: convert_to_json(@salon)
         else
-          render json: { error: 'Not update salon' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@salon)), status: :unprocessable_entity
         end
       end
 
       def destroy
         if @salon.destroy
-          render json: @salon
+          render json: convert_to_json(@salon)
         else
           render json: { error: 'Error deleting salon' }, status: :unprocessable_entity
         end
@@ -57,6 +57,10 @@ module Api
       end
 
       private
+
+      def convert_to_json(object)
+        SalonSerializer.new(object).serializable_hash.to_json
+      end
 
       def find_salon
         @salon = Salon.find(params[:id])

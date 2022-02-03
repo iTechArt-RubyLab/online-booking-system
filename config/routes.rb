@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       resources :visits do
         get 'search', action: :search
       end
-      resources :categories, only: [:index, :show]
+      resources :categories, only: %i[index show create update destroy]
     end
   end
 end

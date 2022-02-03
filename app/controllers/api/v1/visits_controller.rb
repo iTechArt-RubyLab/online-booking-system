@@ -4,7 +4,8 @@ module Api
       before_action :find_visit, only: %i[show update destroy]
 
       def search
-        render json: Visit.search(search_params[:info]).records.to_a
+        visits = Visit.search(search_params[:info]).records.to_a
+        render json: convert_to_json(visits)
       end
 
       def index
@@ -14,35 +15,36 @@ module Api
           else
             Visit.paginate(page: params[:page], per_page: 15)
           end
-        render json: @visits
+
+        render json: convert_to_json(@visits)
       end
 
       def show
-        render json: @visit
+        render json: convert_to_json(@visit)
       end
 
       def create
         @visit = Visit.new(visit_params)
         if @visit.save
-          render json: @visit
+          render json: convert_to_json(@visit)
         else
-          render error: { error: 'Could not create visit' }
+          render json: convert_to_json(errors(@visit)), status: :unprocessable_entity
         end
       end
 
       def update
         if @visit.update(visit_params)
-          render json: @visit
+          render json: convert_to_json(@visit)
         else
-          render json: { error: 'Unable to update visit' }
+          render json: convert_to_json(errors(@visit)), status: :unprocessable_entity
         end
       end
 
       def destroy
         if @visit.destroy
-          render json: @visit
+          render json: convert_to_json(@visit)
         else
-          render json: { error: 'Unable to delete visit' }
+          render json: convert_to_json(errors(@visit)), status: :unprocessable_entity
         end
       end
 
@@ -50,6 +52,10 @@ module Api
 
       def search_params
         params.require(:search).permit(:info)
+      end
+
+      def convert_to_json(object)
+        VisitSerializer.new(object).serializable_hash.to_json
       end
 
       def find_visit

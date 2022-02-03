@@ -7,7 +7,6 @@ class CreateServices < ActiveRecord::Migration[6.1]
       t.text :description, null: false
       t.integer :duration, null: false, default: 1
       t.integer :price, null: false, default: 1
-      t.integer :hidden_price
       t.integer :availability, null: false
 
       t.timestamps

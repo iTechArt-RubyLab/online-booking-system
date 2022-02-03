@@ -1,15 +1,15 @@
 module Api
   module V1
     class CategoriesController < ApplicationController
-      before_action :find_category, only: %i[show]
+      before_action :find_category, only: %i[show update destroy]
 
       def index
         @categories = Category.all
-        render json: @categories
+        render json: convert_to_json(@categories)
       end
 
       def show
-        render json: @category
+        render json: convert_to_json(@category)
       end
 
       def create
@@ -17,36 +17,44 @@ module Api
         @category.images.attach(params[:images])
 
         if @category.save!
-          render json: @category
+          render json: convert_to_json(@category)
         else
-          render json: { error: 'Error creating user.' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@category)), status: :unprocessable_entity
         end
       end
 
       def update
         if @category.update(category_params)
-          render json: @category
+          render json: convert_to_json(@category)
         else
-          render json: { error: 'Error updating user.' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@category)), status: :unprocessable_entity
         end
       end
 
       def destroy
         if @category.destroy
-          render json: @category
+          render json: convert_to_json(@category)
         else
-          render json: { error: 'Error deleting user.' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@category)), status: :unprocessable_entity
         end
       end
 
       private
 
       def category_params
-        params.permit(%i[name images: []])
+        params.require(:category).permit(%i[name image_url])
+      end
+
+      def convert_to_json(object)
+        CategorySerializer.new(object).serializable_hash.to_json
       end
 
       def find_category
         @category = Category.find(params[:id])
+      end
+
+      def error(object)
+        { error: object.errors.full_messages }
       end
     end
   end
