@@ -39,6 +39,18 @@ class Visit < ApplicationRecord
 
   validates :start_at, :end_at, :price, :address, :status, presence: true
   validates :price, length: { minimum: 2 }
+
+  after_create :visit_reminder
+
+  def remind_at
+    start_at - salon.remind_up_min.minutes
+  end
+
+  private
+
+  def visit_reminder
+    VisitReminderJob.perform_later(self)
+  end
 end
 
 Visit.__elasticsearch__.create_index!

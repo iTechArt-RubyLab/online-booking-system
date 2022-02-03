@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 2022_02_02_101807) do
     t.text "notes", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "remind_up_min", default: 60, null: false
     t.float "latitude"
     t.float "longitude"
   end
