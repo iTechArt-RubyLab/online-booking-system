@@ -14,8 +14,9 @@ Rails.application.routes.draw do
       mount_devise_token_auth_for 'User', at: 'auth'
       resources :services
       resources :salons do
+        put 'reminder', to: 'salons#update_reminder' 
         resources :salons_social_networks
-      end
+    end
       resources :users do
         get 'search', action: :search
       end
