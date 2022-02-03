@@ -8,7 +8,6 @@
 #  description  :text             not null
 #  duration     :integer          default(1), not null
 #  price        :integer          default(1), not null
-#  hidden_price :integer
 #  availability :integer          not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -32,10 +31,6 @@ RSpec.describe Service, type: :model do
 
     context 'when price nil' do
       it { is_expected.to validate_presence_of :price }
-    end
-
-    context 'when hidden_price nil' do
-      it { is_expected.to validate_presence_of :hidden_price }
     end
 
     context 'when availability nil' do

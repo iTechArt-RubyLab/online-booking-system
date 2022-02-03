@@ -101,7 +101,6 @@ ActiveRecord::Schema.define(version: 2022_02_02_101807) do
     t.text "description", null: false
     t.integer "duration", default: 1, null: false
     t.integer "price", default: 1, null: false
-    t.integer "hidden_price"
     t.integer "availability", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

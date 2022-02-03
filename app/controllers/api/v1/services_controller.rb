@@ -10,18 +10,19 @@ module Api
           else
             Service.paginate(page: params[:page], per_page: 15)
           end
-        render json: @services
+
+        render json: convert_to_json(@services)
       end
 
       def show
-        render json: @service
+        render json: convert_to_json(@service)
       end
 
       def create
         @service = Service.new(service_params)
 
         if @service.save
-          render json: @service
+          render json: convert_to_json(@service)
         else
           render json: { message: @service.errors.full_messages }, status: :bad_request
         end
@@ -29,7 +30,7 @@ module Api
 
       def update
         if @service.update(service_params)
-          render json: @service
+          render json: convert_to_json(@service)
         else
           render json: { message: @service.errors.full_messages }, status: :bad_request
         end
@@ -37,7 +38,7 @@ module Api
 
       def destroy
         if @service&.destroy
-          render json: @service
+          render json: convert_to_json(@service)
         else
           render json: { message: @service.errors.full_messages }, status: :bad_request
         end
@@ -45,19 +46,18 @@ module Api
 
       private
 
+      def convert_to_json(object)
+        ServiceSerializer.new(object).serializable_hash.to_json
+      end
+
       def find_service
         @service = Service.find(params[:id])
       end
 
       def service_params
-        params.require(:service).permit(%i[category
-                                           salon_id
-                                           name
-                                           description
-                                           duration
-                                           price
-                                           hidden_price
-                                           availability])
+        params.require(:service).permit(%i[salon_id name
+                                           description duration price
+                                           availability category_id])
       end
     end
   end
