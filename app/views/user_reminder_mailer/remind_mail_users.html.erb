@@ -4,9 +4,13 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Hello, <%= @visit.prosessional.name%></h1>
+    <h1>Hello, <%= @visit.user.first_name%> <%= @visit.user.last_name%></h1>
     <p>
-     Don't forget about your appointment in <%= @visit.salon.name%> at <%= @visit.start_at%><br>
+     Don't forget about your appointment in <%= @visit.salon.name%> at <%= @visit.start_at%>.<br>
+    </p>
+    <p>
+     Have a good day!<br>
     </p>
   </body>
 </html>
+
