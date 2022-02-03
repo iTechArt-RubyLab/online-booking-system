@@ -10,6 +10,7 @@ class ApplicationController < ActionController::API
   rescue_from ActiveRecord::StatementInvalid, with: :statement_invalid # not working!
   rescue_from ActionController::ParameterMissing, with: :parameter_missing
   before_action :configure_permitted_parameters, if: :devise_controller?
+  # before_action :authenticate_api_v1_user!
 
   protected
 
@@ -17,7 +18,7 @@ class ApplicationController < ActionController::API
     devise_parameter_sanitizer.permit(:sign_up,
                                       keys: %i[first_name last_name middle_name
                                                email phone birthday role
-                                               status notes image_url])
+                                               status notes avatar work_phone work_email])
   end
 
   private

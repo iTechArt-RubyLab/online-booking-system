@@ -28,6 +28,6 @@ FactoryBot.define do
   trait(:no_name) { name { nil } }
   trait(:no_description) { description { nil } }
   trait(:no_duration) { duration { nil } }
-  trait(:no_price) { price { nil } }  
+  trait(:no_price) { price { nil } }
   trait(:no_availability) { availability { nil } }
 end
