@@ -47,6 +47,15 @@ module Api
         end
       end
 
+      def update_reminder
+        find_salon_for_reminders
+        if @salon.update(reminder_params)
+          render json: { message: 'Reminder was successfully added' }
+        else
+          render json: { error: 'Try again' }, status: :unprocessable_entity
+        end
+      end
+
       private
 
       def convert_to_json(object)
@@ -58,7 +67,15 @@ module Api
       end
 
       def salon_params
-        params.require(:salon).permit(%i[name address phone email notes latitude longitude])
+        params.require(:salon).permit(%i[name address phone email notes latitude longitude remind_up_min])
+      end
+
+      def find_salon_for_reminders
+        @salon = Salon.find(params[:salon_id])
+      end
+
+      def reminder_params
+        params.require(:salon).permit(:remind_up_min)
       end
     end
   end
