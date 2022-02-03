@@ -20,7 +20,7 @@ module Api
       end
 
       def show
-        render json: convert_to_json(@users)
+        render json: convert_to_json(@user)
       end
 
       def create
@@ -58,7 +58,7 @@ module Api
 
       def user_params
         params.require(:user).permit(%i[first_name last_name middle_name salon_id email work_email phone
-                                        work_phone birthday role status notes avatar])
+                                        work_phone birthday role status notes avatar password])
       end
 
       def convert_to_json(object)

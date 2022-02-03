@@ -10,18 +10,19 @@ module Api
           else
             Client.paginate(page: params[:page], per_page: 15)
           end
-        render json: @clients
+
+        render json: convert_to_json(@clients)
       end
 
       def show
-        render json: @client
+        render json: convert_to_json(@client)
       end
 
       def create
         @client = Client.new(client_params)
 
         if @client.save!
-          render json: @client
+          render json: convert_to_json(@client)
         else
           render json: { error: 'Error creating client.' }, status: :unprocessable_entity
         end
@@ -29,7 +30,7 @@ module Api
 
       def update
         if @client.update(client_params)
-          render json: @client
+          render json: convert_to_json(@client)
         else
           render json: { error: 'Error updating client.' }, status: :unprocessable_entity
         end
@@ -37,7 +38,7 @@ module Api
 
       def destroy
         if @client.destroy
-          render json: @client
+          render json: convert_to_json(@client)
         else
           render json: { error: 'Error deleting client.' }, status: :unprocessable_entity
         end
@@ -48,6 +49,10 @@ module Api
       def client_params
         params.require(:client).permit(%i[first_name last_name middle_name email phone
                                           birthday notes image_url])
+      end
+
+      def convert_to_json(object  )
+        ClientSerializer.new(object).serializable_hash.to_json
       end
 
       def find_client
