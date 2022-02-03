@@ -15,11 +15,16 @@ class ApplicationController < ActionController::API
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up,
-                                      keys: %i[first_name last_name middle_name email phone birthday role status notes
-                                               image_url])
+                                      keys: %i[first_name last_name middle_name
+                                               email phone birthday role
+                                               status notes image_url])
   end
 
   private
+
+  def errors(object)
+    { error: object.errors.full_messages }
+  end
 
   def record_not_found(exception)
     render json: { error: exception.to_s }, status: :not_found

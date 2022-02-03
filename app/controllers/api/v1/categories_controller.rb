@@ -19,7 +19,7 @@ module Api
         if @category.save!
           render json: convert_to_json(@category)
         else
-          render json: { error: 'Error creating user.' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@category)), status: :unprocessable_entity
         end
       end
 
@@ -27,7 +27,7 @@ module Api
         if @category.update(category_params)
           render json: convert_to_json(@category)
         else
-          render json: { error: 'Error updating user.' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@category)), status: :unprocessable_entity
         end
       end
 
@@ -35,7 +35,7 @@ module Api
         if @category.destroy
           render json: convert_to_json(@category)
         else
-          render json: { error: 'Error deleting user.' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@category)), status: :unprocessable_entity
         end
       end
 
@@ -51,6 +51,10 @@ module Api
 
       def find_category
         @category = Category.find(params[:id])
+      end
+
+      def error(object)
+        { error: object.errors.full_messages }
       end
     end
   end

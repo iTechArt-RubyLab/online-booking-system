@@ -17,7 +17,7 @@ module Api
         if @salon
           render json: convert_to_json(@salon)
         else
-          render json: { error: 'Salon not found' }, status: :not_found
+          render json: convert_to_json(errors(@salon)), status: :not_found
         end
       end
 
@@ -27,7 +27,7 @@ module Api
         if @salon.save!
           render json: convert_to_json(@salon)
         else
-          render json: { error: 'Error creating salon.' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@salon)), status: :unprocessable_entity
         end
       end
 
@@ -35,7 +35,7 @@ module Api
         if @salon.update(salon_params)
           render json: convert_to_json(@salon)
         else
-          render json: { error: 'Update not update salon' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@salon)), status: :unprocessable_entity
         end
       end
 

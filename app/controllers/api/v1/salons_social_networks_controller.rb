@@ -18,7 +18,7 @@ module Api
         if @salons_social_network.save
           render json: convert_to_json(@salons_social_network)
         else
-          render json: { error: @salons_social_network.errors.full_messages }
+          render json: convert_to_json(errors(@salons_social_network)), status: :unprocessable_entity
         end
       end
 
@@ -26,7 +26,7 @@ module Api
         if @salons_social_network.update(salons_social_network_params)
           render json: convert_to_json(@salons_social_network)
         else
-          render json: { error: 'Update not update SalonsSocialNetwork' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@salons_social_network)), status: :unprocessable_entity
         end
       end
 
@@ -34,7 +34,7 @@ module Api
         if @salons_social_network.destroy
           render json: convert_to_json(@salons_social_network)
         else
-          render json: { message: 'Unable to delete SalonsSocialNetwork' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@salons_social_network)), status: :unprocessable_entity
         end
       end
 

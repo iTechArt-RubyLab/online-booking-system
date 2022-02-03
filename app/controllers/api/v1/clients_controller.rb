@@ -24,7 +24,7 @@ module Api
         if @client.save!
           render json: convert_to_json(@client)
         else
-          render json: { error: 'Error creating client.' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@client)), status: :unprocessable_entity
         end
       end
 
@@ -32,7 +32,7 @@ module Api
         if @client.update(client_params)
           render json: convert_to_json(@client)
         else
-          render json: { error: 'Error updating client.' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@client)), status: :unprocessable_entity
         end
       end
 
@@ -40,7 +40,7 @@ module Api
         if @client.destroy
           render json: convert_to_json(@client)
         else
-          render json: { error: 'Error deleting client.' }, status: :unprocessable_entity
+          render json: convert_to_json(errors(@client)), status: :unprocessable_entity
         end
       end
 
@@ -51,7 +51,7 @@ module Api
                                           birthday notes image_url])
       end
 
-      def convert_to_json(object  )
+      def convert_to_json(object)
         ClientSerializer.new(object).serializable_hash.to_json
       end
 
