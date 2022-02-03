@@ -4,7 +4,8 @@ module Api
       before_action :find_user, only: %i[show update destroy]
 
       def search
-        render json: User.search(search_params[:info]).records.to_a
+        users = User.search(search_params[:info]).records.to_a
+        render json: convert_to_json(users)
       end
 
       def index
@@ -14,11 +15,12 @@ module Api
           else
             User.paginate(page: params[:page], per_page: 15)
           end
-        render json: @users
+
+        render json: convert_to_json(@users)
       end
 
       def show
-        render json: @user
+        render json: convert_to_json(@users)
       end
 
       def create
@@ -26,7 +28,7 @@ module Api
         @user.avatar.attach(params[:avatar])
 
         if @user.save!
-          render json: @user
+          render json: convert_to_json(@user)
         else
           render json: { error: 'Error creating user.' }, status: :unprocessable_entity
         end
@@ -34,7 +36,7 @@ module Api
 
       def update
         if @user.update(user_params)
-          render json: @user
+          render json: convert_to_json(@user)
         else
           render json: { error: 'Error updating user.' }, status: :unprocessable_entity
         end
@@ -42,7 +44,7 @@ module Api
 
       def destroy
         if @user.destroy
-          render json: @user
+          render json: convert_to_json(@user)
         else
           render json: { error: 'Error deleting user.' }, status: :unprocessable_entity
         end
@@ -57,6 +59,10 @@ module Api
       def user_params
         params.require(:user).permit(%i[first_name last_name middle_name salon_id email work_email phone
                                         work_phone birthday role status notes avatar])
+      end
+
+      def convert_to_json(object)
+        UserSerializer.new(object).serializable_hash.to_json
       end
 
       def find_user
