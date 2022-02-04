@@ -10,7 +10,6 @@ class ApplicationController < ActionController::API
   rescue_from ActiveRecord::StatementInvalid, with: :statement_invalid # not working!
   rescue_from ActionController::ParameterMissing, with: :parameter_missing
   before_action :configure_permitted_parameters, if: :devise_controller?
-  # before_action :authenticate_api_v1_user!
 
   protected
 

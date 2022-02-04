@@ -1,6 +1,7 @@
 module Api
   module V1
     class SalonsSocialNetworksController < ApplicationController
+      before_action :authenticate_api_v1_user!, only: %i[create update destroy]
       before_action :set_salons_social_network, only: %i[update destroy]
 
       def index

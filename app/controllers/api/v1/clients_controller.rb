@@ -1,6 +1,7 @@
 module Api
   module V1
     class ClientsController < ApplicationController
+      before_action :authenticate_api_v1_user!, only: %i[create update destroy]
       before_action :find_client, only: %i[show update destroy]
 
       def index
