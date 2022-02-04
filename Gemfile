@@ -46,6 +46,8 @@ gem 'mini_magick', '>= 4.9.5'
 
 gem 'jsonapi-serializer', '~> 2.2'
 
+gem 'aasm', '~> 5.2'
+
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec'
