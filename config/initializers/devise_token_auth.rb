@@ -5,7 +5,7 @@ DeviseTokenAuth.setup do |config|
   # client is responsible for keeping track of the changing tokens. Change
   # this to false to prevent the Authorization header from changing after
   # each request.
-  # config.change_headers_on_each_request = true
+  config.change_headers_on_each_request = Rails.env.production? ? true : false
 
   # By default, users will need to re-authenticate after 2 weeks. This setting
   # determines how long tokens will remain valid after they are issued.
@@ -35,7 +35,7 @@ DeviseTokenAuth.setup do |config|
   # Uncomment to enforce current_password param to be checked before all
   # attribute updates. Set it to :password if you want it to be checked only if
   # password is updated.
-  # config.check_current_password_before_update = :attributes
+  config.check_current_password_before_update = :password
 
   # By default we will use callbacks for single omniauth.
   # It depends on fields like email, provider and uid.
@@ -56,5 +56,19 @@ DeviseTokenAuth.setup do |config|
   # By default DeviseTokenAuth will not send confirmation email, even when including
   # devise confirmable module. If you want to use devise confirmable module and
   # send email, set it to true. (This is a setting for compatibility)
-  # config.send_confirmation_email = true
+  config.send_confirmation_email = true
+
+  # By default this value is expected to be sent by the client so that the API knows
+  # where to redirect users after successful email confirmation. 
+  # If this param is set, the API will redirect to this value when no value is provided by the client.
+  config.default_confirm_success_url = Rails.env.production? ? 'heroku-app..../login' : 'http://localhost:3000/login'
+
+  # By default this value is expected to be sent by the client so that the API knows
+  # where to redirect users after successful password resets. 
+  # If this param is set, the API will redirect to this value when no value is provided by the client.
+  config.default_password_reset_url = Rails.env.production? ? 'heroku-app..../reset-password' : 'http://localhost:3000/reset-password'
+
+  # By default, old tokens are not invalidated when password is changed.
+  # Enable this option if you want to make passwords updates to logout other devices.
+  config.remove_tokens_after_password_reset = true
 end

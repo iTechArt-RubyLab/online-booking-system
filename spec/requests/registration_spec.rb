@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Registration', type: :request do
   before do
     @sign_up_url = '/api/v1/auth/'
+    @avatar = fixture_file_upload('spec/photos/test.png', 'image/png')
     @signup_params = {
       email: 'user@example.com',
       password: '12345678',
@@ -11,7 +12,7 @@ RSpec.describe 'Registration', type: :request do
       last_name: 'Doe',
       phone: '+375 25 609-99-99',
       birthday: '1990-01-01',
-      image_url: 'http://example.com/image.jpg'
+      avatar: @avatar
     }
   end
 
