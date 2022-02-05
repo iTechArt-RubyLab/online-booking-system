@@ -9,6 +9,7 @@ class ApplicationController < ActionController::API
   rescue_from ActionController::RoutingError, with: :routing_error # not working!
   rescue_from ActiveRecord::StatementInvalid, with: :statement_invalid # not working!
   rescue_from ActionController::ParameterMissing, with: :parameter_missing
+  rescue_from AASM::InvalidTransition, with: :invalid_transition
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
@@ -24,6 +25,10 @@ class ApplicationController < ActionController::API
 
   def errors(object)
     { error: object.errors.full_messages }
+  end
+
+  def invalid_transition(exception)
+    render json: { error: exception.to_s }, status: :unprocessable_entity
   end
 
   def record_not_found(exception)

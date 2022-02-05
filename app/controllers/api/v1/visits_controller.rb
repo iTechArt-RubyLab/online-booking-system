@@ -1,7 +1,9 @@
 module Api
   module V1
     class VisitsController < ApplicationController
-      before_action :find_visit, only: %i[show update destroy]
+      before_action :find_visit, only: %i[show update destroy
+                                          approve reject_by_user reject_by_client
+                                          finish]
 
       def search
         visits = Visit.search(search_params[:info]).records.to_a
@@ -41,11 +43,28 @@ module Api
       end
 
       def destroy
-        if @visit.destroy
-          render json: convert_to_json(@visit)
-        else
-          render json: convert_to_json(errors(@visit)), status: :unprocessable_entity
-        end
+        @visit.delete_visit
+        render json: convert_to_json(@visit)
+      end
+
+      def approve
+        @visit.approve!
+        render json: @visit.visit_status
+      end
+
+      def reject_by_user
+        @visit.reject_by_user!
+        render json: @visit.visit_status
+      end
+
+      def reject_by_client
+        @visit.reject_by_client!
+        render json: @visit.visit_status
+      end
+
+      def finish
+        @visit.finish!
+        render json: @visit.visit_status
       end
 
       private
@@ -63,7 +82,7 @@ module Api
       end
 
       def visit_params
-        params.require(:visit).permit(:start_at, :end_at, :price, :address, :status, :client_id, :salon_id,
+        params.require(:visit).permit(:start_at, :end_at, :price, :address, :client_id, :salon_id,
                                       :service_id, :user_id)
       end
     end

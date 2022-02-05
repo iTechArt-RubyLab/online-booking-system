@@ -64,6 +64,10 @@ class Visit < ApplicationRecord
     start_at - salon.remind_up_min.minutes
   end
 
+  def visit_status
+    { message: "Visit #{status}" }
+  end
+
   private
 
   def visit_reminder
