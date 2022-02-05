@@ -2,6 +2,8 @@
 
 class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
+  include Authorization
+
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ArgumentError, with: :arguments_error
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
