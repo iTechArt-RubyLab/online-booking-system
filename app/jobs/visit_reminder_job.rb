@@ -1,4 +1,4 @@
-class VisitReminderJob < ActiveJob::Base
+class VisitReminderJob < ApplicationJob
   queue_as :default
 
   def perform(visit)

@@ -1,4 +1,4 @@
-class CategoryPolicy < ApplicationPolicy
+class ServicePolicy < ApplicationPolicy
   def index?
     true
   end
@@ -8,20 +8,14 @@ class CategoryPolicy < ApplicationPolicy
   end
 
   def create?
-    owner_abilities?
+    user.salon_owner?
   end
 
   def update?
-    owner_abilities?
+    user.salon_owner?
   end
 
   def destroy?
-    owner_abilities?
-  end
-
-  private
-
-  def owner_abilities?
     user.salon_owner?
   end
 end

@@ -118,5 +118,5 @@ class User < ApplicationRecord
   end
 end
 
-User.__elasticsearch__.create_index!
-User.import
+# User.__elasticsearch__.create_index!
+# User.import

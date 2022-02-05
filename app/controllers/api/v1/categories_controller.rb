@@ -2,7 +2,7 @@ module Api
   module V1
     class CategoriesController < ApplicationController
       before_action :find_category, only: %i[show update destroy]
-      before_action :authorize_category!
+      before_action :authorize_category
 
       def index
         @categories = Category.all
@@ -58,8 +58,8 @@ module Api
         { error: object.errors.full_messages }
       end
 
-      def authorize_category!
-        authorize(@category || Category)
+      def authorize_category
+        authorize @category
       end
     end
   end
