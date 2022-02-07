@@ -36,10 +36,10 @@
 #  tokens                 :json
 #
 
-require 'elasticsearch/model'
+require 'elasticsearch/model' if Rails.env.production?
 
 class User < ApplicationRecord
-  include Elasticsearch::Model
+  include Elasticsearch::Model if Rails.env.production?
   extend Devise::Models
 
   # Include default devise modules.
@@ -126,5 +126,7 @@ class User < ApplicationRecord
   end
 end
 
-User.__elasticsearch__.create_index!
-User.import
+if Rails.env.production?
+  User.__elasticsearch__.create_index!
+  User.import
+end
