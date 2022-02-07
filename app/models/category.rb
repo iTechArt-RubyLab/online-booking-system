@@ -20,6 +20,6 @@ class Category < ApplicationRecord
   private
 
   def format_name
-    self.name = name.capitalize
+    self.name = name.capitalize if name.present?
   end
 end

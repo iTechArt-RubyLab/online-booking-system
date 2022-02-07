@@ -1,6 +1,7 @@
 module Api
   module V1
     class VisitsController < ApplicationController
+      before_action :authenticate_api_v1_user!
       before_action :find_visit, only: %i[show update destroy]
       before_action :authorize_visit
       after_action :verify_authorized

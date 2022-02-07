@@ -44,10 +44,12 @@ class User < ApplicationRecord
 
   # Include default devise modules.
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable
+         :recoverable, :rememberable, :trackable,
+         :validatable, :confirmable
 
   include DeviseTokenAuth::Concerns::User
+
+  before_validation :set_uid
 
   SORT_FIELDS = %i[first_name last_name middle_name email phone birthday].freeze
 
@@ -115,6 +117,12 @@ class User < ApplicationRecord
 
   def skip_default_field?
     salon_owner? || client?
+  end
+
+  private
+
+  def set_uid
+    self[:uid] = email if self[:uid].blank? && self[:email].present?
   end
 end
 
