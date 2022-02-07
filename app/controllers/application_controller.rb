@@ -17,7 +17,7 @@ class ApplicationController < ActionController::API
     devise_parameter_sanitizer.permit(:sign_up,
                                       keys: %i[first_name last_name middle_name
                                                email phone birthday role
-                                               status notes image_url])
+                                               status notes avatar work_phone work_email])
   end
 
   private

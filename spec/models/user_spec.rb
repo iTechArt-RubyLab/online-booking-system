@@ -83,12 +83,12 @@ RSpec.describe User, type: :model do
       it { is_expected.to allow_value('', nil).for(:notes) }
     end
 
-    context 'when image_url nil' do
-      it { is_expected.to validate_presence_of :image_url }
-    end
-
     context 'when rating nil' do
       it { is_expected.to allow_value(0).for(:rating) }
+    end
+
+    context 'when avatar nil' do
+      it { is_expected.to validate_presence_of :avatar }
     end
   end
 end
