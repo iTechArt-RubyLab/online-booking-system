@@ -53,5 +53,5 @@ class Visit < ApplicationRecord
   end
 end
 
-Visit.__elasticsearch__.create_index!
-Visit.import
+# Visit.__elasticsearch__.create_index!
+# Visit.import

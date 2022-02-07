@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.3'
-  
+
 gem 'rails', '~> 6.1.4'
 
 gem 'pg'
@@ -42,6 +42,8 @@ gem 'active_storage_validations'
 gem 'mini_magick', '>= 4.9.5'
 
 gem 'jsonapi-serializer', '~> 2.2'
+
+gem 'pundit', require: true
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
