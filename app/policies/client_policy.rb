@@ -4,12 +4,11 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def show?
-    access_for_client?
+    access_for_client? || access_for_current_user?
   end
 
   def create?
-    access_for_client?
-    # all may create /true
+   user.salon_owner?
   end
 
   def update?
@@ -21,7 +20,7 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def search?
-    #clien.id == current_user.id?
+    clien.id == current_user.id?
   end
 
   private

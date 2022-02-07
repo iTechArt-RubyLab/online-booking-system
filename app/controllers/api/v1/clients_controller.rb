@@ -2,6 +2,8 @@ module Api
   module V1
     class ClientsController < ApplicationController
       before_action :find_client, only: %i[show update destroy]
+      before_action :authorize_client
+      after_action :verify_authorized
 
       def index
         @clients =
@@ -57,6 +59,10 @@ module Api
 
       def find_client
         @client = Client.find(params[:id])
+      end
+
+      def authorize_client
+        authorize @client
       end
     end
   end

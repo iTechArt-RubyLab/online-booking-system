@@ -3,7 +3,25 @@
 ```
 The API should allow salon visitors to book services with professionals and professionals to conduct business.
 ```
+---
 
+## The most difficult task
+
+---
+
+## The most interesting task
+
+---
+
+## Instructions on how to deploy the project
+```
+  * (dependencies) and startup commands from scratch
+```
+---
+
+## What could be done if there was more time?
+
+---
 ## Main entities
 ### User:
 ```

@@ -7,17 +7,17 @@ class VisitPolicy < ApplicationPolicy
     true
   end
 
-  # def create?
-  #   true
-  # end
+  def create?
+    true
+  end
 
-  # def update?
-  #   true
-  # end
+  def update?
+    true
+  end
 
-  # def destroy?
-  #   true
-  # end
+  def destroy?
+    true
+  end
 
   private
 

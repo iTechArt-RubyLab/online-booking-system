@@ -2,6 +2,9 @@ module Api
   module V1
     class VisitsController < ApplicationController
       before_action :find_visit, only: %i[show update destroy]
+      before_action :authorize_visit
+      after_action :verify_authorized
+
 
       def search
         visits = Visit.search(search_params[:info]).records.to_a
@@ -65,6 +68,10 @@ module Api
       def visit_params
         params.require(:visit).permit(:start_at, :end_at, :price, :address, :status, :client_id, :salon_id,
                                       :service_id, :user_id)
+      end
+
+      def authorize_visit
+        authorize @visit
       end
     end
   end

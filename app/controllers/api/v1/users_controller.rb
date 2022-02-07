@@ -2,7 +2,7 @@ module Api
   module V1
     class UsersController < ApplicationController
       before_action :find_user, only: %i[show update destroy]
-      before_action :authorize_category
+      before_action :authorize_user
       after_action :verify_authorized
 
       def search
@@ -71,8 +71,8 @@ module Api
         @user = User.find(params[:id])
       end
 
-      def authorize_category
-        authorize @category
+      def authorize_user
+        authorize @user
       end
     end
   end

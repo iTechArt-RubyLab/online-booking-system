@@ -2,6 +2,9 @@ module Api
   module V1
     class ServicesController < ApplicationController
       before_action :find_service, only: %i[show update destroy]
+      before_action :authorize_service
+      after_action :verify_authorized
+
 
       def index
         @services =
@@ -58,6 +61,10 @@ module Api
         params.require(:service).permit(%i[salon_id name
                                            description duration price
                                            availability category_id])
+      end
+
+      def authorize_service
+        authorize @service
       end
     end
   end
