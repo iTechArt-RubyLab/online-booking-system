@@ -9,7 +9,7 @@ class ClientPolicy < ApplicationPolicy
 
   def create?
     access_for_client?
-    # all may create
+    # all may create /true
   end
 
   def update?
@@ -21,7 +21,7 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def search?
-    #clien.id = current_user.id?
+    #clien.id == current_user.id?
   end
 
   private

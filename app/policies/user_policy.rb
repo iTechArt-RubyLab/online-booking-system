@@ -20,6 +20,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   def search?
-    #user.id = current_user.id?
+    #user.id = current_user.id?  /true
   end
 end
