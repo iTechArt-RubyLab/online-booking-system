@@ -39,6 +39,8 @@
 require 'elasticsearch/model'
 
 class User < ApplicationRecord
+  include AASM
+
   include Elasticsearch::Model
   extend Devise::Models
 
@@ -52,7 +54,23 @@ class User < ApplicationRecord
   SORT_FIELDS = %i[first_name last_name middle_name email phone birthday].freeze
 
   enum role: { professional: 0, salon_owner: 1 }
-  enum status: { working: 0, on_vacation: 1, banned: 2, fired: 3 }
+
+  aasm column: 'status' do
+    state :working, initial: true
+    state :on_vacation, :banned, :fired
+
+    event :go_to_vacation, guards: %i[no_visits?] do
+      transitions from: :working, to: :on_vacation
+    end
+
+    event :ban, guards: %i[no_visits?] do
+      transitions to: :banned
+    end
+
+    event :fire, guards: %i[no_visits?] do
+      transitions to: :fired
+    end
+  end
 
   has_many :visits, dependent: :destroy
 
@@ -101,6 +119,14 @@ class User < ApplicationRecord
 
     validates :work_phone,
               format: { with: PHONE_REGEXP, message: 'Work phone invalid' }
+  end
+
+  private
+
+  def no_visits?
+    return visits.empty? if professional?
+
+    true
   end
 
   def date_valid?
