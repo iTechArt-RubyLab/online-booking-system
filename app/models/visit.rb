@@ -15,10 +15,10 @@
 #  client_id  :bigint           not null
 #
 
-require 'elasticsearch/model' if Rails.env.production?
+require 'elasticsearch/model'
 
 class Visit < ApplicationRecord
-  include Elasticsearch::Model if Rails.env.production?
+  include Elasticsearch::Model
 
   SORT_FIELDS = %i[start_at end_at price status].freeze
 
@@ -53,7 +53,5 @@ class Visit < ApplicationRecord
   end
 end
 
-if Rails.env.production?
-  Visit.__elasticsearch__.create_index!
-  Visit.import
-end
+# Visit.__elasticsearch__.create_index!
+# Visit.import
