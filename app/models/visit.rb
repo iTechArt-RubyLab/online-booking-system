@@ -15,11 +15,7 @@
 #  client_id  :bigint           not null
 #
 
-require 'elasticsearch/model' if Rails.env.production?
-
 class Visit < ApplicationRecord
-  include Elasticsearch::Model if Rails.env.production?
-
   SORT_FIELDS = %i[start_at end_at price status].freeze
 
   enum status: {
@@ -51,9 +47,4 @@ class Visit < ApplicationRecord
   def visit_reminder
     VisitReminderJob.perform_later(self)
   end
-end
-
-if Rails.env.production?
-  Visit.__elasticsearch__.create_index!
-  Visit.import
 end
