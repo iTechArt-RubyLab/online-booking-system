@@ -18,14 +18,31 @@
 class Visit < ApplicationRecord
   SORT_FIELDS = %i[start_at end_at price status].freeze
 
-  enum status: {
-    created: 0,
-    approved: 1,
-    rejected_by_user: 2,
-    rejected_by_client: 3,
-    deleted: 4,
-    finished: 5
-  }
+  aasm column: 'status' do
+    state :created, initial: true
+    state :approved, :rejected_by_user, :rejected_by_client,
+          :finished, :deleted
+
+    event :approve do
+      transitions from: :created, to: :approved
+    end
+
+    event :reject_by_user do
+      transitions from: %i[approved created], to: :rejected_by_user
+    end
+
+    event :reject_by_client do
+      transitions from: %i[approved created], to: :rejected_by_client
+    end
+
+    event :finish do
+      transitions from: :approved, to: :finished
+    end
+
+    event :delete_visit do
+      transitions to: :deleted
+    end
+  end
 
   belongs_to :client
   belongs_to :user
@@ -40,6 +57,10 @@ class Visit < ApplicationRecord
 
   def remind_at
     start_at - salon.remind_up_min.minutes
+  end
+
+  def visit_status
+    { message: "Visit #{status}" }
   end
 
   private
