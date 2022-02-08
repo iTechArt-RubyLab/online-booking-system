@@ -37,6 +37,7 @@
 #
 
 class User < ApplicationRecord
+  include AASM
   extend Devise::Models
 
   # Include default devise modules.

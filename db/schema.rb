@@ -80,9 +80,9 @@ ActiveRecord::Schema.define(version: 2022_02_04_124140) do
     t.text "notes", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "remind_up_min", default: 60, null: false
     t.float "latitude"
     t.float "longitude"
-    t.integer "remind_up_min", default: 60, null: false
   end
 
   create_table "salons_social_networks", force: :cascade do |t|

@@ -16,6 +16,8 @@
 #
 
 class Visit < ApplicationRecord
+  include AASM
+
   SORT_FIELDS = %i[start_at end_at price status].freeze
 
   aasm column: 'status' do
