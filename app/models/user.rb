@@ -124,7 +124,7 @@ class User < ApplicationRecord
   end
 
   def no_approved_visits?
-    professional? && visits.none?(&:approved?) || salon_owner?
+    (professional? && visits.none?(&:approved?)) || salon_owner?
   end
 
   def approved_visits
@@ -158,8 +158,6 @@ class User < ApplicationRecord
   def skip_default_field?
     salon_owner? || client?
   end
-
-  private
 
   def set_uid
     self[:uid] = email if self[:uid].blank? && self[:email].present?

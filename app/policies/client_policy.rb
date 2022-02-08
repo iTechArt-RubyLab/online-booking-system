@@ -28,5 +28,4 @@ class ClientPolicy < ApplicationPolicy
   def access_for_client?
     user.salon_owner? || user.professional?
   end
-
 end
