@@ -70,6 +70,10 @@ class Salon < ApplicationRecord
     users.where(role: :professional)
   end
 
+  def working_professionals
+    professionals.select(&:working?)
+  end
+
   def links
     salons_social_networks.map(&:link)
   end

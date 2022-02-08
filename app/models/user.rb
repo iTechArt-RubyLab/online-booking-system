@@ -52,7 +52,27 @@ class User < ApplicationRecord
   SORT_FIELDS = %i[first_name last_name middle_name email phone birthday].freeze
 
   enum role: { professional: 0, salon_owner: 1 }
-  enum status: { working: 0, on_vacation: 1, banned: 2, fired: 3 }
+
+  aasm column: 'status' do
+    state :working, initial: true
+    state :on_vacation, :banned, :fired,
+          :prepare_for_vacation, :prepare_for_fire
+
+    event :go_to_vacation do
+      before { approved_visits.map(&:change_user_or_reject_visit_by_user) }
+      transitions from: :working, to: :on_vacation, guard: :no_approved_visits?
+    end
+
+    event :ban do
+      before { approved_visits.map(&:change_user_or_reject_visit_by_user) }
+      transitions to: :banned, guard: :no_approved_visits?
+    end
+
+    event :fire do
+      before { approved_visits.map(&:change_user_or_reject_visit_by_user) }
+      transitions to: :fired, guard: :no_approved_visits?
+    end
+  end
 
   has_many :visits, dependent: :destroy
 
@@ -101,6 +121,28 @@ class User < ApplicationRecord
 
     validates :work_phone,
               format: { with: PHONE_REGEXP, message: 'Work phone invalid' }
+  end
+
+  def no_approved_visits?
+    professional? && visits.none?(&:approved?)
+  end
+
+  def approved_visits
+    visits.where(status: :approved)
+  end
+
+  def ready_for_vacation?
+    professional? && prepare_for_vacation? && no_approved_visits?
+  end
+
+  def user_status
+    { message: "User #{status}", user_id: id }
+  end
+
+  private
+
+  def remove_from_approved_visits
+    visits.map(&:change_user)
   end
 
   def date_valid?

@@ -47,7 +47,7 @@ FactoryBot.define do
     work_phone { '+375 25 609-99-99' }
     birthday { Faker::Date.between(from: 50.years.ago, to: Time.zone.today - 18.years) }
     role { User.roles[:professional] }
-    status { User.statuses.keys.sample }
+    status { %i[working on_vacation banned fired].sample }
     notes { Faker::Lorem.paragraph }
 
     after(:build) do |user|

@@ -24,7 +24,7 @@ FactoryBot.define do
 
     after(:create) do |salon|
       create(:service, salon_id: salon.id)
-      salon.users << create(:professional)
+      salon.users << create(:professional, status: :working)
     end
   end
 

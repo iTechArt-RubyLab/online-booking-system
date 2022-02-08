@@ -26,6 +26,10 @@ Rails.application.routes.draw do
         get 'search', action: :search
       end
 
+      put 'users/:id/go_to_vacation', to: 'users#go_to_vacation'
+      put 'users/:id/ban', to: 'users#ban'
+      put 'users/:id/fire', to: 'users#fire'
+
       resources :clients
 
       resources :visits do

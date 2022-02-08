@@ -21,9 +21,9 @@ FactoryBot.define do
     start_at { Faker::Date.between(from: Time.zone.today, to: Time.zone.today + 30) }
     end_at { Faker::Date.between(from: Time.zone.today, to: Time.zone.today + 30) }
     status { :created }
-    user_id { association(:user).id }
-    service_id { association(:service).id }
-    client_id { association(:client).id }
+    user_id { User.where(role: :professional).pluck(:id).sample }
+    service_id { Service.pluck(:id).sample }
+    client_id { Client.pluck(:id).sample }
   end
 
   trait(:no_start_at) { start_at { nil } }

@@ -16,7 +16,7 @@ puts "Clients created"
 
 Salon.all.each do |salon|
   2.times do    
-    user_id = salon.professionals.map(&:id).sample
+    user_id = salon.working_professionals.map(&:id).sample
     client_id = Client.pluck(:id).sample
     service_id = salon.services.map(&:id).sample
 
