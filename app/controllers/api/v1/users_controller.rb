@@ -1,7 +1,8 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :find_user, only: %i[show update destroy]
+      before_action :find_user, only: %i[show update destroy
+                                         go_to_vacation ban fire]
 
       def search
         users = User.search(search_params[:info]).records.to_a
@@ -50,6 +51,21 @@ module Api
         end
       end
 
+      def go_to_vacation
+        @user.go_to_vacation!
+        render json: @user.user_status
+      end
+
+      def ban
+        @user.ban!
+        render json: @user.user_status
+      end
+
+      def fire
+        @user.fire!
+        render json: @user.user_status
+      end
+
       private
 
       def search_params
@@ -63,6 +79,10 @@ module Api
 
       def convert_to_json(object)
         UserSerializer.new(object).serializable_hash.to_json
+      end
+
+      def user_id_and_status
+        { user_status: @user.status, user_id: @user.id }
       end
 
       def find_user

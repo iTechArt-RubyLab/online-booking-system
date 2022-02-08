@@ -58,22 +58,21 @@ class User < ApplicationRecord
   aasm column: 'status' do
     state :working, initial: true
     state :on_vacation, :banned, :fired,
-          :prepare_for_vacation
+          :prepare_for_vacation, :prepare_for_fire
 
-    event :prepare_for_vacation do
-      transitions from: :working, to: :prepare_for_vacation
-    end
-
-    event :go_to_vacation, guards: %i[no_visits?] do
-      transitions from: :prepare_for_vacation, to: :on_vacation
+    event :go_to_vacation do
+      before { approved_visits.map(&:change_user_or_reject_visit_by_user) }
+      transitions from: :working, to: :on_vacation, guard: :no_approved_visits?
     end
 
     event :ban do
-      transitions to: :banned
+      before { approved_visits.map(&:change_user_or_reject_visit_by_user) }
+      transitions to: :banned, guard: :no_approved_visits?
     end
 
-    event :fire, guards: %i[no_visits?] do
-      transitions to: :fired
+    event :fire do
+      before { approved_visits.map(&:change_user_or_reject_visit_by_user) }
+      transitions to: :fired, guard: :no_approved_visits?
     end
   end
 
@@ -127,21 +126,25 @@ class User < ApplicationRecord
   end
 
   def no_approved_visits?
-    return visits.none?(&:approved?) if professional?
+    professional? && visits.none?(&:approved?)
+  end
 
-    false
+  def approved_visits
+    visits.where(status: :approved)
   end
 
   def ready_for_vacation?
     professional? && prepare_for_vacation? && no_approved_visits?
   end
 
+  def user_status
+    { message: "User #{status}", user_id: id }
+  end
+
   private
 
-  def no_visits?
-    return visits.empty? if professional?
-
-    true
+  def remove_from_approved_visits
+    visits.map(&:change_user)
   end
 
   def date_valid?

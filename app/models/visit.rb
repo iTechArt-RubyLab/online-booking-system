@@ -69,6 +69,12 @@ class Visit < ApplicationRecord
     { message: "Visit #{status}" }
   end
 
+  def change_user_or_reject_visit_by_user
+    salon_professionals_ids = salon.professionals.map(&:id) - [user.id]
+    reject_by_user! if salon_professionals_ids.empty?
+    update(user_id: salon_professionals_ids.sample) unless salon_professionals_ids.empty?
+  end
+
   private
 
   def visit_reminder
