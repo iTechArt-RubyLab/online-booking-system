@@ -7,40 +7,41 @@ The API should allow salon visitors to book services with professionals and prof
 
 ## The most difficult task
 
+```
+  * Authentication
+```
+
 ---
 
 ## The most interesting task
-
----
-
-## Instructions on how to deploy the project
 ```
-  * (dependencies) and startup commands from scratch
+  * Models
 ```
+
 ---
 
 ## What could be done if there was more time?
 
----
-## Main entities
-### User:
 ```
-  * the owner of the salon;
-      professional :
-  * performing the service;
+  * authorization via google
 ```
-### Customer:
-```
-  * using the service;
-```
-### Salon:
-```
-  * represents one business;
-```
-### Visit
 
-### Service
-### Category
+---
+## Basic entities
+### User:
+  - salon owner
+  - professional (performing a service)
+
+### Customer:
+  - using the service
+### Salon:
+  - represents one business
+### Visit:
+  - can do everything
+### Service:
+  - each service has its own
+### Service category:
+  - each service has its own
 
 ---
 ## Opportunities for the owner and professional of the salon
@@ -107,15 +108,31 @@ The API should allow salon visitors to book services with professionals and prof
 ### To run:
 
 ```rb
-cp config/database.yml.example config/database.yml
+  cp config/database.yml.example config/database.yml
+```
+```rb
+  sudo gem install mailcatcher
+
+  mailcatcher
+```
+  * [mailcatcher](https://mailcatcher.me/)
+
+```rb
+  cp config/application.yml.example config/application.yml
 ```
 
 ```rb
-cp config/application.yml.example config/application.yml
+  sudo apt install redis-server
+```
+
+  * [installation instructions redis](https://www.arubacloud.com/tutorial/how-to-install-and-configure-redis-on-ubuntu-20-04.aspx)
+
+```rb
+  bundle exec sidekiq
 ```
 
 ```rb
-bundle exec rails s
+  bundle exec rails s
 ```
 
 ## Our team

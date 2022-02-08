@@ -32,7 +32,8 @@ gem 'rswag-ui'
 
 gem 'geocoder', '~> 1.3', '>= 1.3.7'
 
-gem "sidekiq"
+gem 'sidekiq'
+
 
 gem 'will_paginate', '~> 3.3'
 

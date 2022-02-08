@@ -5,7 +5,6 @@ module Api
                                          go_to_vacation ban fire]
 
       before_action :authenticate_api_v1_user!, only: %i[create update destroy]
-      before_action :find_user, only: %i[show update destroy]
       before_action :authorize_user
       after_action :verify_authorized
 
@@ -95,7 +94,7 @@ module Api
       end
 
       def authorize_user
-        authorize @user
+        authorize(@user || User)
       end
     end
   end

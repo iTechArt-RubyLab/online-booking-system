@@ -5,7 +5,7 @@ module Api
                                           approve reject_by_user reject_by_client
                                           finish]
 
-      before_action :authenticate_api_v1_user!
+      #before_action :authenticate_api_v1_user!
       before_action :find_visit, only: %i[show update destroy]
       before_action :authorize_visit
       after_action :verify_authorized
@@ -92,7 +92,7 @@ module Api
       end
 
       def authorize_visit
-        authorize @visit
+        authorize(@visit || Visit)
       end
     end
   end
