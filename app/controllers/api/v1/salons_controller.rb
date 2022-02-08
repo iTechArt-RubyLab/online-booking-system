@@ -81,7 +81,6 @@ module Api
         params.require(:salon).permit(:remind_up_min)
       end
 
-
       def authorize_salon
         authorize @salon
       end

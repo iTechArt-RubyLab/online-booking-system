@@ -3,9 +3,15 @@ module Api
     class ServicesController < ApplicationController
       before_action :authenticate_api_v1_user!, only: %i[create update destroy]
       before_action :find_service, only: %i[show update destroy]
-      before_action :authorize_service
-      after_action :verify_authorized
+      # before_action :authorize_service
+      # after_action :verify_authorized
 
+      def search
+        find_service_for_search
+        @services = Service.search(service_search_params[:name])
+
+        render json: convert_to_json(@services)
+      end
 
       def index
         @services =
@@ -58,10 +64,18 @@ module Api
         @service = Service.find(params[:id])
       end
 
+      def find_service_for_search
+        @service = Service.find(params[:service_id])
+      end
+
       def service_params
         params.require(:service).permit(%i[salon_id name
                                            description duration price
-                                           availability category_id])
+                                           availability category_id search])
+      end
+
+      def service_search_params
+        params.require(:search).permit(:name)
       end
 
       def authorize_service

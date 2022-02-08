@@ -8,7 +8,7 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def create?
-   user.salon_owner?
+    user.salon_owner?
   end
 
   def update?
