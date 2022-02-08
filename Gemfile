@@ -27,7 +27,7 @@ gem 'devise_token_auth', '~> 1.2'
 gem 'rack-cors', '~> 1.1'
 
 gem 'geocoder', '~> 1.3', '>= 1.3.7'
-gem "sidekiq"
+gem 'sidekiq'
 
 gem 'will_paginate', '~> 3.3'
 
