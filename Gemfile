@@ -26,9 +26,14 @@ gem 'devise_token_auth', '~> 1.2'
 # Use rack-cors gem for CORS support
 gem 'rack-cors', '~> 1.1'
 
+gem 'rswag-api'
+
+gem 'rswag-ui'
+
 gem 'geocoder', '~> 1.3', '>= 1.3.7'
 
-gem "sidekiq"
+gem 'sidekiq'
+
 
 gem 'will_paginate', '~> 3.3'
 
@@ -73,4 +78,5 @@ group :development, :test do
   gem 'annotate', '~> 3.1', '>= 3.1.1'
   gem 'elasticsearch-rails', '~> 7.2'
   gem 'elasticsearch-model', '~> 7.2'
+  gem 'rswag-specs'
 end
