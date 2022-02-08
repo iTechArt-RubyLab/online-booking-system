@@ -1,7 +1,7 @@
 module Api
   module V1
     class ClientsController < ApplicationController
-      #before_action :authenticate_api_v1_user!, only: %i[create update destroy]
+      before_action :authenticate_api_v1_user!, only: %i[create update destroy index]
       before_action :find_client, only: %i[show update destroy]
       before_action :authorize_client
       after_action :verify_authorized
@@ -27,7 +27,7 @@ module Api
         if @client.save!
           render json: convert_to_json(@client)
         else
-          render json: convert_to_json(errors(@client)), status: :unprocessable_entity
+          render json: errors(@client), status: :unprocessable_entity
         end
       end
 
@@ -35,7 +35,7 @@ module Api
         if @client.update(client_params)
           render json: convert_to_json(@client)
         else
-          render json: convert_to_json(errors(@client)), status: :unprocessable_entity
+          render json: errors(@client), status: :unprocessable_entity
         end
       end
 
@@ -43,7 +43,7 @@ module Api
         if @client.destroy
           render json: convert_to_json(@client)
         else
-          render json: convert_to_json(errors(@client)), status: :unprocessable_entity
+          render json: errors(@client), status: :unprocessable_entity
         end
       end
 

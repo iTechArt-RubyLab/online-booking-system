@@ -22,7 +22,7 @@ module Api
         if @category.save!
           render json: convert_to_json(@category)
         else
-          render json: convert_to_json(errors(@category)), status: :unprocessable_entity
+          render json: errors(@category), status: :unprocessable_entity
         end
       end
 
@@ -30,7 +30,7 @@ module Api
         if @category.update(category_params)
           render json: convert_to_json(@category)
         else
-          render json: convert_to_json(errors(@category)), status: :unprocessable_entity
+          render json: errors(@category), status: :unprocessable_entity
         end
       end
 
@@ -38,7 +38,7 @@ module Api
         if @category.destroy
           render json: convert_to_json(@category)
         else
-          render json: convert_to_json(errors(@category)), status: :unprocessable_entity
+          render json: errors(@category), status: :unprocessable_entity
         end
       end
 

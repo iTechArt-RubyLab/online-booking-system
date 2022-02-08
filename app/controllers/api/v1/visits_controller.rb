@@ -35,7 +35,7 @@ module Api
         if @visit.save
           render json: convert_to_json(@visit)
         else
-          render json: convert_to_json(errors(@visit)), status: :unprocessable_entity
+          render json: errors(@visit), status: :unprocessable_entity
         end
       end
 
@@ -43,7 +43,7 @@ module Api
         if @visit.update(visit_params)
           render json: convert_to_json(@visit)
         else
-          render json: convert_to_json(errors(@visit)), status: :unprocessable_entity
+          render json: errors(@visit), status: :unprocessable_entity
         end
       end
 

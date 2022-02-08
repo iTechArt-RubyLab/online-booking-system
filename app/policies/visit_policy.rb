@@ -22,6 +22,6 @@ class VisitPolicy < ApplicationPolicy
   private
 
   def visit_creators?
-    user.salon_owner? || user.professional? || client.id = current_user.id
+    user.salon_owner? || user.professional?
   end
 end
