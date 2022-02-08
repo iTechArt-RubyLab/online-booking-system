@@ -1,0 +1,1245 @@
+---
+openapi: 3.0.1
+info:
+  title: Online booking system API
+  version: v1
+paths:
+  "/api/v1/categories":
+    post:
+      summary: Creates a categorie
+      tags:
+      - Categories
+      parameters: []
+      responses:
+        '201':
+          description: categorie created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                image_url:
+                  type: string
+              required:
+              - name
+              - image_url
+  api/v1/categories/{id}:
+    get:
+      summary: Retrieves a categorie
+      tags:
+      - Categories
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: categorie found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  image_url:
+                    type: string
+                required:
+                - id
+                - name
+                - image_url
+        '404':
+          description: categorie not found
+    put:
+      summary: Updates a categorie
+      tags:
+      - Categories
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: categorie updated
+        '404':
+          description: categorie not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                image_url:
+                  type: string
+              required:
+              - name
+              - image_url
+    delete:
+      summary: Deletes a categorie
+      tags:
+      - Categories
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: categorie deleted
+        '404':
+          description: categorie not found
+  "/api/v1/clients":
+    post:
+      summary: Creates a client
+      tags:
+      - Clients
+      parameters: []
+      responses:
+        '201':
+          description: client created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                middle_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                birthday:
+                  type: datetime
+                notes:
+                  type: text
+                image_url:
+                  type: string
+                rating:
+                  type: integer
+              required:
+              - first_name
+              - last_name
+              - middle_name
+              - email
+              - phone
+              - birthday
+              - image_url
+              - rating
+    get:
+      summary: Retrieves a client with sorted list
+      tags:
+      - Clients
+      responses:
+        '200':
+          description: clients found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  middle_name:
+                    type: string
+                  email:
+                    type: string
+                  phone:
+                    type: string
+                  birthday:
+                    type: datetime
+                  notes:
+                    type: text
+                  image_url:
+                    type: string
+                  rating:
+                    type: integer
+                required:
+                - id
+                - first_name
+                - last_name
+                - middle_name
+                - email
+                - phone
+                - birthday
+                - image_url
+                - rating
+      parameters:
+      - name: sort
+        in: query
+        schema:
+          type: string
+  api/v1/clients/{id}:
+    get:
+      summary: Retrieves a client
+      tags:
+      - Clients
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: client found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  middle_name:
+                    type: string
+                  email:
+                    type: string
+                  phone:
+                    type: string
+                  birthday:
+                    type: datetime
+                  notes:
+                    type: text
+                  image_url:
+                    type: string
+                  rating:
+                    type: integer
+                required:
+                - id
+                - first_name
+                - last_name
+                - middle_name
+                - email
+                - phone
+                - birthday
+                - image_url
+                - rating
+        '404':
+          description: client not found
+    put:
+      summary: Updates a client
+      tags:
+      - Clients
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: client updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                middle_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                birthday:
+                  type: datetime
+                notes:
+                  type: text
+                image_url:
+                  type: string
+                rating:
+                  type: integer
+              required:
+              - first_name
+              - last_name
+              - middle_name
+              - email
+              - phone
+              - birthday
+              - image_url
+              - rating
+    delete:
+      summary: Deletes a client
+      tags:
+      - Clients
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: client deleted
+        '404':
+          description: client not found
+  "/api/v1/salons_social_networks":
+    post:
+      summary: Creates a salon_social_network
+      tags:
+      - Salons Social Networks
+      parameters: []
+      responses:
+        '201':
+          description: salon_social_network created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                salon_id:
+                  type: integer
+                social_network_id:
+                  type: integer
+                link:
+                  type: string
+              required:
+              - salon_id
+              - social_network_id
+              - link
+    get:
+      summary: Retrieves a salon_social_network with sort and pagination
+      tags:
+      - Salons Social Networks
+      responses:
+        '200':
+          description: salon_social_network found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  salon_id:
+                    type: integer
+                  social_network_id:
+                    type: integer
+                  link:
+                    type: string
+                required:
+                - id
+                - salon_id
+                - social_network_id
+                - link
+      parameters:
+      - name: sort
+        in: query
+        enum:
+        - id
+        - salon_id
+        - social_network_id
+        - link
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        schema:
+          type: integer
+  "/api/v1/salons_social_networks/{id}":
+    put:
+      summary: Updates a salon_social_network
+      tags:
+      - Salons Social Networks
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: salon_social_network updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                salon_id:
+                  type: integer
+                social_network_id:
+                  type: integer
+                link:
+                  type: string
+              required:
+              - salon_id
+              - social_network_id
+              - link
+    delete:
+      summary: Deletes a salon_social_network
+      tags:
+      - Salons Social Networks
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: salon_social_network deleted
+  "/api/v1/salons":
+    post:
+      summary: Creates a salon
+      tags:
+      - Salons
+      parameters: []
+      responses:
+        '201':
+          description: salon created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                address:
+                  type: string
+                phone:
+                  type: string
+                email:
+                  type: string
+                notes:
+                  type: string
+                latitude:
+                  type: float
+                longitude:
+                  type: float
+              required:
+              - name
+              - address
+              - phone
+              - email
+              - notes
+              - latitude
+              - longitude
+    get:
+      summary: Retrieves a salon with sort and pagination
+      tags:
+      - Salons
+      responses:
+        '200':
+          description: salons found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  address:
+                    type: string
+                  phone:
+                    type: string
+                  email:
+                    type: string
+                  notes:
+                    type: string
+                  latitude:
+                    type: float
+                  longitude:
+                    type: float
+                required:
+                - id
+                - name
+                - address
+                - phone
+                - email
+                - notes
+                - latitude
+                - longitude
+      parameters:
+      - name: sort
+        in: query
+        enum:
+        - name
+        - address
+        - phone
+        - email
+        - notes
+        - latitude
+        - longitude
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        schema:
+          type: integer
+  "/api/v1/salons/{id}":
+    get:
+      summary: Retrieves a salon
+      tags:
+      - Salons
+      responses:
+        '200':
+          description: salon found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  address:
+                    type: string
+                  phone:
+                    type: string
+                  email:
+                    type: string
+                  notes:
+                    type: string
+                  latitude:
+                    type: float
+                  longitude:
+                    type: float
+                required:
+                - id
+                - name
+                - address
+                - phone
+                - email
+                - notes
+                - latitude
+                - longitude
+    patch:
+      summary: Updates a salon
+      tags:
+      - Salons
+      parameters: []
+      responses:
+        '200':
+          description: salon updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                address:
+                  type: string
+                phone:
+                  type: string
+                email:
+                  type: string
+                notes:
+                  type: string
+                latitude:
+                  type: float
+                longitude:
+                  type: float
+              required:
+              - name
+              - address
+              - phone
+              - email
+              - notes
+              - latitude
+              - longitude
+    delete:
+      summary: Deletes a salon
+      tags:
+      - Salons
+      responses:
+        '204':
+          description: salon deleted
+  "/api/v1/services":
+    post:
+      summary: Creates a service
+      tags:
+      - Services
+      parameters: []
+      responses:
+        '201':
+          description: service created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                salon_id:
+                  type: integer
+                name:
+                  type: string
+                description:
+                  type: text
+                duration:
+                  type: integer
+                price:
+                  type: integer
+                availability:
+                  type: integer
+                category_id:
+                  type: integer
+              required:
+              - salon_id
+              - name
+              - description
+              - duration
+              - price
+              - availability
+              - category_id
+    get:
+      summary: Retrieves a service with sort and pagination
+      tags:
+      - Services
+      responses:
+        '200':
+          description: service found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  salon_id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    type: text
+                  duration:
+                    type: integer
+                  price:
+                    type: integer
+                  availability:
+                    type: integer
+                  category_id:
+                    type: integer
+                required:
+                - id
+                - salon_id
+                - name
+                - description
+                - duration
+                - price
+                - availability
+                - category_id
+        '422':
+          description: invalid request
+      parameters:
+      - name: sort
+        in: query
+        enum:
+        - id
+        - salon_id
+        - name
+        - description
+        - duration
+        - price
+        - availability
+        - category_id
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        schema:
+          type: integer
+  "/api/v1/services/{id}":
+    get:
+      summary: Retrieves a service
+      tags:
+      - Services
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: service found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  salon_id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    type: text
+                  duration:
+                    type: integer
+                  price:
+                    type: integer
+                  availability:
+                    type: integer
+                  category_id:
+                    type: integer
+                required:
+                - id
+                - salon_id
+                - name
+                - description
+                - duration
+                - price
+                - availability
+                - category_id
+        '404':
+          description: service not found
+    patch:
+      summary: Updates a service
+      tags:
+      - Services
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: service updated
+        '404':
+          description: service not found
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                salon_id:
+                  type: integer
+                name:
+                  type: string
+                description:
+                  type: text
+                duration:
+                  type: integer
+                price:
+                  type: integer
+                availability:
+                  type: integer
+                category_id:
+                  type: integer
+              required:
+              - salon_id
+              - name
+              - description
+              - duration
+              - price
+              - availability
+              - category_id
+    delete:
+      summary: Deletes a service
+      tags:
+      - Services
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: service deleted
+        '404':
+          description: service not found
+  "/api/v1/users":
+    post:
+      summary: Creates a user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '201':
+          description: user created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                middle_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                birthday:
+                  type: string
+                role:
+                  type: string
+                status:
+                  type: string
+                work_email:
+                  type: string
+                work_phone:
+                  type: string
+                rating:
+                  type: integer
+                notes:
+                  type: text
+              required:
+              - first_name
+              - last_name
+              - middle_name
+              - email
+              - phone
+              - birthday
+              - role
+              - status
+              - work_email
+              - work_phone
+              - rating
+              - notes
+    get:
+      summary: Retrieves a user with sort and pagination
+      tags:
+      - Users
+      responses:
+        '200':
+          description: professional found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  middle_name:
+                    type: string
+                  email:
+                    type: string
+                  phone:
+                    type: string
+                  birthday:
+                    type: string
+                  role:
+                    type: string
+                  status:
+                    type: string
+                  work_email:
+                    type: string
+                  work_phone:
+                    type: string
+                  rating:
+                    type: integer
+                  notes:
+                    type: text
+                required:
+                - id
+                - first_name
+                - last_name
+                - middle_name
+                - email
+                - phone
+                - birthday
+                - role
+                - status
+                - work_email
+                - work_phone
+                - rating
+                - notes
+      parameters:
+      - name: sort
+        in: query
+        enum:
+        - id
+        - first_name
+        - last_name
+        - middle_name
+        - email
+        - phone
+        - birthday
+        - role
+        - status
+        - work_email
+        - work_phone
+        - rating
+        - notes
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        schema:
+          type: integer
+  "/api/v1/users/{id}":
+    get:
+      summary: Retrieves a user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: user found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  middle_name:
+                    type: string
+                  email:
+                    type: string
+                  phone:
+                    type: string
+                  birthday:
+                    type: string
+                  role:
+                    type: string
+                  status:
+                    type: string
+                  work_email:
+                    type: string
+                  work_phone:
+                    type: string
+                  rating:
+                    type: integer
+                  notes:
+                    type: text
+                required:
+                - id
+                - first_name
+                - last_name
+                - middle_name
+                - email
+                - phone
+                - birthday
+                - role
+                - status
+                - work_email
+                - work_phone
+                - rating
+                - notes
+        '404':
+          description: user not found
+    patch:
+      summary: Updates a user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: user updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                middle_name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                birthday:
+                  type: string
+                role:
+                  type: string
+                status:
+                  type: string
+                work_email:
+                  type: string
+                work_phone:
+                  type: string
+                rating:
+                  type: integer
+                notes:
+                  type: text
+              required:
+              - first_name
+              - last_name
+              - middle_name
+              - email
+              - phone
+              - birthday
+              - role
+              - status
+              - work_email
+              - work_phone
+              - rating
+              - notes
+    delete:
+      summary: Deletes a user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: user deleted
+        '404':
+          description: user not found
+  "/api/v1/visits":
+    post:
+      summary: Creates a visit
+      tags:
+      - Visits
+      parameters: []
+      responses:
+        '201':
+          description: visit created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                service_id:
+                  type: integer
+                date:
+                  type: string
+                time:
+                  type: string
+                duration:
+                  type: integer
+                price:
+                  type: integer
+                status:
+                  type: integer
+              required:
+              - user_id
+              - service_id
+              - date
+              - time
+              - duration
+              - price
+              - status
+    get:
+      summary: Retrieves a visit with sort and pagination
+      tags:
+      - Visits
+      responses:
+        '200':
+          description: visits found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  user_id:
+                    type: integer
+                  service_id:
+                    type: integer
+                  date:
+                    type: string
+                  time:
+                    type: string
+                  duration:
+                    type: integer
+                  price:
+                    type: integer
+                  status:
+                    type: integer
+                required:
+                - id
+                - user_id
+                - service_id
+                - date
+                - time
+                - duration
+                - price
+                - status
+        '422':
+          description: invalid request
+  "/api/v1/visits/{id}":
+    get:
+      summary: Retrieves a visit
+      tags:
+      - Visits
+      responses:
+        '200':
+          description: visit found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  user_id:
+                    type: integer
+                  service_id:
+                    type: integer
+                  date:
+                    type: string
+                  time:
+                    type: string
+                  duration:
+                    type: integer
+                  price:
+                    type: integer
+                  status:
+                    type: integer
+                required:
+                - id
+                - user_id
+                - service_id
+                - date
+                - time
+                - duration
+                - price
+                - status
+        '422':
+          description: invalid request
+    patch:
+      summary: Updates a visit
+      tags:
+      - Visits
+      parameters: []
+      responses:
+        '200':
+          description: visit updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                service_id:
+                  type: integer
+                date:
+                  type: string
+                time:
+                  type: string
+                duration:
+                  type: integer
+                price:
+                  type: integer
+                status:
+                  type: integer
+              required:
+              - user_id
+              - service_id
+              - date
+              - time
+              - duration
+              - price
+              - status
+    delete:
+      summary: Deletes a visit
+      tags:
+      - Visits
+      responses:
+        '204':
+          description: visit deleted
+servers:
+- url: https://{https://online-booking-sys-for-salons.herokuapp.com/}
+  variables:
+    defaultHost:
+      default: localhost:3000
