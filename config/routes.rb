@@ -7,13 +7,17 @@ Sidekiq::Web.use ActionDispatch::Cookies
 Sidekiq::Web.use ActionDispatch::Session::CookieStore, key: "_interslice_session"
 
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   mount Sidekiq::Web => '/sidekiq'
 
   namespace :api do
     namespace :v1 do
       mount_devise_token_auth_for 'User', at: 'auth'
 
-      resources :services
+      resources :services do
+        get 'search', action: :search
+      end
 
       resources :salons do
           put 'reminder', to: 'salons#update_reminder' 
@@ -23,6 +27,10 @@ Rails.application.routes.draw do
       resources :users do
         get 'search', action: :search
       end
+
+      put 'users/:id/go_to_vacation', to: 'users#go_to_vacation'
+      put 'users/:id/ban', to: 'users#ban'
+      put 'users/:id/fire', to: 'users#fire'
 
       resources :clients
 

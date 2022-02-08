@@ -35,4 +35,8 @@ class Service < ApplicationRecord
   validates :description, length: { minimum: 10, maximum: 255 }
   validates :salon_id, numericality: { in: Salon.pluck(:id) }
   validates :category_id, numericality: { in: Category.pluck(:id) }
+
+  def self.search(search)
+    where('name LIKE ?', "%#{search}%")
+  end
 end

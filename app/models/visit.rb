@@ -16,6 +16,8 @@
 #
 
 class Visit < ApplicationRecord
+  include AASM
+
   SORT_FIELDS = %i[start_at end_at price status].freeze
 
   aasm column: 'status' do
@@ -38,10 +40,6 @@ class Visit < ApplicationRecord
     event :finish do
       transitions from: :approved, to: :finished
     end
-
-    event :delete_visit do
-      transitions to: :deleted
-    end
   end
 
   belongs_to :client
@@ -52,6 +50,7 @@ class Visit < ApplicationRecord
 
   validates :start_at, :end_at, :price, :address, :status, presence: true
   validates :price, length: { minimum: 2 }
+  validate :user_working?
 
   after_create :visit_reminder
 
@@ -63,9 +62,21 @@ class Visit < ApplicationRecord
     { message: "Visit #{status}" }
   end
 
+  def change_user_or_reject_visit_by_user
+    salon_professionals_ids = salon.professionals.map(&:id) - [user.id]
+    reject_by_user! if salon_professionals_ids.empty?
+    update(user_id: salon_professionals_ids.sample) unless salon_professionals_ids.empty?
+  end
+
   private
 
   def visit_reminder
     VisitReminderJob.perform_later(self)
+  end
+
+  def user_working?
+    user = User.find(user_id)
+
+    errors.add(:user, 'must be in working status') unless user.professional? & user.working?
   end
 end
