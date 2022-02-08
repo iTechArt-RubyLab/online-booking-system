@@ -4,6 +4,11 @@ module Api
       before_action :find_user, only: %i[show update destroy
                                          go_to_vacation ban fire]
 
+      before_action :authenticate_api_v1_user!, only: %i[create update destroy]
+      before_action :find_user, only: %i[show update destroy]
+      before_action :authorize_user
+      after_action :verify_authorized
+
       def search
         users = User.search(search_params[:info]).records.to_a
         render json: convert_to_json(users)
@@ -87,6 +92,10 @@ module Api
 
       def find_user
         @user = User.find(params[:id])
+      end
+
+      def authorize_user
+        authorize @user
       end
     end
   end

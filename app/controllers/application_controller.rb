@@ -2,6 +2,8 @@
 
 class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
+  include Authorization
+
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ArgumentError, with: :arguments_error
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
@@ -18,7 +20,7 @@ class ApplicationController < ActionController::API
     devise_parameter_sanitizer.permit(:sign_up,
                                       keys: %i[first_name last_name middle_name
                                                email phone birthday role
-                                               status notes avatar])
+                                               status notes avatar work_phone work_email])
   end
 
   private
