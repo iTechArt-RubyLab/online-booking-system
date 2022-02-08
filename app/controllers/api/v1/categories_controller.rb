@@ -1,7 +1,7 @@
 module Api
   module V1
     class CategoriesController < ApplicationController
-      before_action :authenticate_api_v1_user!, only: %i[create update destroy]
+      #before_action :authenticate_api_v1_user!, only: %i[create update destroy]
       before_action :find_category, only: %i[show update destroy]
       # before_action :authorize_category
       # after_action :verify_authorized
@@ -61,7 +61,7 @@ module Api
       end
 
       def authorize_category
-        authorize @category
+        authorize(@category || Category)
       end
     end
   end
