@@ -13,7 +13,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       mount_devise_token_auth_for 'User', at: 'auth'
 
-      resources :services
+      resources :services do
+        get 'search', action: :search
+      end
 
       resources :salons do
           put 'reminder', to: 'salons#update_reminder' 
