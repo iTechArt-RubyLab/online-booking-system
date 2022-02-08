@@ -34,7 +34,7 @@ module Api
         if @service.save
           render json: convert_to_json(@service)
         else
-          render json: convert_to_json(errors(@service)), status: :bad_request
+          render json: errors(@service), status: :bad_request
         end
       end
 
@@ -42,7 +42,7 @@ module Api
         if @service.update(service_params)
           render json: convert_to_json(@service)
         else
-          render json: convert_to_json(errors(@service)), status: :bad_request
+          render json: errors(@service), status: :bad_request
         end
       end
 
@@ -50,7 +50,7 @@ module Api
         if @service&.destroy
           render json: convert_to_json(@service)
         else
-          render json: convert_to_json(errors(@service)), status: :bad_request
+          render json: errors(@service), status: :bad_request
         end
       end
 
