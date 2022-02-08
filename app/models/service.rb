@@ -15,7 +15,7 @@
 #
 
 class Service < ApplicationRecord
-  SORT_FIELDS = %i[category salon_id name duration price availability].freeze
+  SORT_FIELDS = %i[category_id salon_id name duration price availability].freeze
 
   belongs_to :salon
   belongs_to :category
