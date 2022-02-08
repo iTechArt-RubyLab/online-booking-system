@@ -1,7 +1,7 @@
 module Api
   module V1
     class SalonsController < ApplicationController
-      # before_action :authenticate_api_v1_user!, only: %i[create update destroy]
+      before_action :authenticate_api_v1_user!, only: %i[create update destroy]
       before_action :find_salon, only: %i[show update destroy]
       before_action :authorize_salon
       after_action :verify_authorized
@@ -20,7 +20,7 @@ module Api
         if @salon
           render json: convert_to_json(@salon)
         else
-          render json: convert_to_json(errors(@salon)), status: :not_found
+          render json: errors(@salon), status: :not_found
         end
       end
 
@@ -30,7 +30,7 @@ module Api
         if @salon.save!
           render json: convert_to_json(@salon)
         else
-          render json: convert_to_json(errors(@salon)), status: :unprocessable_entity
+          render json: errors(@salon), status: :unprocessable_entity
         end
       end
 
@@ -38,7 +38,7 @@ module Api
         if @salon.update(salon_params)
           render json: convert_to_json(@salon)
         else
-          render json: convert_to_json(errors(@salon)), status: :unprocessable_entity
+          render json: errors(@salon), status: :unprocessable_entity
         end
       end
 

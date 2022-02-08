@@ -1,7 +1,7 @@
 module Api
   module V1
     class CategoriesController < ApplicationController
-      # before_action :authenticate_api_v1_user!, only: %i[create update destroy]
+      before_action :authenticate_api_v1_user!, only: %i[create update destroy]
       before_action :find_category, only: %i[show update destroy]
       before_action :authorize_category
       after_action :verify_authorized
@@ -22,7 +22,7 @@ module Api
         if @category.save!
           render json: convert_to_json(@category)
         else
-          render json: convert_to_json(errors(@category)), status: :unprocessable_entity
+          render json: errors(@category), status: :unprocessable_entity
         end
       end
 
@@ -30,7 +30,7 @@ module Api
         if @category.update(category_params)
           render json: convert_to_json(@category)
         else
-          render json: convert_to_json(errors(@category)), status: :unprocessable_entity
+          render json: errors(@category), status: :unprocessable_entity
         end
       end
 
@@ -38,7 +38,7 @@ module Api
         if @category.destroy
           render json: convert_to_json(@category)
         else
-          render json: convert_to_json(errors(@category)), status: :unprocessable_entity
+          render json: errors(@category), status: :unprocessable_entity
         end
       end
 

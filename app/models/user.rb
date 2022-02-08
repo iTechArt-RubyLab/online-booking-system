@@ -124,7 +124,7 @@ class User < ApplicationRecord
   end
 
   def no_approved_visits?
-    professional? && visits.none?(&:approved?)
+    professional? && visits.none?(&:approved?) || salon_owner?
   end
 
   def approved_visits

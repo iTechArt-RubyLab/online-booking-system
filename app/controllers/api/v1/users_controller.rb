@@ -35,7 +35,7 @@ module Api
         if @user.save!
           render json: convert_to_json(@user)
         else
-          render json: convert_to_json(errors(@user)), status: :unprocessable_entity
+          render json: errors(@user), status: :unprocessable_entity
         end
       end
 
@@ -43,7 +43,7 @@ module Api
         if @user.update(user_params)
           render json: convert_to_json(@user)
         else
-          render json: convert_to_json(errors(@user)), status: :unprocessable_entity
+          render json: errors(@user), status: :unprocessable_entity
         end
       end
 
@@ -51,7 +51,7 @@ module Api
         if @user.destroy
           render json: convert_to_json(@user)
         else
-          render json: convert_to_json(errors(@user)), status: :unprocessable_entity
+          render json: errors(@user), status: :unprocessable_entity
         end
       end
 
@@ -78,7 +78,7 @@ module Api
 
       def user_params
         params.require(:user).permit(%i[first_name last_name middle_name salon_id email work_email phone
-                                        work_phone birthday role status notes avatar password])
+                                        work_phone birthday role notes avatar password])
       end
 
       def convert_to_json(object)

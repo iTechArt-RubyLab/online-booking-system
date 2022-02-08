@@ -18,4 +18,8 @@ class ServicePolicy < ApplicationPolicy
   def destroy?
     user.salon_owner?
   end
+
+  def search?
+    user.salon_owner? || user.professional?
+  end
 end

@@ -19,7 +19,7 @@ class SalonPolicy < ApplicationPolicy
     user.salon_owner?
   end
 
-  def update_reminder
+  def update_reminder?
     user.professional?
   end
 end

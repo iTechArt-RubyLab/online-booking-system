@@ -22,4 +22,17 @@ class UserPolicy < ApplicationPolicy
   def search?
     user.id == current_user.id?
   end
+
+  def go_to_vacation?
+    user.salon_owner?
+  end
+
+  def ban?
+    user.salon_owner?
+  end
+
+  def fire?
+    user.salon_owner?
+  end
+
 end
