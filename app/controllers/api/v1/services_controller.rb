@@ -8,7 +8,9 @@ module Api
 
       def search
         find_service_for_search
-        @services = Service.search(params[:search])
+        @services = Service.search(service_search_params[:name])
+
+        render json: convert_to_json(@services)
       end
 
       def index
@@ -69,7 +71,11 @@ module Api
       def service_params
         params.require(:service).permit(%i[salon_id name
                                            description duration price
-                                           availability category_id])
+                                           availability category_id search])
+      end
+
+      def service_search_params
+        params.require(:search).permit(:name)
       end
 
       def authorize_service
