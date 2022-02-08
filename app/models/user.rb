@@ -57,13 +57,18 @@ class User < ApplicationRecord
 
   aasm column: 'status' do
     state :working, initial: true
-    state :on_vacation, :banned, :fired
+    state :on_vacation, :banned, :fired,
+          :prepare_for_vacation
 
-    event :go_to_vacation, guards: %i[no_visits?] do
-      transitions from: :working, to: :on_vacation
+    event :prepare_for_vacation do
+      transitions from: :working, to: :prepare_for_vacation
     end
 
-    event :ban, guards: %i[no_visits?] do
+    event :go_to_vacation, guards: %i[no_visits?] do
+      transitions from: :prepare_for_vacation, to: :on_vacation
+    end
+
+    event :ban do
       transitions to: :banned
     end
 
@@ -119,6 +124,16 @@ class User < ApplicationRecord
 
     validates :work_phone,
               format: { with: PHONE_REGEXP, message: 'Work phone invalid' }
+  end
+
+  def no_approved_visits?
+    return visits.none?(&:approved?) if professional?
+
+    false
+  end
+
+  def ready_for_vacation?
+    professional? && prepare_for_vacation? && no_approved_visits?
   end
 
   private

@@ -57,6 +57,7 @@ class Visit < ApplicationRecord
 
   validates :start_at, :end_at, :price, :address, :status, presence: true
   validates :price, length: { minimum: 2 }
+  validate :user_working?
 
   after_create :visit_reminder
 
@@ -72,6 +73,12 @@ class Visit < ApplicationRecord
 
   def visit_reminder
     VisitReminderJob.perform_later(self)
+  end
+
+  def user_working?
+    user = User.find(user_id)
+
+    errors.add(:user, 'must be in working status') unless user.professional? & user.working?
   end
 end
 
