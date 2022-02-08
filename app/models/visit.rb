@@ -40,10 +40,6 @@ class Visit < ApplicationRecord
     event :finish do
       transitions from: :approved, to: :finished
     end
-
-    event :delete_visit do
-      transitions to: :deleted
-    end
   end
 
   belongs_to :client

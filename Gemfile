@@ -26,13 +26,9 @@ gem 'devise_token_auth', '~> 1.2'
 # Use rack-cors gem for CORS support
 gem 'rack-cors', '~> 1.1'
 
-gem 'redis', '~> 4.6'
-
 gem 'geocoder', '~> 1.3', '>= 1.3.7'
 
 gem "sidekiq"
-
-gem 'sidekiq-cron', '~> 1.2'
 
 gem 'will_paginate', '~> 3.3'
 

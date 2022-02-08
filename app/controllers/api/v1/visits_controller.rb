@@ -48,7 +48,7 @@ module Api
       end
 
       def destroy
-        @visit.delete_visit
+        @visit.destroy
         render json: convert_to_json(@visit)
       end
 
