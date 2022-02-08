@@ -75,10 +75,6 @@ RSpec.describe User, type: :model do
       it { is_expected.to validate_presence_of :role }
     end
 
-    context 'when status nil' do
-      it { is_expected.to allow_value(0).for(:status) }
-    end
-
     context 'when notes nil' do
       it { is_expected.to allow_value('', nil).for(:notes) }
     end

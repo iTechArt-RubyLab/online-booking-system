@@ -30,3 +30,5 @@ RSpec/ExampleLength:
   Enabled: false
 RSpec/MultipleExpectations:
   Enabled: false
+Rails/FilePath:
+  Enabled: false

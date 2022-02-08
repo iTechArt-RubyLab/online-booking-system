@@ -1,27 +1,29 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/categories', type: :request do
-  path '/api/v1/categories' do
-    post 'Creates a categorie' do
-      tags 'Categories'
-      consumes 'application/json'
-      parameter name: :categorie, in: :body, schema: {
-        type: :object,
-        properties: {
-          name: { type: :string },
-          image_url: { type: :string }
-        },
-        required: %w[name image_url]
-      }
+  it 'returns all categories' do
+    path '/api/v1/categories' do
+      post 'Creates a categorie' do
+        tags 'Categories'
+        consumes 'application/json'
+        parameter name: :categorie, in: :body, schema: {
+          type: :object,
+          properties: {
+            name: { type: :string },
+            image_url: { type: :string }
+          },
+          required: %w[name image_url]
+        }
 
-      response '201', 'categorie created' do
-        let(:categorie) { { name: 'test', image_url: 'test' } }
-        run_test!
-      end
+        response '201', 'categorie created' do
+          let(:categorie) { { name: 'test', image_url: 'test' } }
+          run_test!
+        end
 
-      response '422', 'invalid request' do
-        let(:categorie) { { name: 'test' } }
-        run_test!
+        response '422', 'invalid request' do
+          let(:categorie) { { name: 'test' } }
+          run_test!
+        end
       end
     end
   end

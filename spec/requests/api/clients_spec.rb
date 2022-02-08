@@ -1,37 +1,39 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/clients', type: :request do
-  path '/api/v1/clients' do
-    post 'Creates a client' do
-      tags 'Clients'
-      consumes 'application/json'
-      parameter name: :client, in: :body, schema: {
-        type: :object,
-        properties: {
-          first_name: { type: :string },
-          last_name: { type: :string },
-          middle_name: { type: :string },
-          email: { type: :string },
-          phone: { type: :string },
-          birthday: { type: :datetime },
-          notes: { type: :text },
-          image_url: { type: :string },
-          rating: { type: :integer }
-        },
-        required: %w[first_name last_name middle_name email phone birthday image_url rating]
-      }
+  it 'returns all clients' do
+    path '/api/v1/clients' do
+      post 'Creates a client' do
+        tags 'Clients'
+        consumes 'application/json'
+        parameter name: :client, in: :body, schema: {
+          type: :object,
+          properties: {
+            first_name: { type: :string },
+            last_name: { type: :string },
+            middle_name: { type: :string },
+            email: { type: :string },
+            phone: { type: :string },
+            birthday: { type: :datetime },
+            notes: { type: :text },
+            image_url: { type: :string },
+            rating: { type: :integer }
+          },
+          required: %w[first_name last_name middle_name email phone birthday image_url rating]
+        }
 
-      response '201', 'client created' do
-        let(:client) do
-          { first_name: 'test', last_name: 'test', middle_name: 'test', email: 'test', phone: 'test', birthday: 'test',
-            notes: 'test', image_url: 'test', rating: 'test' }
+        response '201', 'client created' do
+          let(:client) do
+            { first_name: 'test', last_name: 'test', middle_name: 'test', email: 'test',
+              phone: 'test', birthday: 'test', notes: 'test', image_url: 'test', rating: 'test' }
+          end
+          run_test!
         end
-        run_test!
-      end
 
-      response '422', 'invalid request' do
-        let(:client) { { first_name: 'test' } }
-        run_test!
+        response '422', 'invalid request' do
+          let(:client) { { first_name: 'test' } }
+          run_test!
+        end
       end
     end
 
@@ -55,7 +57,7 @@ RSpec.describe 'api/v1/clients', type: :request do
                },
                required: %w[id first_name last_name middle_name email phone birthday image_url rating]
 
-        let!(:clients) { create_list(:client, 10) }
+        let(:clients) { create_list(:client, 10) }
         run_test!
       end
     end
@@ -81,7 +83,7 @@ RSpec.describe 'api/v1/clients', type: :request do
                },
                required: %w[id first_name last_name middle_name email phone birthday image_url rating]
 
-        let!(:clients) { create_list(:client, 10) }
+        let(:clients) { create_list(:client, 10) }
         run_test!
       end
     end

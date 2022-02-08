@@ -1,35 +1,37 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/salons', type: :request do
-  path '/api/v1/salons' do
-    post 'Creates a salon' do
-      tags 'Salons'
-      consumes 'application/json'
-      parameter name: :salon, in: :body, schema: {
-        type: :object,
-        properties: {
-          name: { type: :string },
-          address: { type: :string },
-          phone: { type: :string },
-          email: { type: :string },
-          notes: { type: :string },
-          latitude: { type: :float },
-          longitude: { type: :float }
-        },
-        required: %w[name address phone email notes latitude longitude]
-      }
+  it 'returns all salons' do
+    path '/api/v1/salons' do
+      post 'Creates a salon' do
+        tags 'Salons'
+        consumes 'application/json'
+        parameter name: :salon, in: :body, schema: {
+          type: :object,
+          properties: {
+            name: { type: :string },
+            address: { type: :string },
+            phone: { type: :string },
+            email: { type: :string },
+            notes: { type: :string },
+            latitude: { type: :float },
+            longitude: { type: :float }
+          },
+          required: %w[name address phone email notes latitude longitude]
+        }
 
-      response '201', 'salon created' do
-        let(:salon) do
-          { name: 'test', address: 'test', phone: 'test', email: 'test', notes: 'test', latitude: 'test',
-            longitude: 'test' }
+        response '201', 'salon created' do
+          let(:salon) do
+            { name: 'test', address: 'test', phone: 'test', email: 'test', notes: 'test', latitude: 'test',
+              longitude: 'test' }
+          end
+          run_test!
         end
-        run_test!
-      end
 
-      response '422', 'invalid request' do
-        let(:salon) { { name: 'test' } }
-        run_test!
+        response '422', 'invalid request' do
+          let(:salon) { { name: 'test' } }
+          run_test!
+        end
       end
     end
 
@@ -51,7 +53,7 @@ RSpec.describe 'api/v1/salons', type: :request do
                },
                required: %w[id name address phone email notes latitude longitude]
 
-        let!(:salons) { create_list(:salon, 10) }
+        let(:salons) { create_list(:salon, 10) }
         run_test!
       end
     end
@@ -77,7 +79,7 @@ RSpec.describe 'api/v1/salons', type: :request do
                },
                required: %w[id name address phone email notes latitude longitude]
 
-        let!(:salons) { create_list(:salon, 10) }
+        let(:salons) { create_list(:salon, 10) }
         run_test!
       end
     end
@@ -102,7 +104,7 @@ RSpec.describe 'api/v1/salons', type: :request do
                },
                required: %w[id name address phone email notes latitude longitude]
 
-        let!(:salon) { create(:salon) }
+        let(:salon) { create(:salon) }
         run_test!
       end
     end
@@ -142,7 +144,7 @@ RSpec.describe 'api/v1/salons', type: :request do
       tags 'Salons'
 
       response '204', 'salon deleted' do
-        let!(:salon) { create(:salon) }
+        let(:salon) { create(:salon) }
         run_test!
       end
     end

@@ -75,8 +75,8 @@ class Visit < ApplicationRecord
   end
 
   def user_working?
-    user = User.find(user_id)
+    user = User.find(user_id) if user_id.present?
 
-    errors.add(:user, 'must be in working status') unless user.professional? & user.working?
+    errors.add(:user, 'must be in working status') if user.present? && !(user.professional? & user.working?)
   end
 end

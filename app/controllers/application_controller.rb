@@ -17,6 +17,7 @@ class ApplicationController < ActionController::API
   def current_user
     current_api_v1_user
   end
+
   protected
 
   def configure_permitted_parameters
