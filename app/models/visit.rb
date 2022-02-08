@@ -15,12 +15,7 @@
 #  client_id  :bigint           not null
 #
 
-require 'elasticsearch/model'
-
 class Visit < ApplicationRecord
-  include AASM
-  include Elasticsearch::Model
-
   SORT_FIELDS = %i[start_at end_at price status].freeze
 
   aasm column: 'status' do
@@ -74,6 +69,3 @@ class Visit < ApplicationRecord
     VisitReminderJob.perform_later(self)
   end
 end
-
-Visit.__elasticsearch__.create_index!
-Visit.import

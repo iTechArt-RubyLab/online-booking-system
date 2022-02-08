@@ -5,6 +5,11 @@ module Api
                                           approve reject_by_user reject_by_client
                                           finish]
 
+      before_action :authenticate_api_v1_user!
+      before_action :find_visit, only: %i[show update destroy]
+      before_action :authorize_visit
+      after_action :verify_authorized
+
       def search
         visits = Visit.search(search_params[:info]).records.to_a
         render json: convert_to_json(visits)
@@ -84,6 +89,10 @@ module Api
       def visit_params
         params.require(:visit).permit(:start_at, :end_at, :price, :address, :client_id, :salon_id,
                                       :service_id, :user_id)
+      end
+
+      def authorize_visit
+        authorize @visit
       end
     end
   end
