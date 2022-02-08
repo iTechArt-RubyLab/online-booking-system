@@ -20,7 +20,7 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def search?
-    clien.id == current_user.id?
+    client.id == current_user.id?
   end
 
   private
@@ -30,6 +30,6 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def access_for_current_user?
-    client.id = current_user.id
+    client.id == current_user.id
   end
 end
