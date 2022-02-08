@@ -1,14 +1,14 @@
 class ClientPolicy < ApplicationPolicy
   def index?
-    access_for_current_user?
+    access_for_client?
   end
 
   def show?
-    access_for_client? || access_for_current_user?
+    access_for_client?
   end
 
   def create?
-    user.salon_owner?
+    access_for_client?
   end
 
   def update?
@@ -29,7 +29,4 @@ class ClientPolicy < ApplicationPolicy
     user.salon_owner? || user.professional?
   end
 
-  def access_for_current_user?
-    client.id == current_user.id
-  end
 end
