@@ -7,8 +7,8 @@ module Api
 
       before_action :authenticate_api_v1_user!
       before_action :find_visit, only: %i[show update destroy]
-      before_action :authorize_visit
-      after_action :verify_authorized
+      # before_action :authorize_visit
+      # after_action :verify_authorized
 
       def search
         visits = Visit.search(search_params[:info]).records.to_a

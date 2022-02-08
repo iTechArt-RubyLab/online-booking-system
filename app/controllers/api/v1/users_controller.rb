@@ -6,8 +6,8 @@ module Api
 
       before_action :authenticate_api_v1_user!, only: %i[create update destroy]
       before_action :find_user, only: %i[show update destroy]
-      before_action :authorize_user
-      after_action :verify_authorized
+      # before_action :authorize_user
+      # after_action :verify_authorized
 
       def search
         users = User.search(search_params[:info]).records.to_a

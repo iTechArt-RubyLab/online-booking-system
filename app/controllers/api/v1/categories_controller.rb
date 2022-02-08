@@ -3,8 +3,8 @@ module Api
     class CategoriesController < ApplicationController
       before_action :authenticate_api_v1_user!, only: %i[create update destroy]
       before_action :find_category, only: %i[show update destroy]
-      before_action :authorize_category
-      after_action :verify_authorized
+      # before_action :authorize_category
+      # after_action :verify_authorized
 
       def index
         @categories = Category.all
