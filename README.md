@@ -8,14 +8,14 @@ The API should allow salon visitors to book services with professionals and prof
 ## The most difficult task 😥
 
 ```
-  * Authentication
+  * Development of the database structure
 ```
 
 ---
 
 ## The most interesting task 😃
 ```
-  * Models
+  * Models and associations
 ```
 
 ---
@@ -23,7 +23,7 @@ The API should allow salon visitors to book services with professionals and prof
 ## What could be done if there was more time?  🐱‍💻
 
 ```
-  * Authorization via google and rate limit
+  * Add professional free time calendar
 ```
 
 ---
