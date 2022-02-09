@@ -145,9 +145,9 @@ The API should allow salon visitors to book services with professionals and prof
 
 ---
 
-- [@Suleyman Gek62](https://github.com/GEK62)
-- [@Tehanov Anton / TehanovAnton](https://github.com/TehanovAnton)
-- [@Valeriya Petrova / valeriyapetrova](https://github.com/valeriyapetrova)
-- [@Vitaliy Goylo / Vgoylo ](https://github.com/Vgoylo)
+- [@Suleyman Gek62](https://github.com/GEK62)🐱‍👤
+- [@Tehanov Anton / TehanovAnton](https://github.com/TehanovAnton)👨‍💻
+- [@Valeriya Petrova / valeriyapetrova](https://github.com/valeriyapetrova)👩‍⚖️
+- [@Vitaliy Goylo / Vgoylo ](https://github.com/Vgoylo)🕵️‍♂️
 
 ---
