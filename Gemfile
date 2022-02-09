@@ -78,5 +78,6 @@ group :development, :test do
   gem 'annotate', '~> 3.1', '>= 3.1.1'
   gem 'elasticsearch-rails', '~> 7.2'
   gem 'elasticsearch-model', '~> 7.2'
+  gem 'elasticsearch-persistence', '~> 7.2'
   gem 'rswag-specs'
 end
