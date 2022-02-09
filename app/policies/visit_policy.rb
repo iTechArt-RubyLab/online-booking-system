@@ -19,6 +19,22 @@ class VisitPolicy < ApplicationPolicy
     true
   end
 
+  def approve?
+    user.professional?
+  end
+
+  def reject_by_user?
+    user.professional?
+  end
+
+  def reject_by_client?
+    user.professional?
+  end
+
+  def finish?
+    user.professional?
+  end
+
   private
 
   def visit_creators?

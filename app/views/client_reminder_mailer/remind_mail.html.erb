@@ -6,7 +6,7 @@
   <body>
     <h1>Hello, <%= @visit.client.first_name%> <%= @visit.client.last_name%></h1>
     <p>
-     Don't forget about your visit in <%= @visit.salon.name%> at <%= @visit.start_at%>.<br>
+     Don't forget about your visit in <%= @visit.salon.name%> in <%= @visit.salon.remind_up_min%> min.<br>
     </p>
     <p>
      Have a good day!<br>

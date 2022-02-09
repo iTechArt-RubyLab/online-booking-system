@@ -19,10 +19,6 @@ class UserPolicy < ApplicationPolicy
     user.salon_owner?
   end
 
-  def search?
-    user.id == current_user.id?
-  end
-
   def go_to_vacation?
     user.salon_owner?
   end
