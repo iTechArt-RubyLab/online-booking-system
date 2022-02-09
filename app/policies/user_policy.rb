@@ -34,5 +34,4 @@ class UserPolicy < ApplicationPolicy
   def fire?
     user.salon_owner?
   end
-
 end

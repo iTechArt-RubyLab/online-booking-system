@@ -78,7 +78,7 @@ module Api
 
       def user_params
         params.require(:user).permit(%i[first_name last_name middle_name salon_id email work_email phone
-                                        work_phone birthday role notes avatar password])
+                                        work_phone birthday role notes avatar status password])
       end
 
       def convert_to_json(object)
