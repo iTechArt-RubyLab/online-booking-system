@@ -1,28 +1,19 @@
-describe 'Users API GET', type: :request do
-  context 'when /users' do
-    before do
-      create_list(:user, 2)
-      get '/api/v1/users'
-    end
+require 'rails_helper'
 
-    it 'have http status success' do
+describe 'Users API GET', type: :request do
+  describe 'GET requests', type: :request do
+    let(:user) { create(:salon_owner) }
+    let(:auth_headers) { user.create_new_auth_token }
+    let(:user_params) { { user: { first_name: 'New first name' } } }
+
+    it 'gets an existing user' do
+      get "/api/v1/users/#{user.id}", params: user_params, headers: auth_headers
       expect(response).to have_http_status(:success)
     end
 
-    it 'returns all users' do
-      expect(JSON.parse(response.body).size).to eq(2)
-    end
-  end
-
-  context 'when /users/:id' do
-    let!(:user) { create(:user) }
-
-    before { get "/api/v1/users/#{user.id}" }
-
-    include_examples 'success status'
-
-    it 'return right user' do
-      expect(JSON.parse(response.body)['id']).to eq(user.id)
+    it 'gets an all users' do
+      get '/api/v1/users', params: user_params, headers: auth_headers
+      expect(response).to have_http_status(:success)
     end
   end
 end

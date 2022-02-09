@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :category do
-    name { Faker::Lorem.word }
+    name { Faker::Ancient.god }
     image_url { 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y' }
     after(:build) do |category|
       category.images.attach(

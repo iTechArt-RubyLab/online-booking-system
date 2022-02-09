@@ -43,7 +43,7 @@ RSpec.describe 'api/v1/salons_social_networks', type: :request do
                  },
                  required: %w[id salon_id social_network_id link]
 
-          let(:salon_social_networks) { create_list(:salon_social_network, 10) }
+          let(:salon_social_networks) { create_list(:salons_social_network, 10) }
           run_test!
         end
       end
@@ -66,7 +66,7 @@ RSpec.describe 'api/v1/salons_social_networks', type: :request do
                },
                required: %w[id salon_id social_network_id link]
 
-        let(:salon_social_networks) { create_list(:salon_social_network, 10) }
+        let(:salon_social_networks) { create_list(:salons_social_network, 10) }
         run_test!
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe 'api/v1/salons_social_networks', type: :request do
       }
 
       response '200', 'salon_social_network updated' do
-        let(:id) { create(:salon_social_network).id }
+        let(:id) { create(:salons_social_network).id }
         let(:salon_social_network) do
           { salon_id: 'test', social_network_id: 'test', link: 'test' }
         end
@@ -96,7 +96,7 @@ RSpec.describe 'api/v1/salons_social_networks', type: :request do
       end
 
       response '422', 'invalid request' do
-        let(:id) { create(:salon_social_network).id }
+        let(:id) { create(:salons_social_network).id }
         let(:salon_social_network) { { salon_id: 'test' } }
         run_test!
       end
@@ -108,7 +108,7 @@ RSpec.describe 'api/v1/salons_social_networks', type: :request do
       parameter name: :id, in: :path, type: :integer
 
       response '204', 'salon_social_network deleted' do
-        let(:id) { create(:salon_social_network).id }
+        let(:id) { create(:salons_social_network).id }
         run_test!
       end
     end

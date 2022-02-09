@@ -1,28 +1,19 @@
 require 'rails_helper'
 
 describe 'Salons API GET', type: :request do
-  context 'when /salons' do
-    before do
-      create_list(:salon, 5)
-      get '/api/v1/salons'
+  let(:salon1) { create(:salon) }
+  let(:salon_owner) { create(:salon_owner) }
+  let(:salon_owner_auth_headers) { salon_owner.create_new_auth_token }
+
+  describe 'GET /api/v1/salons' do
+    before { get '/api/v1/salons', headers: salon_owner_auth_headers }
+
+    it 'returns status code 200' do
+      expect(response).to have_http_status(:ok)
     end
 
-    include_examples 'success status'
-
-    it 'returns all salons' do
-      expect(JSON.parse(response.body).size).to eq(5)
-    end
-  end
-
-  context 'when /salons/:id' do
-    let!(:salon) { create(:salon) }
-
-    before { get "/api/v1/salons/#{salon.id}" }
-
-    include_examples 'success status'
-
-    it 'return right salon' do
-      expect(JSON.parse(response.body)['id']).to eq(salon.id)
+    it 'returns 1 salon' do
+      expect(JSON.parse(response.body).size).to eq(1)
     end
   end
 end
