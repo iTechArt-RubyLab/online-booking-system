@@ -14,7 +14,11 @@
 #  category_id  :bigint           not null
 #
 
+require 'elasticsearch/model'
+
 class Service < ApplicationRecord
+  include Elasticsearch::Model
+
   SORT_FIELDS = %i[category_id salon_id name duration price availability].freeze
 
   belongs_to :salon
@@ -35,8 +39,7 @@ class Service < ApplicationRecord
   validates :description, length: { minimum: 10, maximum: 255 }
   validates :salon_id, numericality: { in: Salon.pluck(:id) }
   validates :category_id, numericality: { in: Category.pluck(:id) }
-
-  def self.search(search)
-    where('name LIKE ?', "%#{search}%")
-  end
 end
+
+Service.__elasticsearch__.create_index!
+Service.import

@@ -118,6 +118,12 @@ GEM
       activesupport (> 3)
       elasticsearch (~> 7)
       hashie
+    elasticsearch-persistence (7.2.0)
+      activemodel (> 4)
+      activesupport (> 4)
+      elasticsearch (~> 7)
+      elasticsearch-model (= 7.2.0)
+      hashie
     elasticsearch-rails (7.2.0)
     elasticsearch-transport (7.17.0)
       faraday (~> 1)
@@ -343,6 +349,7 @@ DEPENDENCIES
   debug
   devise_token_auth (~> 1.2)
   elasticsearch-model (~> 7.2)
+  elasticsearch-persistence (~> 7.2)
   elasticsearch-rails (~> 7.2)
   factory_bot_rails
   faker (~> 2.19)
