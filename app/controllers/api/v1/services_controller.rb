@@ -8,7 +8,7 @@ module Api
 
       def search
         find_service_for_search
-        @services = Service.search(service_search_params[:name])
+        @services = Service.search(service_search_params[:name]).records.to_a
 
         render json: convert_to_json(@services)
       end
