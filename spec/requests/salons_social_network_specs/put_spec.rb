@@ -6,6 +6,7 @@ describe 'SalonsSocialNetwork API', type: :request do
     let(:social_network) { create(:social_network) }
     let(:salons_social_network) { create(:salons_social_network, salon: salon, social_network: social_network) }
     let(:new_social_network) { create(:social_network) }
+    let(:auth_headers) { create(:user).create_new_auth_token }
 
     before do
       put "/api/v1/salons/#{salon.id}/salons_social_networks/#{salons_social_network.id}",
@@ -13,7 +14,7 @@ describe 'SalonsSocialNetwork API', type: :request do
             salons_social_network: {
               social_network_id: new_social_network.id
             }
-          }
+          }, headers: auth_headers
     end
 
     include_examples 'success status'

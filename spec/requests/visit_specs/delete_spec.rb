@@ -1,17 +1,21 @@
 require 'rails_helper'
 
-describe 'delete visit route' do
-  let(:visit_one) { create(:visit) }
-  let(:visit_two) { create(:visit) }
+describe 'Visit API DELETE', type: :request do
+  let(:user) { create(:salon_owner) }
+  let(:auth_headers) { user.create_new_auth_token }
+  let(:client) { create(:client) }
+  let(:service) { create(:service) }
+  let(:visit) { create(:visit, client: client, service: service) }
 
-  before do
-    delete "/api/v1/visits/#{visit_one.id}"
-  end
+  context 'with valid params' do
+    it 'returns a success response' do
+      delete "/api/v1/visits/#{visit.id}", headers: auth_headers
+      expect(response).to have_http_status(:success)
+    end
 
-  include_examples 'success status'
-
-  it 'deletes the visit' do
-    id = JSON.parse(response.body)[:id]
-    expect(Visit.find_by(id: id)).to be_nil
+    it 'deletes the visit' do
+      delete "/api/v1/visits/#{visit.id}", headers: auth_headers
+      expect(Visit.count).to eq(0)
+    end
   end
 end

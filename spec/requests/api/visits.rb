@@ -1,35 +1,37 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/visits', type: :request do
-  path '/api/v1/visits' do
-    post 'Creates a visit' do
-      tags 'Visits'
-      consumes 'application/json'
-      parameter name: :visit, in: :body, schema: {
-        type: :object,
-        properties: {
-          user_id: { type: :integer },
-          service_id: { type: :integer },
-          date: { type: :string },
-          time: { type: :string },
-          duration: { type: :integer },
-          price: { type: :integer },
-          status: { type: :integer }
-        },
-        required: %w[user_id service_id date time duration price status]
-      }
+  it 'returns all visits' do
+    path '/api/v1/visits' do
+      post 'Creates a visit' do
+        tags 'Visits'
+        consumes 'application/json'
+        parameter name: :visit, in: :body, schema: {
+          type: :object,
+          properties: {
+            user_id: { type: :integer },
+            service_id: { type: :integer },
+            date: { type: :string },
+            time: { type: :string },
+            duration: { type: :integer },
+            price: { type: :integer },
+            status: { type: :integer }
+          },
+          required: %w[user_id service_id date time duration price status]
+        }
 
-      response '201', 'visit created' do
-        let(:visit) do
-          { user_id: 'test', service_id: 'test', date: 'test', time: 'test', duration: 'test', price: 'test',
-            status: 'test' }
+        response '201', 'visit created' do
+          let(:visit) do
+            { user_id: 'test', service_id: 'test', date: 'test', time: 'test', duration: 'test', price: 'test',
+              status: 'test' }
+          end
+          run_test!
         end
-        run_test!
-      end
 
-      response '422', 'invalid request' do
-        let(:visit) { { user_id: 'test' } }
-        run_test!
+        response '422', 'invalid request' do
+          let(:visit) { { user_id: 'test' } }
+          run_test!
+        end
       end
     end
 
@@ -104,7 +106,7 @@ RSpec.describe 'api/v1/visits', type: :request do
                },
                required: %w[id user_id service_id date time duration price status]
 
-        let!(:visit) { create(:visit) }
+        let(:visit) { create(:visit) }
         run_test!
       end
 
@@ -149,7 +151,7 @@ RSpec.describe 'api/v1/visits', type: :request do
       tags 'Visits'
 
       response '204', 'visit deleted' do
-        let!(:visit) { create(:visit) }
+        let(:visit) { create(:visit) }
         run_test!
       end
     end

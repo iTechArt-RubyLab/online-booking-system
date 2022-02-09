@@ -1,35 +1,37 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/services', type: :request do
-  path '/api/v1/services' do
-    post 'Creates a service' do
-      tags 'Services'
-      consumes 'application/json'
-      parameter name: :service, in: :body, schema: {
-        type: :object,
-        properties: {
-          salon_id: { type: :integer },
-          name: { type: :string },
-          description: { type: :text },
-          duration: { type: :integer },
-          price: { type: :integer },
-          availability: { type: :integer },
-          category_id: { type: :integer }
-        },
-        required: %w[salon_id name description duration price availability category_id]
-      }
+  it 'returns all services' do
+    path '/api/v1/services' do
+      post 'Creates a service' do
+        tags 'Services'
+        consumes 'application/json'
+        parameter name: :service, in: :body, schema: {
+          type: :object,
+          properties: {
+            salon_id: { type: :integer },
+            name: { type: :string },
+            description: { type: :text },
+            duration: { type: :integer },
+            price: { type: :integer },
+            availability: { type: :integer },
+            category_id: { type: :integer }
+          },
+          required: %w[salon_id name description duration price availability category_id]
+        }
 
-      response '201', 'service created' do
-        let(:service) do
-          { salon_id: 'test', name: 'test', description: 'test', duration: 'test', price: 'test', availability: 'test',
-            category_id: 'test' }
+        response '201', 'service created' do
+          let(:service) do
+            { salon_id: 'test', name: 'test', description: 'test', duration: 'test',
+              price: 'test', availability: 'test', category_id: 'test' }
+          end
+          run_test!
         end
-        run_test!
-      end
 
-      response '422', 'invalid request' do
-        let(:service) { { salon_id: 'test' } }
-        run_test!
+        response '422', 'invalid request' do
+          let(:service) { { salon_id: 'test' } }
+          run_test!
+        end
       end
     end
 
@@ -51,7 +53,7 @@ RSpec.describe 'api/v1/services', type: :request do
                },
                required: %w[id salon_id name description duration price availability category_id]
 
-        let!(:services) { create_list(:service, 10) }
+        let(:services) { create_list(:service, 10) }
         run_test!
       end
     end
@@ -78,7 +80,7 @@ RSpec.describe 'api/v1/services', type: :request do
                },
                required: %w[id salon_id name description duration price availability category_id]
 
-        let!(:services) { create_list(:service, 10) }
+        let(:services) { create_list(:service, 10) }
         run_test!
       end
 
@@ -110,7 +112,7 @@ RSpec.describe 'api/v1/services', type: :request do
                },
                required: %w[id salon_id name description duration price availability category_id]
 
-        let!(:service) { create(:service) }
+        let(:service) { create(:service) }
         run_test!
       end
 
@@ -163,7 +165,7 @@ RSpec.describe 'api/v1/services', type: :request do
       parameter name: :id, in: :path, type: :integer
 
       response '200', 'service deleted' do
-        let!(:service) { create(:service) }
+        let(:service) { create(:service) }
         run_test!
       end
 
