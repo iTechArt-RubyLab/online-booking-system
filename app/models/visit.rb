@@ -15,7 +15,10 @@
 #  client_id  :bigint           not null
 #
 
+require 'elasticsearch/model'
+
 class Visit < ApplicationRecord
+  include Elasticsearch::Model
   include AASM
 
   SORT_FIELDS = %i[start_at end_at price status].freeze
@@ -80,3 +83,6 @@ class Visit < ApplicationRecord
     errors.add(:user, 'must be in working status') if user.present? && !(user.professional? & user.working?)
   end
 end
+
+Visit.__elasticsearch__.create_index!
+Visit.import

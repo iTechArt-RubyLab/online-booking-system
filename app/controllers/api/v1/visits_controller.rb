@@ -11,8 +11,8 @@ module Api
       after_action :verify_authorized
 
       def search
-        visits = Visit.search(search_params[:info]).records.to_a
-        render json: convert_to_json(visits)
+        @visits = Visit.search(search_params[:info]).records.to_a
+        render json: convert_to_json(@visits)
       end
 
       def index

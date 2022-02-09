@@ -19,6 +19,10 @@ class VisitPolicy < ApplicationPolicy
     true
   end
 
+  def search?
+    true
+  end
+
   def approve?
     user.professional?
   end
